@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1st Edition AD&D Character Generator</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>1st Edition AD&amp;D Character Generator</h1>
+            <p class="subtitle">Dungeon Master's Guide Methods I&ndash;IV</p>
+        </header>
+
+        <main>
+            <!-- Step 1: Choose Ability Score Generation Method -->
+            <section id="step-method" class="step active">
+                <h2>Step 1: Choose Ability Score Generation Method</h2>
+                <div class="method-cards">
+                    <div class="method-card" data-method="1">
+                        <h3>Method I</h3>
+                        <p>Roll <strong>4d6</strong>, drop the lowest die. Repeat 6 times. Arrange scores to abilities as desired.</p>
+                        <span class="tag">Most Popular</span>
+                    </div>
+                    <div class="method-card" data-method="2">
+                        <h3>Method II</h3>
+                        <p>Roll <strong>3d6</strong> twelve times. Select the best 6 scores and assign them to abilities as desired.</p>
+                        <span class="tag">Selective</span>
+                    </div>
+                    <div class="method-card" data-method="3">
+                        <h3>Method III</h3>
+                        <p>Roll <strong>3d6</strong> six times <em>for each</em> ability. Keep the highest roll for each ability score.</p>
+                        <span class="tag">Best of Six</span>
+                    </div>
+                    <div class="method-card" data-method="4">
+                        <h3>Method IV</h3>
+                        <p>Roll <strong>3d6</strong> for each ability to create <strong>12 characters</strong>. Select the character you prefer.</p>
+                        <span class="tag">Pick a Character</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 2: Ability Score Results -->
+            <section id="step-abilities" class="step">
+                <h2>Step 2: Ability Scores</h2>
+                <div id="ability-results"></div>
+            </section>
+
+            <!-- Step 3: Choose Race -->
+            <section id="step-race" class="step">
+                <h2>Step 3: Choose Race</h2>
+                <div id="race-options"></div>
+                <div id="race-info" class="info-panel"></div>
+            </section>
+
+            <!-- Step 4: Choose Class -->
+            <section id="step-class" class="step">
+                <h2>Step 4: Choose Class</h2>
+                <div id="class-options"></div>
+                <div id="class-info" class="info-panel"></div>
+            </section>
+
+            <!-- Step 5: Choose Alignment -->
+            <section id="step-alignment" class="step">
+                <h2>Step 5: Choose Alignment</h2>
+                <div id="alignment-options"></div>
+            </section>
+
+            <!-- Step 6: Hit Points & Starting Gold -->
+            <section id="step-finalize" class="step">
+                <h2>Step 6: Hit Points &amp; Starting Gold</h2>
+                <div id="finalize-results"></div>
+            </section>
+
+            <!-- Step 7: Character Sheet -->
+            <section id="step-sheet" class="step">
+                <h2>Character Sheet</h2>
+                <div id="character-sheet"></div>
+                <div class="button-row">
+                    <button id="btn-print" class="btn btn-secondary">Print Character</button>
+                    <button id="btn-new" class="btn btn-primary">New Character</button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Navigation -->
+        <nav id="step-nav">
+            <button id="btn-back" class="btn btn-secondary" disabled>Back</button>
+            <div id="step-indicators"></div>
+            <button id="btn-next" class="btn btn-primary" disabled>Next</button>
+        </nav>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/dice.js"></script>
+    <script src="js/methods.js"></script>
+    <script src="js/generator.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

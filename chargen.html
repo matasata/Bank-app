@@ -1,0 +1,2709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1st Edition AD&D Character Generator</title>
+    <style>
+/* 1st Edition AD&D Character Generator - Styles */
+
+:root {
+    --parchment: #f4e8c1;
+    --parchment-dark: #e6d5a8;
+    --ink: #2c1810;
+    --ink-light: #5a3a28;
+    --red: #8b1a1a;
+    --red-light: #b33030;
+    --gold: #c49a2a;
+    --gold-dark: #8b6914;
+    --green: #2d5a27;
+    --blue: #1a3a5c;
+    --bg: #1a1a2e;
+    --card-bg: #faf3e0;
+    --shadow: rgba(0, 0, 0, 0.3);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+}
+
+#app {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+header {
+    text-align: center;
+    padding: 30px 20px 20px;
+    background: linear-gradient(180deg, var(--parchment) 0%, var(--parchment-dark) 100%);
+    border: 3px double var(--ink);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+header h1 {
+    font-size: 2em;
+    color: var(--red);
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
+    letter-spacing: 1px;
+}
+
+header .subtitle {
+    color: var(--ink-light);
+    font-style: italic;
+    margin-top: 5px;
+    font-size: 1.1em;
+}
+
+/* Steps */
+.step {
+    display: none;
+    background: var(--card-bg);
+    border: 2px solid var(--gold-dark);
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+.step.active {
+    display: block;
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.step h2 {
+    color: var(--red);
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 1.4em;
+}
+
+/* Method Cards */
+.method-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.method-card {
+    background: var(--parchment);
+    border: 2px solid var(--gold-dark);
+    border-radius: 6px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.method-card:hover {
+    border-color: var(--red);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--shadow);
+}
+
+.method-card.selected {
+    border-color: var(--red);
+    background: linear-gradient(180deg, #fff5e0, var(--parchment));
+    box-shadow: 0 0 0 3px rgba(139, 26, 26, 0.2);
+}
+
+.method-card h3 {
+    color: var(--red);
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.method-card p {
+    font-size: 0.9em;
+    line-height: 1.5;
+    color: var(--ink-light);
+}
+
+.method-card .tag {
+    display: inline-block;
+    background: var(--gold);
+    color: white;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.75em;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* Roll Details */
+.roll-details {
+    margin-bottom: 20px;
+}
+
+.roll-details h3 {
+    color: var(--ink);
+    margin-bottom: 10px;
+}
+
+.roll-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+}
+
+.roll-grid.twelve {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+}
+
+.roll-box {
+    background: var(--parchment);
+    border: 1px solid var(--gold-dark);
+    border-radius: 4px;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.roll-box.kept {
+    border-color: var(--green);
+    background: #e8f5e9;
+}
+
+.roll-box.dropped {
+    opacity: 0.5;
+}
+
+.roll-num {
+    font-weight: bold;
+    color: var(--ink-light);
+    font-size: 0.8em;
+}
+
+.roll-dice {
+    color: var(--ink-light);
+    font-size: 0.85em;
+}
+
+.roll-dropped {
+    color: var(--red-light);
+    font-size: 0.75em;
+    font-style: italic;
+}
+
+.roll-total {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: var(--red);
+}
+
+/* Score Assignment */
+.assign-section {
+    margin-top: 20px;
+}
+
+.assign-section h3 {
+    color: var(--ink);
+    margin-bottom: 10px;
+}
+
+.assign-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.assign-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    background: var(--parchment);
+    border-radius: 4px;
+}
+
+.assign-row label {
+    font-weight: bold;
+    min-width: 100px;
+}
+
+.score-select {
+    flex: 1;
+    padding: 6px 10px;
+    font-family: inherit;
+    font-size: 1em;
+    border: 1px solid var(--gold-dark);
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+}
+
+.score-select option:disabled {
+    color: #ccc;
+}
+
+/* Fixed Scores (Method III) */
+.fixed-scores {
+    margin-bottom: 20px;
+}
+
+.fixed-score-row {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--parchment-dark);
+}
+
+.fixed-score-row:last-child {
+    border-bottom: none;
+}
+
+.ability-name {
+    font-weight: bold;
+    width: 120px;
+}
+
+.ability-rolls {
+    flex: 1;
+    display: flex;
+    gap: 8px;
+}
+
+.mini-roll {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    background: var(--parchment);
+    border: 1px solid var(--parchment-dark);
+    color: var(--ink-light);
+}
+
+.mini-roll.best {
+    background: var(--gold);
+    color: white;
+    font-weight: bold;
+    border-color: var(--gold-dark);
+}
+
+.ability-score {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: var(--red);
+    width: 50px;
+    text-align: center;
+}
+
+/* Character Picker (Method IV) */
+.character-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.char-card {
+    background: var(--parchment);
+    border: 2px solid var(--gold-dark);
+    border-radius: 6px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+}
+
+.char-card:hover {
+    border-color: var(--red);
+    transform: translateY(-2px);
+}
+
+.char-card.selected {
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(139, 26, 26, 0.3);
+    background: #fff5e0;
+}
+
+.char-card h4 {
+    color: var(--ink);
+    margin-bottom: 8px;
+    font-size: 0.95em;
+}
+
+.char-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+}
+
+.char-stat {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-abbrev {
+    font-size: 0.7em;
+    color: var(--ink-light);
+    font-weight: bold;
+}
+
+.stat-value {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: var(--red);
+}
+
+.char-total {
+    margin-top: 8px;
+    font-size: 0.85em;
+    color: var(--ink-light);
+    font-weight: bold;
+}
+
+/* Option Buttons (Race, Class, Alignment) */
+.option-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.option-btn {
+    background: var(--parchment);
+    border: 2px solid var(--gold-dark);
+    border-radius: 6px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    font-family: inherit;
+    font-size: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.option-btn:hover:not(.disabled) {
+    border-color: var(--red);
+    transform: translateY(-1px);
+}
+
+.option-btn.selected {
+    border-color: var(--red);
+    background: #fff5e0;
+    box-shadow: 0 0 0 3px rgba(139, 26, 26, 0.2);
+}
+
+.option-btn.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.option-name {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.option-note {
+    font-size: 0.75em;
+    color: var(--ink-light);
+}
+
+/* Alignment Grid */
+.alignment-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.alignment-btn {
+    padding: 18px 12px;
+}
+
+/* Info Panel */
+.info-panel {
+    background: var(--parchment);
+    border: 1px solid var(--gold-dark);
+    border-radius: 6px;
+    padding: 20px;
+    margin-top: 15px;
+    min-height: 60px;
+}
+
+.info-panel:empty {
+    display: none;
+}
+
+.info-panel h3 {
+    color: var(--red);
+    margin-bottom: 10px;
+}
+
+.info-panel p {
+    margin-bottom: 6px;
+    line-height: 1.5;
+}
+
+/* Finalize Form */
+.finalize-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.form-row label {
+    font-weight: bold;
+    min-width: 120px;
+}
+
+.form-row input,
+.form-row select {
+    flex: 1;
+    padding: 8px 12px;
+    font-family: inherit;
+    font-size: 1em;
+    border: 1px solid var(--gold-dark);
+    border-radius: 4px;
+    background: white;
+}
+
+.adjustments-table {
+    margin: 20px 0;
+}
+
+.adjustments-table h3 {
+    color: var(--ink);
+    margin-bottom: 10px;
+}
+
+.adjustments-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.adjustments-table th,
+.adjustments-table td {
+    padding: 6px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--parchment-dark);
+}
+
+.adjustments-table th {
+    background: var(--parchment);
+    font-weight: bold;
+}
+
+.positive { color: var(--green); font-weight: bold; }
+.negative { color: var(--red); font-weight: bold; }
+
+.summary-preview {
+    background: var(--parchment);
+    padding: 15px;
+    border-radius: 6px;
+    margin: 15px 0;
+}
+
+.summary-preview h3 {
+    color: var(--ink);
+    margin-bottom: 8px;
+}
+
+.ability-preview {
+    margin: 15px 0;
+}
+
+.ability-preview h3 {
+    color: var(--ink);
+    margin-bottom: 10px;
+}
+
+.score-display {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.score-box {
+    background: var(--parchment);
+    border: 2px solid var(--gold-dark);
+    border-radius: 6px;
+    padding: 10px 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 70px;
+}
+
+.score-label {
+    font-size: 0.8em;
+    font-weight: bold;
+    color: var(--ink-light);
+}
+
+.score-value {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--red);
+}
+
+/* Buttons */
+.btn {
+    padding: 10px 24px;
+    font-family: inherit;
+    font-size: 1em;
+    border: 2px solid;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background: var(--red);
+    color: white;
+    border-color: var(--red);
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: var(--red-light);
+}
+
+.btn-secondary {
+    background: var(--parchment);
+    color: var(--ink);
+    border-color: var(--gold-dark);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: var(--parchment-dark);
+}
+
+.btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.button-row {
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+/* Navigation */
+#step-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--parchment);
+    border: 2px solid var(--gold-dark);
+    border-radius: 8px;
+    padding: 15px 20px;
+    box-shadow: 0 4px 12px var(--shadow);
+    position: sticky;
+    bottom: 10px;
+}
+
+#step-indicators {
+    display: flex;
+    gap: 20px;
+}
+
+.step-dot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.step-dot .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--parchment-dark);
+    border: 2px solid var(--gold-dark);
+    transition: all 0.2s;
+}
+
+.step-dot.active .dot {
+    background: var(--red);
+    border-color: var(--red);
+    box-shadow: 0 0 6px rgba(139, 26, 26, 0.4);
+}
+
+.step-dot.completed .dot {
+    background: var(--green);
+    border-color: var(--green);
+}
+
+.step-dot .dot-label {
+    font-size: 0.65em;
+    color: var(--ink-light);
+    white-space: nowrap;
+}
+
+.step-dot.active .dot-label {
+    color: var(--red);
+    font-weight: bold;
+}
+
+/* Character Sheet */
+.sheet {
+    background: var(--parchment);
+    border: 3px double var(--ink);
+    border-radius: 8px;
+    padding: 25px;
+}
+
+.sheet-header {
+    text-align: center;
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.char-name {
+    font-size: 1.8em;
+    color: var(--red);
+}
+
+.char-title {
+    font-size: 1.2em;
+    color: var(--ink);
+    margin-top: 5px;
+}
+
+.char-alignment {
+    font-style: italic;
+    color: var(--ink-light);
+    margin-top: 3px;
+}
+
+.sheet-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.sheet-section {
+    margin-bottom: 20px;
+}
+
+.sheet-section h3 {
+    color: var(--red);
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.ability-table,
+.saves-table,
+.details-table,
+.thief-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.ability-table td,
+.saves-table td,
+.details-table td,
+.thief-table td {
+    padding: 5px 8px;
+    border-bottom: 1px solid var(--parchment-dark);
+}
+
+.ability-table .val,
+.saves-table .val,
+.thief-table .val {
+    font-weight: bold;
+    text-align: right;
+    color: var(--red);
+    font-size: 1.1em;
+}
+
+.combat-stats {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.combat-stat {
+    flex: 1;
+    text-align: center;
+    background: white;
+    border: 2px solid var(--gold-dark);
+    border-radius: 6px;
+    padding: 10px;
+}
+
+.combat-label {
+    display: block;
+    font-size: 0.8em;
+    color: var(--ink-light);
+    font-weight: bold;
+}
+
+.combat-value {
+    display: block;
+    font-size: 1.6em;
+    font-weight: bold;
+    color: var(--red);
+}
+
+.hp-detail {
+    font-size: 0.85em;
+    color: var(--ink-light);
+    font-style: italic;
+}
+
+.equipment-lines,
+.notes-lines {
+    margin-top: 8px;
+}
+
+.equip-line,
+.note-line {
+    border-bottom: 1px solid var(--ink-light);
+    height: 28px;
+    margin-bottom: 4px;
+}
+
+.hint {
+    font-size: 0.85em;
+    color: var(--ink-light);
+    font-style: italic;
+}
+
+.method-label {
+    font-style: italic;
+    color: var(--ink-light);
+    margin-bottom: 15px;
+}
+
+/* Print Styles */
+@media print {
+    body {
+        background: white;
+    }
+
+    #app {
+        max-width: 100%;
+        padding: 0;
+    }
+
+    header, #step-nav, .button-row,
+    #step-method, #step-abilities, #step-race,
+    #step-class, #step-alignment, #step-finalize {
+        display: none !important;
+    }
+
+    #step-sheet {
+        display: block !important;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+    }
+
+    #step-sheet h2 {
+        display: none;
+    }
+
+    .sheet {
+        border: 2px solid black;
+        box-shadow: none;
+    }
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+    .sheet-columns {
+        grid-template-columns: 1fr;
+    }
+
+    .method-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .alignment-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+    }
+
+    .alignment-btn {
+        padding: 12px 6px;
+        font-size: 0.85em;
+    }
+
+    #step-indicators {
+        gap: 8px;
+    }
+
+    .dot-label {
+        display: none;
+    }
+
+    header h1 {
+        font-size: 1.4em;
+    }
+
+    .combat-stats {
+        flex-direction: column;
+    }
+}
+
+</style>
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>1st Edition AD&amp;D Character Generator</h1>
+            <p class="subtitle">Dungeon Master's Guide Methods I&ndash;IV</p>
+        </header>
+
+        <main>
+            <!-- Step 1: Choose Ability Score Generation Method -->
+            <section id="step-method" class="step active">
+                <h2>Step 1: Choose Ability Score Generation Method</h2>
+                <div class="method-cards">
+                    <div class="method-card" data-method="1">
+                        <h3>Method I</h3>
+                        <p>Roll <strong>4d6</strong>, drop the lowest die. Repeat 6 times. Arrange scores to abilities as desired.</p>
+                        <span class="tag">Most Popular</span>
+                    </div>
+                    <div class="method-card" data-method="2">
+                        <h3>Method II</h3>
+                        <p>Roll <strong>3d6</strong> twelve times. Select the best 6 scores and assign them to abilities as desired.</p>
+                        <span class="tag">Selective</span>
+                    </div>
+                    <div class="method-card" data-method="3">
+                        <h3>Method III</h3>
+                        <p>Roll <strong>3d6</strong> six times <em>for each</em> ability. Keep the highest roll for each ability score.</p>
+                        <span class="tag">Best of Six</span>
+                    </div>
+                    <div class="method-card" data-method="4">
+                        <h3>Method IV</h3>
+                        <p>Roll <strong>3d6</strong> for each ability to create <strong>12 characters</strong>. Select the character you prefer.</p>
+                        <span class="tag">Pick a Character</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 2: Ability Score Results -->
+            <section id="step-abilities" class="step">
+                <h2>Step 2: Ability Scores</h2>
+                <div id="ability-results"></div>
+            </section>
+
+            <!-- Step 3: Choose Race -->
+            <section id="step-race" class="step">
+                <h2>Step 3: Choose Race</h2>
+                <div id="race-options"></div>
+                <div id="race-info" class="info-panel"></div>
+            </section>
+
+            <!-- Step 4: Choose Class -->
+            <section id="step-class" class="step">
+                <h2>Step 4: Choose Class</h2>
+                <div id="class-options"></div>
+                <div id="class-info" class="info-panel"></div>
+            </section>
+
+            <!-- Step 5: Choose Alignment -->
+            <section id="step-alignment" class="step">
+                <h2>Step 5: Choose Alignment</h2>
+                <div id="alignment-options"></div>
+            </section>
+
+            <!-- Step 6: Hit Points & Starting Gold -->
+            <section id="step-finalize" class="step">
+                <h2>Step 6: Hit Points &amp; Starting Gold</h2>
+                <div id="finalize-results"></div>
+            </section>
+
+            <!-- Step 7: Character Sheet -->
+            <section id="step-sheet" class="step">
+                <h2>Character Sheet</h2>
+                <div id="character-sheet"></div>
+                <div class="button-row">
+                    <button id="btn-print" class="btn btn-secondary">Print Character</button>
+                    <button id="btn-new" class="btn btn-primary">New Character</button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Navigation -->
+        <nav id="step-nav">
+            <button id="btn-back" class="btn btn-secondary" disabled>Back</button>
+            <div id="step-indicators"></div>
+            <button id="btn-next" class="btn btn-primary" disabled>Next</button>
+        </nav>
+    </div>
+
+    
+    
+    
+    
+    
+    
+<script>
+/**
+ * 1st Edition AD&D Character Generator - Game Data
+ * All data sourced from the 1e PHB and DMG.
+ */
+
+const ABILITIES = ['strength', 'intelligence', 'wisdom', 'dexterity', 'constitution', 'charisma'];
+
+const ABILITY_LABELS = {
+    strength: 'Strength',
+    intelligence: 'Intelligence',
+    wisdom: 'Wisdom',
+    dexterity: 'Dexterity',
+    constitution: 'Constitution',
+    charisma: 'Charisma'
+};
+
+const ABILITY_ABBREV = {
+    strength: 'STR',
+    intelligence: 'INT',
+    wisdom: 'WIS',
+    dexterity: 'DEX',
+    constitution: 'CON',
+    charisma: 'CHA'
+};
+
+/**
+ * Racial ability score adjustments.
+ * Applied after score assignment.
+ */
+const RACIAL_ADJUSTMENTS = {
+    human:    { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0, charisma: 0 },
+    dwarf:    { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: +1, charisma: -1 },
+    elf:      { strength: 0, intelligence: 0, wisdom: 0, dexterity: +1, constitution: -1, charisma: 0 },
+    gnome:    { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0, charisma: 0 },
+    halfelf:  { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0, charisma: 0 },
+    halfling: { strength: -1, intelligence: 0, wisdom: 0, dexterity: +1, constitution: 0, charisma: 0 },
+    halforc:  { strength: +1, intelligence: 0, wisdom: 0, dexterity: 0, constitution: +1, charisma: -2 }
+};
+
+/**
+ * Racial ability score minimums and maximums (after adjustments).
+ */
+const RACIAL_LIMITS = {
+    human:    { strength: [3,18], intelligence: [3,18], wisdom: [3,18], dexterity: [3,18], constitution: [3,18], charisma: [3,18] },
+    dwarf:    { strength: [8,18], intelligence: [3,18], wisdom: [3,18], dexterity: [3,17], constitution: [12,19], charisma: [3,16] },
+    elf:      { strength: [3,18], intelligence: [8,18], wisdom: [3,18], dexterity: [7,19], constitution: [6,17], charisma: [8,18] },
+    gnome:    { strength: [6,18], intelligence: [7,18], wisdom: [3,18], dexterity: [3,18], constitution: [8,18], charisma: [3,18] },
+    halfelf:  { strength: [3,18], intelligence: [4,18], wisdom: [3,18], dexterity: [6,18], constitution: [6,18], charisma: [3,18] },
+    halfling: { strength: [6,17], intelligence: [6,18], wisdom: [3,17], dexterity: [8,18], constitution: [10,19], charisma: [3,18] },
+    halforc:  { strength: [6,18], intelligence: [3,17], wisdom: [3,14], dexterity: [3,17], constitution: [13,19], charisma: [3,12] }
+};
+
+const RACE_LABELS = {
+    human: 'Human',
+    dwarf: 'Dwarf',
+    elf: 'Elf',
+    gnome: 'Gnome',
+    halfelf: 'Half-Elf',
+    halfling: 'Halfling',
+    halforc: 'Half-Orc'
+};
+
+const RACE_DESCRIPTIONS = {
+    human: 'Humans are the most adaptable and ambitious of the common races. They can be any class with no level limits.',
+    dwarf: 'Stout and hardy folk who dwell in mountain strongholds. +1 CON, -1 CHA. Infravision 60\'.',
+    elf: 'Graceful and long-lived denizens of ancient forests. +1 DEX, -1 CON. Infravision 60\'. Resistance to sleep and charm.',
+    gnome: 'Small, clever folk related to dwarves. Infravision 60\'. Bonus to saves vs. magic.',
+    halfelf: 'Children of two worlds with mixed heritage. Infravision 60\'. 30% resistance to sleep and charm.',
+    halfling: 'Small, nimble folk who love comfort. -1 STR, +1 DEX. Infravision 30\' (some). Bonus to saves vs. magic.',
+    halforc: 'Tough crossbreeds shunned by many. +1 STR, +1 CON, -2 CHA. Infravision 60\'.'
+};
+
+/**
+ * Allowed classes per race. true = allowed, false = not allowed.
+ */
+const RACE_CLASSES = {
+    human:    ['fighter', 'paladin', 'ranger', 'cleric', 'druid', 'magicuser', 'illusionist', 'thief', 'assassin', 'monk', 'bard'],
+    dwarf:    ['fighter', 'cleric', 'thief', 'assassin'],
+    elf:      ['fighter', 'ranger', 'magicuser', 'thief', 'assassin'],
+    gnome:    ['fighter', 'cleric', 'illusionist', 'thief', 'assassin'],
+    halfelf:  ['fighter', 'ranger', 'cleric', 'druid', 'magicuser', 'thief', 'assassin'],
+    halfling: ['fighter', 'cleric', 'thief'],
+    halforc:  ['fighter', 'cleric', 'thief', 'assassin']
+};
+
+/**
+ * Multi-class options per race.
+ */
+const RACE_MULTICLASS = {
+    human: [],
+    dwarf: ['fighter/thief'],
+    elf: ['fighter/magicuser', 'fighter/thief', 'magicuser/thief', 'fighter/magicuser/thief'],
+    gnome: ['fighter/illusionist', 'fighter/thief', 'illusionist/thief'],
+    halfelf: ['cleric/fighter', 'cleric/ranger', 'cleric/magicuser', 'fighter/magicuser', 'fighter/thief',
+              'magicuser/thief', 'cleric/fighter/magicuser', 'fighter/magicuser/thief'],
+    halfling: ['fighter/thief'],
+    halforc: ['cleric/thief', 'cleric/assassin', 'cleric/fighter', 'fighter/thief', 'fighter/assassin']
+};
+
+/**
+ * Level limits by race/class. null = unlimited (human).
+ */
+const LEVEL_LIMITS = {
+    dwarf:    { fighter: 9, cleric: 8, thief: null, assassin: 9 },
+    elf:      { fighter: 7, ranger: 8, magicuser: 11, thief: null, assassin: 10 },
+    gnome:    { fighter: 6, cleric: 7, illusionist: 7, thief: null, assassin: 8 },
+    halfelf:  { fighter: 8, ranger: 8, cleric: 5, druid: null, magicuser: 8, thief: null, assassin: 11 },
+    halfling: { fighter: 6, cleric: 4, thief: null },
+    halforc:  { fighter: 10, cleric: 4, thief: 8, assassin: null }
+};
+
+const CLASS_LABELS = {
+    fighter: 'Fighter',
+    paladin: 'Paladin',
+    ranger: 'Ranger',
+    cleric: 'Cleric',
+    druid: 'Druid',
+    magicuser: 'Magic-User',
+    illusionist: 'Illusionist',
+    thief: 'Thief',
+    assassin: 'Assassin',
+    monk: 'Monk',
+    bard: 'Bard'
+};
+
+/**
+ * Minimum ability scores required for each class.
+ */
+const CLASS_REQUIREMENTS = {
+    fighter:     { strength: 9 },
+    paladin:     { strength: 12, intelligence: 9, wisdom: 13, constitution: 9, charisma: 17 },
+    ranger:      { strength: 13, intelligence: 13, wisdom: 14, constitution: 14, charisma: 0 },
+    cleric:      { wisdom: 9 },
+    druid:       { wisdom: 12, charisma: 15 },
+    magicuser:   { intelligence: 9 },
+    illusionist: { intelligence: 15, dexterity: 16 },
+    thief:       { dexterity: 9 },
+    assassin:    { strength: 12, intelligence: 11, dexterity: 12 },
+    monk:        { strength: 15, wisdom: 15, dexterity: 15, constitution: 11 },
+    bard:        { strength: 15, intelligence: 12, wisdom: 15, dexterity: 15, constitution: 10, charisma: 15 }
+};
+
+const CLASS_DESCRIPTIONS = {
+    fighter: 'A warrior skilled in combat. Masters of arms and armor. Hit die: d10.',
+    paladin: 'A holy warrior devoted to law and good. Must be Lawful Good. Hit die: d10.',
+    ranger: 'A woodland warrior and tracker. Must be Good alignment. Hit die: d8 (2d8 at 1st level).',
+    cleric: 'A priestly warrior who serves a deity. Can turn undead. Hit die: d8.',
+    druid: 'A priest of nature. Must be True Neutral. Hit die: d8.',
+    magicuser: 'A student of the arcane arts. Casts spells from a spellbook. Hit die: d4.',
+    illusionist: 'A specialist in illusion magic. Hit die: d4.',
+    thief: 'A rogue skilled in stealth and subterfuge. Hit die: d6.',
+    assassin: 'A killer for hire. Must be Evil alignment. Hit die: d6.',
+    monk: 'A martial artist devoted to discipline. Must be Lawful. Hit die: d4.',
+    bard: 'A jack-of-all-trades poet and loremaster. Dual-class path (Fighter then Thief then Bard). Hit die: d6.'
+};
+
+/**
+ * Hit dice per class.
+ */
+const CLASS_HIT_DICE = {
+    fighter: 10,
+    paladin: 10,
+    ranger: 8,   // Gets 2d8 at level 1
+    cleric: 8,
+    druid: 8,
+    magicuser: 4,
+    illusionist: 4,
+    thief: 6,
+    assassin: 6,
+    monk: 4,
+    bard: 6
+};
+
+/**
+ * Starting gold (in gp) dice formulas.
+ * Format: [numDice, dieSize, multiplier]
+ */
+const STARTING_GOLD = {
+    fighter:     [5, 4, 10],   // 5d4 x 10
+    paladin:     [5, 4, 10],
+    ranger:      [5, 4, 10],
+    cleric:      [3, 6, 10],   // 3d6 x 10
+    druid:       [3, 6, 10],
+    magicuser:   [2, 4, 10],   // 2d4 x 10
+    illusionist: [2, 4, 10],
+    thief:       [2, 6, 10],   // 2d6 x 10
+    assassin:    [2, 6, 10],
+    monk:        [5, 4, 1],    // 5d4 (no multiplier)
+    bard:        [2, 6, 10]
+};
+
+/**
+ * Alignment restrictions by class.
+ */
+const CLASS_ALIGNMENTS = {
+    fighter:     ['lg', 'ng', 'cg', 'ln', 'tn', 'cn', 'le', 'ne', 'ce'],
+    paladin:     ['lg'],
+    ranger:      ['lg', 'ng', 'cg'],
+    cleric:      ['lg', 'ng', 'cg', 'ln', 'tn', 'cn', 'le', 'ne', 'ce'],
+    druid:       ['tn'],
+    magicuser:   ['lg', 'ng', 'cg', 'ln', 'tn', 'cn', 'le', 'ne', 'ce'],
+    illusionist: ['lg', 'ng', 'cg', 'ln', 'tn', 'cn', 'le', 'ne', 'ce'],
+    thief:       ['ln', 'tn', 'cn', 'le', 'ne', 'ce', 'ng', 'cg'],
+    assassin:    ['le', 'ne', 'ce'],
+    monk:        ['lg', 'ln', 'le'],
+    bard:        ['tn']
+};
+
+const ALIGNMENT_LABELS = {
+    lg: 'Lawful Good',
+    ng: 'Neutral Good',
+    cg: 'Chaotic Good',
+    ln: 'Lawful Neutral',
+    tn: 'True Neutral',
+    cn: 'Chaotic Neutral',
+    le: 'Lawful Evil',
+    ne: 'Neutral Evil',
+    ce: 'Chaotic Evil'
+};
+
+/**
+ * Saving throw tables by class group.
+ * Index 0 = level 1 values: [paralyzation, petrification, rod/staff/wand, breath weapon, spell]
+ */
+const SAVING_THROWS = {
+    fighter:     [14, 15, 16, 17, 17],
+    paladin:     [14, 15, 16, 17, 17],
+    ranger:      [14, 15, 16, 17, 17],
+    cleric:      [10, 13, 14, 16, 15],
+    druid:       [10, 13, 14, 16, 15],
+    magicuser:   [14, 13, 11, 15, 12],
+    illusionist: [14, 13, 11, 15, 12],
+    thief:       [13, 12, 14, 16, 15],
+    assassin:    [13, 12, 14, 16, 15],
+    monk:        [13, 12, 14, 16, 15],
+    bard:        [13, 12, 14, 16, 15]
+};
+
+/**
+ * Constitution HP adjustment table.
+ * Key = CON score, value = HP adjustment per die.
+ * For fighters (and subclasses), special bonuses apply at 17+.
+ */
+const CON_HP_ADJ = {
+    3: -2, 4: -1, 5: -1, 6: -1,
+    7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0,
+    15: +1, 16: +2,
+    17: +3,  // +2 for non-fighters
+    18: +4,  // +2 for non-fighters
+    19: +5   // +2 for non-fighters
+};
+
+const CON_HP_ADJ_NONFIGHTER = {
+    3: -2, 4: -1, 5: -1, 6: -1,
+    7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0,
+    15: +1, 16: +2,
+    17: +2, 18: +2, 19: +2
+};
+
+const FIGHTER_TYPES = ['fighter', 'paladin', 'ranger'];
+
+/**
+ * Exceptional strength table (fighters with 18 STR).
+ * Only fighters, paladins, and rangers can have exceptional strength.
+ */
+const EXCEPTIONAL_STRENGTH_RANGES = [
+    { min: 1,   max: 50,  label: '18/01-50' },
+    { min: 51,  max: 75,  label: '18/51-75' },
+    { min: 76,  max: 90,  label: '18/76-90' },
+    { min: 91,  max: 99,  label: '18/91-99' },
+    { min: 100, max: 100, label: '18/00' }
+];
+
+/**
+ * Thief skill base percentages at level 1.
+ */
+const THIEF_SKILLS = {
+    pickPockets: 30,
+    openLocks: 25,
+    findTraps: 20,
+    moveSilently: 15,
+    hideInShadows: 10,
+    hearNoise: 10,
+    climbWalls: 85,
+    readLanguages: 0
+};
+
+const THIEF_SKILL_LABELS = {
+    pickPockets: 'Pick Pockets',
+    openLocks: 'Open Locks',
+    findTraps: 'Find/Remove Traps',
+    moveSilently: 'Move Silently',
+    hideInShadows: 'Hide in Shadows',
+    hearNoise: 'Hear Noise',
+    climbWalls: 'Climb Walls',
+    readLanguages: 'Read Languages'
+};
+
+/**
+ * Racial thief skill adjustments.
+ */
+const RACIAL_THIEF_ADJ = {
+    human:    { pickPockets: 0, openLocks: 0, findTraps: 0, moveSilently: 0, hideInShadows: 0, hearNoise: 0, climbWalls: 0, readLanguages: 0 },
+    dwarf:    { pickPockets: 0, openLocks: 10, findTraps: 15, moveSilently: 0, hideInShadows: 0, hearNoise: 0, climbWalls: -10, readLanguages: -5 },
+    elf:      { pickPockets: 5, openLocks: -5, findTraps: 0, moveSilently: 5, hideInShadows: 10, hearNoise: 5, climbWalls: 0, readLanguages: 0 },
+    gnome:    { pickPockets: 0, openLocks: 5, findTraps: 10, moveSilently: 5, hideInShadows: 5, hearNoise: 10, climbWalls: -15, readLanguages: 0 },
+    halfelf:  { pickPockets: 10, openLocks: 0, findTraps: 0, moveSilently: 0, hideInShadows: 5, hearNoise: 0, climbWalls: 0, readLanguages: 0 },
+    halfling: { pickPockets: 5, openLocks: 5, findTraps: 5, moveSilently: 10, hideInShadows: 15, hearNoise: 5, climbWalls: -15, readLanguages: -5 },
+    halforc:  { pickPockets: -5, openLocks: 5, findTraps: 5, moveSilently: 5, hideInShadows: 5, hearNoise: 5, climbWalls: 5, readLanguages: -10 }
+};
+
+/**
+ * Dexterity thief skill adjustments.
+ */
+const DEX_THIEF_ADJ = {
+    9:  { pickPockets: -15, openLocks: -10, findTraps: -10, moveSilently: -20, hideInShadows: -10 },
+    10: { pickPockets: -10, openLocks: -5, findTraps: -10, moveSilently: -15, hideInShadows: -5 },
+    11: { pickPockets: -5, openLocks: 0, findTraps: -5, moveSilently: -10, hideInShadows: 0 },
+    12: { pickPockets: 0, openLocks: 0, findTraps: 0, moveSilently: -5, hideInShadows: 0 },
+    13: { pickPockets: 0, openLocks: 0, findTraps: 0, moveSilently: 0, hideInShadows: 0 },
+    14: { pickPockets: 0, openLocks: 0, findTraps: 0, moveSilently: 0, hideInShadows: 0 },
+    15: { pickPockets: 0, openLocks: 0, findTraps: 0, moveSilently: 0, hideInShadows: 0 },
+    16: { pickPockets: 0, openLocks: 5, findTraps: 0, moveSilently: 0, hideInShadows: 0 },
+    17: { pickPockets: 5, openLocks: 10, findTraps: 0, moveSilently: 5, hideInShadows: 5 },
+    18: { pickPockets: 10, openLocks: 15, findTraps: 5, moveSilently: 10, hideInShadows: 10 },
+    19: { pickPockets: 15, openLocks: 20, findTraps: 10, moveSilently: 15, hideInShadows: 15 }
+};
+
+/**
+ * Languages known based on Intelligence.
+ */
+const INT_LANGUAGES = {
+    3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 1, 9: 1,
+    10: 2, 11: 2, 12: 3, 13: 3, 14: 4, 15: 4,
+    16: 5, 17: 6, 18: 7
+};
+
+/**
+ * Racial languages.
+ */
+const RACIAL_LANGUAGES = {
+    human: ['Common'],
+    dwarf: ['Common', 'Dwarven', 'Gnome', 'Goblin', 'Kobold', 'Orcish'],
+    elf: ['Common', 'Elven', 'Gnoll', 'Gnome', 'Goblin', 'Halfling', 'Hobgoblin', 'Orcish'],
+    gnome: ['Common', 'Dwarven', 'Gnome', 'Goblin', 'Halfling', 'Kobold'],
+    halfelf: ['Common', 'Elven', 'Gnome', 'Halfling', 'Goblin', 'Hobgoblin', 'Orcish'],
+    halfling: ['Common', 'Dwarven', 'Elven', 'Gnome', 'Goblin', 'Halfling', 'Orcish'],
+    halforc: ['Common', 'Orcish']
+};
+
+/**
+ * Movement rates by race.
+ */
+const RACIAL_MOVEMENT = {
+    human: 12,
+    dwarf: 6,
+    elf: 12,
+    gnome: 6,
+    halfelf: 12,
+    halfling: 6,
+    halforc: 12
+};
+
+/**
+ * Age ranges by race/class for starting age.
+ * Format: [baseAge, numDice, dieSize]
+ */
+const STARTING_AGE = {
+    human:    { fighter: [15, 1, 4], paladin: [17, 1, 4], ranger: [20, 1, 4], cleric: [18, 1, 4], druid: [18, 2, 4], magicuser: [24, 2, 8], illusionist: [30, 1, 6], thief: [18, 1, 4], assassin: [20, 1, 4], monk: [21, 1, 4], bard: [18, 1, 4] },
+    dwarf:    { fighter: [40, 5, 4], cleric: [250, 2, 20], thief: [75, 3, 6], assassin: [75, 4, 4] },
+    elf:      { fighter: [130, 5, 6], ranger: [160, 1, 10], magicuser: [150, 5, 6], thief: [100, 5, 6], assassin: [100, 5, 6] },
+    gnome:    { fighter: [60, 5, 4], cleric: [300, 3, 12], illusionist: [100, 2, 12], thief: [80, 5, 4], assassin: [80, 5, 4] },
+    halfelf:  { fighter: [22, 3, 4], ranger: [30, 2, 4], cleric: [40, 2, 4], druid: [40, 2, 4], magicuser: [30, 2, 8], thief: [22, 3, 8], assassin: [30, 2, 4] },
+    halfling: { fighter: [20, 3, 4], cleric: [30, 1, 4], thief: [40, 2, 4] },
+    halforc:  { fighter: [13, 1, 4], cleric: [20, 1, 4], thief: [20, 2, 4], assassin: [20, 2, 4] }
+};
+
+/**
+ * Height and weight by race and sex.
+ * Format: [baseHeight (inches), heightDice, heightDie, baseWeight (lbs), weightDice, weightDie]
+ */
+const HEIGHT_WEIGHT = {
+    human:    { male: [60, 2, 10, 140, 6, 10], female: [59, 2, 10, 100, 6, 10] },
+    dwarf:    { male: [43, 1, 10, 130, 4, 10], female: [41, 1, 10, 105, 4, 10] },
+    elf:      { male: [55, 1, 10, 90, 3, 10],  female: [50, 1, 10, 70, 3, 10] },
+    gnome:    { male: [38, 1, 6, 72, 5, 4],     female: [36, 1, 6, 68, 5, 4] },
+    halfelf:  { male: [60, 2, 6, 110, 3, 12],   female: [58, 2, 6, 85, 3, 12] },
+    halfling: { male: [32, 2, 8, 52, 5, 4],     female: [30, 2, 8, 48, 5, 4] },
+    halforc:  { male: [58, 2, 10, 120, 5, 10],  female: [56, 2, 10, 90, 5, 10] }
+};
+
+/**
+ * 1st Edition AD&D Character Generator - Dice Rolling
+ */
+
+const Dice = {
+    /**
+     * Roll a single die of the given size.
+     */
+    roll(sides) {
+        return Math.floor(Math.random() * sides) + 1;
+    },
+
+    /**
+     * Roll multiple dice and return the individual results.
+     */
+    rollMultiple(numDice, sides) {
+        const results = [];
+        for (let i = 0; i < numDice; i++) {
+            results.push(this.roll(sides));
+        }
+        return results;
+    },
+
+    /**
+     * Roll multiple dice and return the sum.
+     */
+    rollSum(numDice, sides) {
+        return this.rollMultiple(numDice, sides).reduce((a, b) => a + b, 0);
+    },
+
+    /**
+     * Roll 4d6 and drop the lowest die.
+     */
+    roll4d6DropLowest() {
+        const rolls = this.rollMultiple(4, 6);
+        rolls.sort((a, b) => a - b);
+        const kept = rolls.slice(1); // drop lowest
+        return {
+            allRolls: [...rolls],
+            kept: kept,
+            total: kept.reduce((a, b) => a + b, 0)
+        };
+    },
+
+    /**
+     * Roll 3d6.
+     */
+    roll3d6() {
+        const rolls = this.rollMultiple(3, 6);
+        return {
+            allRolls: rolls,
+            total: rolls.reduce((a, b) => a + b, 0)
+        };
+    },
+
+    /**
+     * Roll percentile dice (d100).
+     */
+    rollPercentile() {
+        return this.roll(100);
+    },
+
+    /**
+     * Roll for starting gold.
+     * @param {string} className - The character class key
+     * @returns {{ rolls: number[], multiplier: number, total: number }}
+     */
+    rollStartingGold(className) {
+        const [numDice, dieSize, multiplier] = STARTING_GOLD[className];
+        const rolls = this.rollMultiple(numDice, dieSize);
+        const sum = rolls.reduce((a, b) => a + b, 0);
+        return {
+            rolls,
+            multiplier,
+            total: sum * multiplier
+        };
+    },
+
+    /**
+     * Roll hit points for a class at level 1.
+     * Rangers get 2d8 at level 1.
+     * @param {string} className - The character class key
+     * @param {number} conScore - Constitution score
+     * @returns {{ rolls: number[], conBonus: number, total: number }}
+     */
+    rollHitPoints(className, conScore) {
+        const hitDie = CLASS_HIT_DICE[className];
+        const isFighter = FIGHTER_TYPES.includes(className);
+        const conAdj = isFighter ? (CON_HP_ADJ[conScore] || 0) : (CON_HP_ADJ_NONFIGHTER[conScore] || 0);
+
+        let numDice = 1;
+        if (className === 'ranger') numDice = 2; // Rangers get 2 hit dice at level 1
+
+        const rolls = this.rollMultiple(numDice, hitDie);
+        const rawTotal = rolls.reduce((a, b) => a + b, 0);
+        const total = Math.max(1, rawTotal + (conAdj * numDice));
+
+        return {
+            rolls,
+            hitDie,
+            numDice,
+            conBonus: conAdj * numDice,
+            total
+        };
+    },
+
+    /**
+     * Roll starting age.
+     */
+    rollStartingAge(race, className) {
+        // For multi-class, use the first class
+        const baseClass = className.split('/')[0];
+        const ageData = STARTING_AGE[race] && STARTING_AGE[race][baseClass];
+        if (!ageData) {
+            // Fallback
+            return { base: 20, diceTotal: 0, total: 20 };
+        }
+        const [base, numDice, dieSize] = ageData;
+        const diceTotal = this.rollSum(numDice, dieSize);
+        return {
+            base,
+            diceTotal,
+            total: base + diceTotal
+        };
+    },
+
+    /**
+     * Roll height and weight.
+     */
+    rollHeightWeight(race, sex) {
+        const data = HEIGHT_WEIGHT[race][sex];
+        const [baseH, hDice, hDie, baseW, wDice, wDie] = data;
+        const heightExtra = this.rollSum(hDice, hDie);
+        const weightExtra = this.rollSum(wDice, wDie);
+        const heightInches = baseH + heightExtra;
+        const feet = Math.floor(heightInches / 12);
+        const inches = heightInches % 12;
+        return {
+            heightInches,
+            heightStr: `${feet}'${inches}"`,
+            weight: baseW + weightExtra
+        };
+    }
+};
+
+/**
+ * 1st Edition AD&D Character Generator - DMG Ability Score Methods I-IV
+ */
+
+const Methods = {
+    /**
+     * Method I: Roll 4d6, drop lowest die. Repeat 6 times.
+     * Player arranges the 6 scores among abilities as desired.
+     *
+     * @returns {{ scores: object[], arranged: boolean }}
+     */
+    methodI() {
+        const scores = [];
+        for (let i = 0; i < 6; i++) {
+            scores.push(Dice.roll4d6DropLowest());
+        }
+        return {
+            method: 1,
+            description: 'Method I: 4d6, drop lowest. Arrange as desired.',
+            scores,
+            totals: scores.map(s => s.total).sort((a, b) => b - a),
+            arrangeable: true
+        };
+    },
+
+    /**
+     * Method II: Roll 3d6 twelve times. Select best 6 scores.
+     * Player arranges the 6 scores among abilities as desired.
+     *
+     * @returns {{ allScores: object[], bestSix: number[], arranged: boolean }}
+     */
+    methodII() {
+        const allScores = [];
+        for (let i = 0; i < 12; i++) {
+            allScores.push(Dice.roll3d6());
+        }
+        // Sort all totals descending and pick best 6
+        const sorted = [...allScores].sort((a, b) => b.total - a.total);
+        const bestSix = sorted.slice(0, 6);
+
+        return {
+            method: 2,
+            description: 'Method II: 3d6 twelve times, keep best 6. Arrange as desired.',
+            allScores,
+            bestSix: bestSix.map(s => s.total).sort((a, b) => b - a),
+            totals: bestSix.map(s => s.total).sort((a, b) => b - a),
+            arrangeable: true
+        };
+    },
+
+    /**
+     * Method III: Roll 3d6 six times for each ability score.
+     * Keep the highest roll for each. Scores are assigned to specific abilities.
+     *
+     * @returns {{ abilities: object }}
+     */
+    methodIII() {
+        const abilities = {};
+        const details = {};
+
+        ABILITIES.forEach(ability => {
+            const rolls = [];
+            for (let i = 0; i < 6; i++) {
+                rolls.push(Dice.roll3d6());
+            }
+            const best = rolls.reduce((a, b) => a.total > b.total ? a : b);
+            abilities[ability] = best.total;
+            details[ability] = {
+                allRolls: rolls,
+                best: best.total
+            };
+        });
+
+        return {
+            method: 3,
+            description: 'Method III: 3d6 six times per ability. Keep highest for each.',
+            abilities,
+            details,
+            totals: ABILITIES.map(a => abilities[a]),
+            arrangeable: false
+        };
+    },
+
+    /**
+     * Method IV: Roll 3d6 for each ability to create 12 characters.
+     * Player selects the character they prefer.
+     *
+     * @returns {{ characters: object[] }}
+     */
+    methodIV() {
+        const characters = [];
+        for (let i = 0; i < 12; i++) {
+            const abilities = {};
+            ABILITIES.forEach(ability => {
+                abilities[ability] = Dice.roll3d6().total;
+            });
+            const total = ABILITIES.reduce((sum, a) => sum + abilities[a], 0);
+            characters.push({ abilities, total });
+        }
+
+        return {
+            method: 4,
+            description: 'Method IV: 3d6 for each ability, generate 12 characters. Pick one.',
+            characters,
+            arrangeable: false
+        };
+    }
+};
+
+/**
+ * 1st Edition AD&D Character Generator - Core Generator Logic
+ */
+
+const Generator = {
+    /**
+     * Check if a set of ability scores qualifies for a given class.
+     */
+    meetsClassRequirements(abilities, className) {
+        const reqs = CLASS_REQUIREMENTS[className];
+        if (!reqs) return false;
+        for (const [ability, minScore] of Object.entries(reqs)) {
+            if ((abilities[ability] || 0) < minScore) return false;
+        }
+        return true;
+    },
+
+    /**
+     * Get all available single classes for a race with given ability scores.
+     */
+    getAvailableClasses(abilities, race) {
+        const allowed = RACE_CLASSES[race] || [];
+        return allowed.filter(cls => this.meetsClassRequirements(abilities, cls));
+    },
+
+    /**
+     * Get available multi-class options for a race with given ability scores.
+     */
+    getAvailableMultiClasses(abilities, race) {
+        const options = RACE_MULTICLASS[race] || [];
+        return options.filter(combo => {
+            const classes = combo.split('/');
+            return classes.every(cls => this.meetsClassRequirements(abilities, cls));
+        });
+    },
+
+    /**
+     * Get available alignments for a class (or multi-class).
+     */
+    getAvailableAlignments(className) {
+        const classes = className.split('/');
+        // Intersection of all class alignment lists
+        let alignments = [...CLASS_ALIGNMENTS[classes[0]]];
+        for (let i = 1; i < classes.length; i++) {
+            const classAlignments = CLASS_ALIGNMENTS[classes[i]];
+            alignments = alignments.filter(a => classAlignments.includes(a));
+        }
+        return alignments;
+    },
+
+    /**
+     * Apply racial ability score adjustments.
+     */
+    applyRacialAdjustments(abilities, race) {
+        const adjusted = { ...abilities };
+        const adj = RACIAL_ADJUSTMENTS[race];
+        const limits = RACIAL_LIMITS[race];
+
+        for (const ability of ABILITIES) {
+            adjusted[ability] += adj[ability];
+            // Clamp to racial limits
+            adjusted[ability] = Math.max(limits[ability][0], Math.min(limits[ability][1], adjusted[ability]));
+        }
+        return adjusted;
+    },
+
+    /**
+     * Check if ability scores meet racial minimums.
+     */
+    meetsRacialMins(abilities, race) {
+        const limits = RACIAL_LIMITS[race];
+        for (const ability of ABILITIES) {
+            if (abilities[ability] < limits[ability][0]) return false;
+        }
+        return true;
+    },
+
+    /**
+     * Get available races for a set of ability scores.
+     */
+    getAvailableRaces(abilities) {
+        const races = [];
+        for (const race of Object.keys(RACE_LABELS)) {
+            if (this.meetsRacialMins(abilities, race)) {
+                // Check if they can be at least one class of this race
+                const adjusted = this.applyRacialAdjustments(abilities, race);
+                const classes = this.getAvailableClasses(adjusted, race);
+                const multiClasses = this.getAvailableMultiClasses(adjusted, race);
+                if (classes.length > 0 || multiClasses.length > 0) {
+                    races.push(race);
+                }
+            }
+        }
+        return races;
+    },
+
+    /**
+     * Roll exceptional strength for fighters with 18 STR.
+     */
+    rollExceptionalStrength(className, strength) {
+        const classes = className.split('/');
+        const hasFighter = classes.some(c => FIGHTER_TYPES.includes(c));
+        if (hasFighter && strength === 18) {
+            const roll = Dice.rollPercentile();
+            const range = EXCEPTIONAL_STRENGTH_RANGES.find(r => roll >= r.min && roll <= r.max);
+            return { roll, label: range.label };
+        }
+        return null;
+    },
+
+    /**
+     * Calculate thief skills for a thief or assassin.
+     */
+    calculateThiefSkills(race, dexScore) {
+        const skills = {};
+        for (const [skill, base] of Object.entries(THIEF_SKILLS)) {
+            let value = base;
+            // Racial adjustment
+            if (RACIAL_THIEF_ADJ[race] && RACIAL_THIEF_ADJ[race][skill] !== undefined) {
+                value += RACIAL_THIEF_ADJ[race][skill];
+            }
+            // Dexterity adjustment (only for certain skills)
+            if (DEX_THIEF_ADJ[dexScore] && DEX_THIEF_ADJ[dexScore][skill] !== undefined) {
+                value += DEX_THIEF_ADJ[dexScore][skill];
+            }
+            skills[skill] = Math.max(1, value);
+        }
+        return skills;
+    },
+
+    /**
+     * Get level limit for a race/class combo.
+     */
+    getLevelLimit(race, className) {
+        if (race === 'human') return 'Unlimited';
+        const limits = LEVEL_LIMITS[race];
+        if (!limits) return 'N/A';
+        const limit = limits[className];
+        if (limit === null) return 'Unlimited';
+        if (limit === undefined) return 'N/A';
+        return limit.toString();
+    },
+
+    /**
+     * Get the label for a class (handles multi-class).
+     */
+    getClassLabel(className) {
+        if (className.includes('/')) {
+            return className.split('/').map(c => CLASS_LABELS[c]).join(' / ');
+        }
+        return CLASS_LABELS[className] || className;
+    },
+
+    /**
+     * Get the hit die label for a class.
+     */
+    getHitDieLabel(className) {
+        if (className.includes('/')) {
+            return className.split('/').map(c => `d${CLASS_HIT_DICE[c]}`).join(' / ');
+        }
+        return `d${CLASS_HIT_DICE[className]}`;
+    },
+
+    /**
+     * Roll hit points for multi-class.
+     */
+    rollMultiClassHP(className, conScore) {
+        const classes = className.split('/');
+        let totalHP = 0;
+        const details = [];
+
+        for (const cls of classes) {
+            const result = Dice.rollHitPoints(cls, conScore);
+            details.push({ class: cls, ...result });
+            totalHP += result.total;
+        }
+
+        // Multi-class divides total HP
+        const dividedHP = Math.max(1, Math.floor(totalHP / classes.length));
+        return {
+            details,
+            rawTotal: totalHP,
+            dividedHP,
+            isMultiClass: true,
+            numClasses: classes.length
+        };
+    },
+
+    /**
+     * Roll starting gold for multi-class (use highest).
+     */
+    rollMultiClassGold(className) {
+        const classes = className.split('/');
+        let best = null;
+
+        for (const cls of classes) {
+            const result = Dice.rollStartingGold(cls);
+            if (!best || result.total > best.total) {
+                best = { class: cls, ...result };
+            }
+        }
+        return best;
+    },
+
+    /**
+     * Build the complete character.
+     */
+    buildCharacter(config) {
+        const {
+            abilities,
+            race,
+            className,
+            alignment,
+            name,
+            sex
+        } = config;
+
+        const char = {
+            name: name || 'Unnamed Adventurer',
+            sex: sex || 'Male',
+            race,
+            raceName: RACE_LABELS[race],
+            className,
+            classLabel: this.getClassLabel(className),
+            alignment,
+            alignmentLabel: ALIGNMENT_LABELS[alignment],
+            abilities: { ...abilities }
+        };
+
+        // Exceptional strength
+        char.exceptionalStrength = this.rollExceptionalStrength(className, abilities.strength);
+
+        // Hit points
+        const isMultiClass = className.includes('/');
+        if (isMultiClass) {
+            const hpResult = this.rollMultiClassHP(className, abilities.constitution);
+            char.hitPoints = hpResult.dividedHP;
+            char.hpDetails = hpResult;
+        } else {
+            const hpResult = Dice.rollHitPoints(className, abilities.constitution);
+            char.hitPoints = hpResult.total;
+            char.hpDetails = hpResult;
+        }
+
+        // Starting gold
+        if (isMultiClass) {
+            const goldResult = this.rollMultiClassGold(className);
+            char.gold = goldResult.total;
+            char.goldDetails = goldResult;
+        } else {
+            const goldResult = Dice.rollStartingGold(className);
+            char.gold = goldResult.total;
+            char.goldDetails = goldResult;
+        }
+
+        // Saving throws (use first class for multi-class)
+        const primaryClass = className.split('/')[0];
+        char.savingThrows = {
+            paralyzation: SAVING_THROWS[primaryClass][0],
+            petrification: SAVING_THROWS[primaryClass][1],
+            rodStaffWand: SAVING_THROWS[primaryClass][2],
+            breathWeapon: SAVING_THROWS[primaryClass][3],
+            spell: SAVING_THROWS[primaryClass][4]
+        };
+
+        // Thief skills (if thief or assassin in class)
+        const allClasses = className.split('/');
+        if (allClasses.includes('thief') || allClasses.includes('assassin')) {
+            char.thiefSkills = this.calculateThiefSkills(race, abilities.dexterity);
+        }
+
+        // Level limits
+        if (isMultiClass) {
+            char.levelLimits = allClasses.map(c => ({
+                class: CLASS_LABELS[c],
+                limit: this.getLevelLimit(race, c)
+            }));
+        } else {
+            char.levelLimit = this.getLevelLimit(race, className);
+        }
+
+        // Languages
+        const intLangs = INT_LANGUAGES[Math.min(18, Math.max(3, abilities.intelligence))] || 0;
+        char.languages = [...RACIAL_LANGUAGES[race]];
+        char.additionalLanguageSlots = intLangs;
+
+        // Movement
+        char.movement = RACIAL_MOVEMENT[race];
+
+        // Age
+        char.ageDetails = Dice.rollStartingAge(race, className);
+        char.age = char.ageDetails.total;
+
+        // Height & Weight
+        const hwResult = Dice.rollHeightWeight(race, sex === 'Female' ? 'female' : 'male');
+        char.height = hwResult.heightStr;
+        char.weight = hwResult.weight;
+
+        // THAC0 (all level 1 characters start at 20)
+        char.thac0 = 20;
+
+        // Armor Class (base 10, no armor)
+        char.armorClass = 10;
+
+        return char;
+    }
+};
+
+/**
+ * 1st Edition AD&D Character Generator - UI Rendering
+ */
+
+const UI = {
+    /**
+     * Render the ability score assignment interface for Methods I & II (arrangeable).
+     */
+    renderArrangeableScores(result) {
+        const container = document.getElementById('ability-results');
+        const totals = result.totals;
+
+        let html = `<p class="method-label">${result.description}</p>`;
+
+        // Show the roll details
+        if (result.method === 1) {
+            html += '<div class="roll-details"><h3>Your Rolls</h3><div class="roll-grid">';
+            result.scores.forEach((s, i) => {
+                html += `<div class="roll-box">
+                    <span class="roll-num">#${i + 1}</span>
+                    <span class="roll-dice">[${s.allRolls.join(', ')}]</span>
+                    <span class="roll-dropped">drop ${s.allRolls[0]}</span>
+                    <span class="roll-total">${s.total}</span>
+                </div>`;
+            });
+            html += '</div></div>';
+        } else if (result.method === 2) {
+            html += '<div class="roll-details"><h3>All 12 Rolls</h3><div class="roll-grid twelve">';
+            result.allScores.forEach((s, i) => {
+                const isKept = result.bestSix.includes(s.total) &&
+                    result.bestSix.filter(x => x === s.total).length >
+                    result.allScores.slice(0, i).filter(x => result.bestSix.includes(x.total) && x.total === s.total).length;
+                html += `<div class="roll-box ${result.totals.includes(s.total) ? 'kept' : 'dropped'}">
+                    <span class="roll-dice">[${s.allRolls.join(', ')}]</span>
+                    <span class="roll-total">${s.total}</span>
+                </div>`;
+            });
+            html += '</div><p class="hint">Best 6 scores highlighted</p></div>';
+        }
+
+        html += '<div class="assign-section"><h3>Assign Scores to Abilities</h3>';
+        html += '<p class="hint">Select a score for each ability from the dropdown.</p>';
+        html += '<div class="assign-grid">';
+
+        ABILITIES.forEach(ability => {
+            html += `<div class="assign-row">
+                <label>${ABILITY_LABELS[ability]}</label>
+                <select class="score-select" data-ability="${ability}">
+                    <option value="">-- Select --</option>
+                    ${totals.map(t => `<option value="${t}">${t}</option>`).join('')}
+                </select>
+            </div>`;
+        });
+
+        html += '</div></div>';
+        container.innerHTML = html;
+
+        // Track used scores
+        this._setupScoreAssignment(totals);
+    },
+
+    _setupScoreAssignment(totals) {
+        const selects = document.querySelectorAll('.score-select');
+        const updateSelects = () => {
+            const used = {};
+            const availableCounts = {};
+            totals.forEach(t => { availableCounts[t] = (availableCounts[t] || 0) + 1; });
+
+            selects.forEach(sel => {
+                if (sel.value) {
+                    used[sel.value] = (used[sel.value] || 0) + 1;
+                }
+            });
+
+            selects.forEach(sel => {
+                const currentVal = sel.value;
+                const options = sel.querySelectorAll('option');
+                options.forEach(opt => {
+                    if (opt.value === '') return;
+                    const val = opt.value;
+                    const totalAvailable = availableCounts[val] || 0;
+                    const totalUsed = used[val] || 0;
+                    const isCurrentSelection = val === currentVal;
+                    opt.disabled = !isCurrentSelection && totalUsed >= totalAvailable;
+                });
+            });
+
+            // Enable next button only when all are assigned
+            const allAssigned = Array.from(selects).every(s => s.value !== '');
+            document.getElementById('btn-next').disabled = !allAssigned;
+
+            if (allAssigned) {
+                App.state.abilities = {};
+                selects.forEach(s => {
+                    App.state.abilities[s.dataset.ability] = parseInt(s.value);
+                });
+            }
+        };
+
+        selects.forEach(s => s.addEventListener('change', updateSelects));
+    },
+
+    /**
+     * Render Method III results (fixed assignment).
+     */
+    renderFixedScores(result) {
+        const container = document.getElementById('ability-results');
+
+        let html = `<p class="method-label">${result.description}</p>`;
+        html += '<div class="fixed-scores">';
+
+        ABILITIES.forEach(ability => {
+            const detail = result.details[ability];
+            html += `<div class="fixed-score-row">
+                <div class="ability-name">${ABILITY_LABELS[ability]}</div>
+                <div class="ability-rolls">`;
+
+            detail.allRolls.forEach(roll => {
+                const isBest = roll.total === detail.best;
+                html += `<span class="mini-roll ${isBest ? 'best' : ''}">${roll.total}</span>`;
+            });
+
+            html += `</div>
+                <div class="ability-score">${detail.best}</div>
+            </div>`;
+        });
+
+        html += '</div>';
+        html += '<button class="btn btn-primary" id="btn-accept-scores">Accept These Scores</button>';
+        html += ' <button class="btn btn-secondary" id="btn-reroll">Re-Roll</button>';
+        container.innerHTML = html;
+
+        document.getElementById('btn-accept-scores').addEventListener('click', () => {
+            App.state.abilities = { ...result.abilities };
+            document.getElementById('btn-next').disabled = false;
+            document.getElementById('btn-next').click();
+        });
+
+        document.getElementById('btn-reroll').addEventListener('click', () => {
+            App.rollAbilities();
+        });
+    },
+
+    /**
+     * Render Method IV results (pick a character).
+     */
+    renderCharacterPicker(result) {
+        const container = document.getElementById('ability-results');
+
+        let html = `<p class="method-label">${result.description}</p>`;
+        html += '<div class="character-grid">';
+
+        result.characters.forEach((char, i) => {
+            html += `<div class="char-card" data-index="${i}">
+                <h4>Character #${i + 1}</h4>
+                <div class="char-stats">`;
+
+            ABILITIES.forEach(ability => {
+                html += `<div class="char-stat">
+                    <span class="stat-abbrev">${ABILITY_ABBREV[ability]}</span>
+                    <span class="stat-value">${char.abilities[ability]}</span>
+                </div>`;
+            });
+
+            html += `</div>
+                <div class="char-total">Total: ${char.total}</div>
+            </div>`;
+        });
+
+        html += '</div>';
+        html += '<button class="btn btn-secondary" id="btn-reroll-iv">Re-Generate All 12</button>';
+        container.innerHTML = html;
+
+        // Click to select a character
+        document.querySelectorAll('.char-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.char-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                const idx = parseInt(card.dataset.index);
+                App.state.abilities = { ...result.characters[idx].abilities };
+                document.getElementById('btn-next').disabled = false;
+            });
+        });
+
+        document.getElementById('btn-reroll-iv').addEventListener('click', () => {
+            App.rollAbilities();
+        });
+    },
+
+    /**
+     * Render race selection.
+     */
+    renderRaceSelection(availableRaces) {
+        const container = document.getElementById('race-options');
+        const infoPanel = document.getElementById('race-info');
+
+        let html = '<div class="option-grid">';
+        Object.keys(RACE_LABELS).forEach(race => {
+            const available = availableRaces.includes(race);
+            html += `<button class="option-btn ${available ? '' : 'disabled'}"
+                data-race="${race}" ${available ? '' : 'disabled'}>
+                <span class="option-name">${RACE_LABELS[race]}</span>
+                ${!available ? '<span class="option-note">Requirements not met</span>' : ''}
+            </button>`;
+        });
+        html += '</div>';
+        container.innerHTML = html;
+
+        // Show info on hover/click
+        document.querySelectorAll('.option-btn[data-race]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (btn.disabled) return;
+                document.querySelectorAll('.option-btn[data-race]').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+
+                const race = btn.dataset.race;
+                App.state.race = race;
+
+                // Show race info
+                const adj = RACIAL_ADJUSTMENTS[race];
+                const adjStr = ABILITIES
+                    .filter(a => adj[a] !== 0)
+                    .map(a => `${adj[a] > 0 ? '+' : ''}${adj[a]} ${ABILITY_ABBREV[a]}`)
+                    .join(', ') || 'None';
+
+                const limits = RACIAL_LIMITS[race];
+                const limitsStr = ABILITIES
+                    .map(a => `${ABILITY_ABBREV[a]}: ${limits[a][0]}-${limits[a][1]}`)
+                    .join(', ');
+
+                infoPanel.innerHTML = `
+                    <h3>${RACE_LABELS[race]}</h3>
+                    <p>${RACE_DESCRIPTIONS[race]}</p>
+                    <p><strong>Adjustments:</strong> ${adjStr}</p>
+                    <p><strong>Ability Ranges:</strong> ${limitsStr}</p>
+                    <p><strong>Movement:</strong> ${RACIAL_MOVEMENT[race]}"</p>
+                    <p><strong>Languages:</strong> ${RACIAL_LANGUAGES[race].join(', ')}</p>
+                `;
+
+                document.getElementById('btn-next').disabled = false;
+            });
+        });
+    },
+
+    /**
+     * Render class selection.
+     */
+    renderClassSelection(availableClasses, availableMultiClasses) {
+        const container = document.getElementById('class-options');
+        const infoPanel = document.getElementById('class-info');
+
+        let html = '<h3>Single Classes</h3><div class="option-grid">';
+        Object.keys(CLASS_LABELS).forEach(cls => {
+            const available = availableClasses.includes(cls);
+            const reqs = CLASS_REQUIREMENTS[cls];
+            const reqStr = Object.entries(reqs).map(([a, v]) => `${ABILITY_ABBREV[a]} ${v}`).join(', ');
+
+            html += `<button class="option-btn ${available ? '' : 'disabled'}"
+                data-class="${cls}" ${available ? '' : 'disabled'}>
+                <span class="option-name">${CLASS_LABELS[cls]}</span>
+                <span class="option-note">${available ? `Requires: ${reqStr}` : `Needs: ${reqStr}`}</span>
+            </button>`;
+        });
+        html += '</div>';
+
+        if (availableMultiClasses.length > 0) {
+            html += '<h3>Multi-Classes</h3><div class="option-grid">';
+            availableMultiClasses.forEach(mc => {
+                const label = mc.split('/').map(c => CLASS_LABELS[c]).join(' / ');
+                html += `<button class="option-btn" data-class="${mc}">
+                    <span class="option-name">${label}</span>
+                </button>`;
+            });
+            html += '</div>';
+        }
+
+        container.innerHTML = html;
+
+        document.querySelectorAll('.option-btn[data-class]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (btn.disabled) return;
+                document.querySelectorAll('.option-btn[data-class]').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+
+                const cls = btn.dataset.class;
+                App.state.className = cls;
+
+                // Show class info
+                const isMulti = cls.includes('/');
+                if (isMulti) {
+                    const classes = cls.split('/');
+                    const descriptions = classes.map(c => `<strong>${CLASS_LABELS[c]}:</strong> ${CLASS_DESCRIPTIONS[c]}`).join('<br>');
+                    const levelLimits = classes.map(c =>
+                        `${CLASS_LABELS[c]}: ${Generator.getLevelLimit(App.state.race, c)}`
+                    ).join(', ');
+
+                    infoPanel.innerHTML = `
+                        <h3>${Generator.getClassLabel(cls)}</h3>
+                        <p>${descriptions}</p>
+                        <p><strong>Level Limits:</strong> ${levelLimits}</p>
+                    `;
+                } else {
+                    const levelLimit = Generator.getLevelLimit(App.state.race, cls);
+                    infoPanel.innerHTML = `
+                        <h3>${CLASS_LABELS[cls]}</h3>
+                        <p>${CLASS_DESCRIPTIONS[cls]}</p>
+                        <p><strong>Hit Die:</strong> d${CLASS_HIT_DICE[cls]}${cls === 'ranger' ? ' (2d8 at level 1)' : ''}</p>
+                        <p><strong>Level Limit:</strong> ${levelLimit}</p>
+                    `;
+                }
+
+                document.getElementById('btn-next').disabled = false;
+            });
+        });
+    },
+
+    /**
+     * Render alignment selection.
+     */
+    renderAlignmentSelection(availableAlignments) {
+        const container = document.getElementById('alignment-options');
+        const allAlignments = ['lg', 'ng', 'cg', 'ln', 'tn', 'cn', 'le', 'ne', 'ce'];
+
+        let html = '<div class="alignment-grid">';
+        allAlignments.forEach(al => {
+            const available = availableAlignments.includes(al);
+            html += `<button class="option-btn alignment-btn ${available ? '' : 'disabled'}"
+                data-alignment="${al}" ${available ? '' : 'disabled'}>
+                ${ALIGNMENT_LABELS[al]}
+            </button>`;
+        });
+        html += '</div>';
+
+        container.innerHTML = html;
+
+        document.querySelectorAll('.alignment-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (btn.disabled) return;
+                document.querySelectorAll('.alignment-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                App.state.alignment = btn.dataset.alignment;
+                document.getElementById('btn-next').disabled = false;
+            });
+        });
+    },
+
+    /**
+     * Render the finalization step (name, sex, HP, gold preview).
+     */
+    renderFinalization() {
+        const container = document.getElementById('finalize-results');
+        const state = App.state;
+
+        // Apply racial adjustments
+        const adjustedAbilities = Generator.applyRacialAdjustments(state.abilities, state.race);
+        state.adjustedAbilities = adjustedAbilities;
+
+        // Show adjustments
+        const adj = RACIAL_ADJUSTMENTS[state.race];
+        const hasAdj = ABILITIES.some(a => adj[a] !== 0);
+
+        let html = '<div class="finalize-form">';
+        html += `<div class="form-row">
+            <label for="char-name">Character Name</label>
+            <input type="text" id="char-name" placeholder="Enter character name" value="">
+        </div>`;
+        html += `<div class="form-row">
+            <label for="char-sex">Sex</label>
+            <select id="char-sex">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+        </div>`;
+
+        if (hasAdj) {
+            html += '<div class="adjustments-table"><h3>Racial Adjustments Applied</h3><table>';
+            html += '<tr><th>Ability</th><th>Base</th><th>Adj</th><th>Final</th></tr>';
+            ABILITIES.forEach(a => {
+                const adjVal = adj[a];
+                if (adjVal !== 0) {
+                    html += `<tr>
+                        <td>${ABILITY_LABELS[a]}</td>
+                        <td>${state.abilities[a]}</td>
+                        <td class="${adjVal > 0 ? 'positive' : 'negative'}">${adjVal > 0 ? '+' : ''}${adjVal}</td>
+                        <td><strong>${adjustedAbilities[a]}</strong></td>
+                    </tr>`;
+                }
+            });
+            html += '</table></div>';
+        }
+
+        html += `<div class="summary-preview">
+            <h3>Character Summary</h3>
+            <p><strong>Race:</strong> ${RACE_LABELS[state.race]}</p>
+            <p><strong>Class:</strong> ${Generator.getClassLabel(state.className)}</p>
+            <p><strong>Alignment:</strong> ${ALIGNMENT_LABELS[state.alignment]}</p>
+        </div>`;
+
+        html += '<div class="ability-preview"><h3>Final Ability Scores</h3><div class="score-display">';
+        ABILITIES.forEach(a => {
+            html += `<div class="score-box">
+                <span class="score-label">${ABILITY_ABBREV[a]}</span>
+                <span class="score-value">${adjustedAbilities[a]}</span>
+            </div>`;
+        });
+        html += '</div></div>';
+
+        html += `<button class="btn btn-primary" id="btn-generate">Generate Character!</button>`;
+        html += '</div>';
+
+        container.innerHTML = html;
+
+        document.getElementById('btn-generate').addEventListener('click', () => {
+            App.generateFinalCharacter();
+        });
+
+        // Hide next button on this step
+        document.getElementById('btn-next').style.display = 'none';
+    },
+
+    /**
+     * Render the final character sheet.
+     */
+    renderCharacterSheet(char) {
+        const container = document.getElementById('character-sheet');
+
+        let strDisplay = char.abilities.strength.toString();
+        if (char.exceptionalStrength) {
+            strDisplay = char.exceptionalStrength.label;
+        }
+
+        let html = `
+        <div class="sheet">
+            <div class="sheet-header">
+                <h2 class="char-name">${char.name}</h2>
+                <div class="char-title">${char.raceName} ${char.classLabel}</div>
+                <div class="char-alignment">${char.alignmentLabel}</div>
+            </div>
+
+            <div class="sheet-columns">
+                <div class="sheet-col">
+                    <div class="sheet-section">
+                        <h3>Ability Scores</h3>
+                        <table class="ability-table">
+                            <tr><td>Strength</td><td class="val">${strDisplay}</td></tr>
+                            <tr><td>Intelligence</td><td class="val">${char.abilities.intelligence}</td></tr>
+                            <tr><td>Wisdom</td><td class="val">${char.abilities.wisdom}</td></tr>
+                            <tr><td>Dexterity</td><td class="val">${char.abilities.dexterity}</td></tr>
+                            <tr><td>Constitution</td><td class="val">${char.abilities.constitution}</td></tr>
+                            <tr><td>Charisma</td><td class="val">${char.abilities.charisma}</td></tr>
+                        </table>
+                    </div>
+
+                    <div class="sheet-section">
+                        <h3>Combat</h3>
+                        <div class="combat-stats">
+                            <div class="combat-stat">
+                                <span class="combat-label">Hit Points</span>
+                                <span class="combat-value">${char.hitPoints}</span>
+                            </div>
+                            <div class="combat-stat">
+                                <span class="combat-label">Armor Class</span>
+                                <span class="combat-value">${char.armorClass}</span>
+                            </div>
+                            <div class="combat-stat">
+                                <span class="combat-label">THAC0</span>
+                                <span class="combat-value">${char.thac0}</span>
+                            </div>
+                        </div>
+                        <p class="hp-detail">`;
+
+        if (char.hpDetails.isMultiClass) {
+            html += `Multi-class: `;
+            char.hpDetails.details.forEach((d, i) => {
+                if (i > 0) html += ' + ';
+                html += `${CLASS_LABELS[d.class]} ${d.rolls.join('+')}`;
+            });
+            html += ` = ${char.hpDetails.rawTotal} / ${char.hpDetails.numClasses} = ${char.hitPoints}`;
+        } else {
+            html += `${char.hpDetails.numDice}d${char.hpDetails.hitDie} [${char.hpDetails.rolls.join(', ')}]`;
+            if (char.hpDetails.conBonus !== 0) {
+                html += ` ${char.hpDetails.conBonus > 0 ? '+' : ''}${char.hpDetails.conBonus} (CON)`;
+            }
+            html += ` = ${char.hitPoints}`;
+        }
+
+        html += `</p>
+                    </div>
+
+                    <div class="sheet-section">
+                        <h3>Saving Throws</h3>
+                        <table class="saves-table">
+                            <tr><td>Paralyzation/Poison/Death</td><td class="val">${char.savingThrows.paralyzation}</td></tr>
+                            <tr><td>Petrification/Polymorph</td><td class="val">${char.savingThrows.petrification}</td></tr>
+                            <tr><td>Rod/Staff/Wand</td><td class="val">${char.savingThrows.rodStaffWand}</td></tr>
+                            <tr><td>Breath Weapon</td><td class="val">${char.savingThrows.breathWeapon}</td></tr>
+                            <tr><td>Spell</td><td class="val">${char.savingThrows.spell}</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="sheet-col">
+                    <div class="sheet-section">
+                        <h3>Details</h3>
+                        <table class="details-table">
+                            <tr><td>Sex</td><td>${char.sex}</td></tr>
+                            <tr><td>Age</td><td>${char.age} years</td></tr>
+                            <tr><td>Height</td><td>${char.height}</td></tr>
+                            <tr><td>Weight</td><td>${char.weight} lbs</td></tr>
+                            <tr><td>Movement</td><td>${char.movement}"</td></tr>
+                            <tr><td>Hit Die</td><td>${Generator.getHitDieLabel(char.className)}</td></tr>`;
+
+        if (char.levelLimits) {
+            html += `<tr><td>Level Limits</td><td>${char.levelLimits.map(l => `${l.class}: ${l.limit}`).join(', ')}</td></tr>`;
+        } else {
+            html += `<tr><td>Level Limit</td><td>${char.levelLimit}</td></tr>`;
+        }
+
+        html += `   <tr><td>Starting Gold</td><td>${char.gold} gp</td></tr>
+                        </table>
+                    </div>
+
+                    <div class="sheet-section">
+                        <h3>Languages</h3>
+                        <p>${char.languages.join(', ')}</p>
+                        <p class="hint">Additional language slots: ${char.additionalLanguageSlots}</p>
+                    </div>`;
+
+        // Thief skills
+        if (char.thiefSkills) {
+            html += `<div class="sheet-section">
+                <h3>Thief Skills</h3>
+                <table class="thief-table">`;
+            for (const [skill, value] of Object.entries(char.thiefSkills)) {
+                html += `<tr><td>${THIEF_SKILL_LABELS[skill]}</td><td class="val">${value}%</td></tr>`;
+            }
+            html += '</table></div>';
+        }
+
+        html += `
+                    <div class="sheet-section">
+                        <h3>Equipment</h3>
+                        <p class="hint">Starting gold: ${char.gold} gp. Purchase equipment from the PHB.</p>
+                        <div class="equipment-lines">
+                            <div class="equip-line"></div>
+                            <div class="equip-line"></div>
+                            <div class="equip-line"></div>
+                            <div class="equip-line"></div>
+                            <div class="equip-line"></div>
+                            <div class="equip-line"></div>
+                        </div>
+                    </div>
+
+                    <div class="sheet-section">
+                        <h3>Notes</h3>
+                        <div class="notes-lines">
+                            <div class="note-line"></div>
+                            <div class="note-line"></div>
+                            <div class="note-line"></div>
+                            <div class="note-line"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+
+        container.innerHTML = html;
+    }
+};
+
+/**
+ * 1st Edition AD&D Character Generator - Main Application
+ */
+
+const App = {
+    state: {
+        currentStep: 0,
+        method: null,
+        methodResult: null,
+        abilities: null,
+        adjustedAbilities: null,
+        race: null,
+        className: null,
+        alignment: null,
+        character: null
+    },
+
+    steps: ['step-method', 'step-abilities', 'step-race', 'step-class', 'step-alignment', 'step-finalize', 'step-sheet'],
+
+    init() {
+        this.setupMethodCards();
+        this.setupNavigation();
+        this.setupStepIndicators();
+        this.goToStep(0);
+    },
+
+    setupMethodCards() {
+        document.querySelectorAll('.method-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.method-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                this.state.method = parseInt(card.dataset.method);
+                document.getElementById('btn-next').disabled = false;
+            });
+        });
+    },
+
+    setupNavigation() {
+        document.getElementById('btn-next').addEventListener('click', () => this.nextStep());
+        document.getElementById('btn-back').addEventListener('click', () => this.prevStep());
+        document.getElementById('btn-new').addEventListener('click', () => this.reset());
+        document.getElementById('btn-print').addEventListener('click', () => window.print());
+    },
+
+    setupStepIndicators() {
+        const indicators = document.getElementById('step-indicators');
+        const labels = ['Method', 'Abilities', 'Race', 'Class', 'Alignment', 'Finalize', 'Sheet'];
+        labels.forEach((label, i) => {
+            const dot = document.createElement('div');
+            dot.className = 'step-dot';
+            dot.title = label;
+            dot.innerHTML = `<span class="dot"></span><span class="dot-label">${label}</span>`;
+            indicators.appendChild(dot);
+        });
+    },
+
+    goToStep(stepIndex) {
+        this.state.currentStep = stepIndex;
+
+        // Show/hide sections
+        this.steps.forEach((id, i) => {
+            const section = document.getElementById(id);
+            section.classList.toggle('active', i === stepIndex);
+        });
+
+        // Update indicators
+        document.querySelectorAll('.step-dot').forEach((dot, i) => {
+            dot.classList.toggle('active', i === stepIndex);
+            dot.classList.toggle('completed', i < stepIndex);
+        });
+
+        // Update nav buttons
+        document.getElementById('btn-back').disabled = stepIndex === 0;
+        document.getElementById('btn-next').disabled = true;
+        document.getElementById('btn-next').style.display = stepIndex >= this.steps.length - 2 ? 'none' : '';
+        document.getElementById('btn-back').style.display = stepIndex >= this.steps.length - 1 ? 'none' : '';
+
+        // Step-specific setup
+        switch (stepIndex) {
+            case 0: // Method selection
+                if (this.state.method) {
+                    document.getElementById('btn-next').disabled = false;
+                }
+                break;
+            case 1: // Abilities
+                this.rollAbilities();
+                break;
+            case 2: // Race
+                this.setupRaceStep();
+                break;
+            case 3: // Class
+                this.setupClassStep();
+                break;
+            case 4: // Alignment
+                this.setupAlignmentStep();
+                break;
+            case 5: // Finalize
+                UI.renderFinalization();
+                break;
+            case 6: // Sheet - handled by generateFinalCharacter
+                break;
+        }
+    },
+
+    nextStep() {
+        if (this.state.currentStep < this.steps.length - 1) {
+            this.goToStep(this.state.currentStep + 1);
+        }
+    },
+
+    prevStep() {
+        if (this.state.currentStep > 0) {
+            // Reset dependent state when going back
+            if (this.state.currentStep === 3) this.state.className = null;
+            if (this.state.currentStep === 4) this.state.alignment = null;
+            if (this.state.currentStep === 2) this.state.race = null;
+
+            this.goToStep(this.state.currentStep - 1);
+        }
+    },
+
+    rollAbilities() {
+        let result;
+        switch (this.state.method) {
+            case 1: result = Methods.methodI(); break;
+            case 2: result = Methods.methodII(); break;
+            case 3: result = Methods.methodIII(); break;
+            case 4: result = Methods.methodIV(); break;
+        }
+
+        this.state.methodResult = result;
+        this.state.abilities = null;
+
+        if (result.method === 1 || result.method === 2) {
+            UI.renderArrangeableScores(result);
+        } else if (result.method === 3) {
+            UI.renderFixedScores(result);
+        } else if (result.method === 4) {
+            UI.renderCharacterPicker(result);
+        }
+    },
+
+    setupRaceStep() {
+        if (!this.state.abilities) return;
+        const availableRaces = Generator.getAvailableRaces(this.state.abilities);
+        UI.renderRaceSelection(availableRaces);
+        if (this.state.race) {
+            const btn = document.querySelector(`.option-btn[data-race="${this.state.race}"]`);
+            if (btn && !btn.disabled) {
+                btn.click();
+            }
+        }
+    },
+
+    setupClassStep() {
+        if (!this.state.abilities || !this.state.race) return;
+        const adjustedAbilities = Generator.applyRacialAdjustments(this.state.abilities, this.state.race);
+        const availableClasses = Generator.getAvailableClasses(adjustedAbilities, this.state.race);
+        const availableMultiClasses = Generator.getAvailableMultiClasses(adjustedAbilities, this.state.race);
+        UI.renderClassSelection(availableClasses, availableMultiClasses);
+    },
+
+    setupAlignmentStep() {
+        if (!this.state.className) return;
+        const availableAlignments = Generator.getAvailableAlignments(this.state.className);
+        UI.renderAlignmentSelection(availableAlignments);
+    },
+
+    generateFinalCharacter() {
+        const name = document.getElementById('char-name').value || 'Unnamed Adventurer';
+        const sex = document.getElementById('char-sex').value;
+
+        const char = Generator.buildCharacter({
+            abilities: this.state.adjustedAbilities || this.state.abilities,
+            race: this.state.race,
+            className: this.state.className,
+            alignment: this.state.alignment,
+            name,
+            sex
+        });
+
+        this.state.character = char;
+        this.goToStep(6);
+        UI.renderCharacterSheet(char);
+    },
+
+    reset() {
+        this.state = {
+            currentStep: 0,
+            method: null,
+            methodResult: null,
+            abilities: null,
+            adjustedAbilities: null,
+            race: null,
+            className: null,
+            alignment: null,
+            character: null
+        };
+
+        document.querySelectorAll('.method-card').forEach(c => c.classList.remove('selected'));
+        document.getElementById('btn-next').style.display = '';
+        document.getElementById('btn-back').style.display = '';
+        this.goToStep(0);
+    }
+};
+
+// Initialize the app when DOM is ready
+document.addEventListener('DOMContentLoaded', () => App.init());
+
+</script>
+</body>
+</html>
