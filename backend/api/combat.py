@@ -1,223 +1,243 @@
-"""API routes for combat management."""
-from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
-from typing import Optional
+"""FastAPI router for combat encounter endpoints."""
 
-from engine.combat.initiative import InitiativeManager
-from engine.combat.attack import AttackResolver
+from __future__ import annotations
 
-router = APIRouter(tags=["combat"])
+from typing import Dict, List, Optional
 
-# In-memory combat state
-_active_combats: dict[str, dict] = {}
-_combat_counter = 0
+from fastapi import APIRouter, HTTPException, status
+from pydantic import BaseModel, Field
+
+from engine.combat.combat_round import (
+    CombatManager,
+    Combatant,
+    DeclaredAction,
+    ActionType,
+)
+
+router = APIRouter(prefix="/api/combat", tags=["combat"])
+
+# ── In-memory combat store ────────────────────────────────────────────────
+_active_combats: Dict[str, CombatManager] = {}
+
+
+# ── Request / Response schemas ────────────────────────────────────────────
+
+class CombatantSchema(BaseModel):
+    """Schema for adding a combatant."""
+
+    id: str
+    name: str
+    side: str = Field(..., description="'party' or 'monsters'")
+    hp: int
+    max_hp: int
+    ac: int
+    class_name: str = "Fighter"
+    level: int = 1
+    str_score: int = 10
+    dex_score: int = 10
+    is_monster: bool = False
+    monster_hd: int = 1
+    damage_dice_num: int = 1
+    damage_dice_sides: int = 8
+    magic_weapon_bonus: int = 0
+    morale: int = 12
 
 
 class StartCombatRequest(BaseModel):
-    party: list[dict]
-    monsters: list[dict]
-    initiative_method: str = "side"  # "side" or "individual"
+    """Request to start a new combat encounter."""
+
+    party: List[CombatantSchema]
+    monsters: List[CombatantSchema]
+    initiative_method: str = Field(
+        "side",
+        description="'side' (d6 per side) or 'individual' (d10 + mods)",
+    )
+    seed: Optional[int] = None
 
 
-class CombatActionRequest(BaseModel):
-    combatant_name: str
-    action_type: str  # "attack", "cast", "move", "use_item", "defend", "flee"
-    target: Optional[str] = None
-    spell_name: Optional[str] = None
-    details: dict = {}
+class InitiativeRequest(BaseModel):
+    """Request to roll initiative for the current round."""
+
+    combat_id: str
+
+
+class ActionRequest(BaseModel):
+    """Request to declare a combat action."""
+
+    combat_id: str
+    combatant_id: str
+    action_type: str = Field(..., description="melee, missile, spell, movement, defend, flee, etc.")
+    target_id: Optional[str] = None
+    details: Dict = Field(default_factory=dict)
 
 
 class ResolveRoundRequest(BaseModel):
+    """Request to resolve the current combat round."""
+
     combat_id: str
-    actions: list[CombatActionRequest]
 
 
-@router.post("/combat/start")
-async def start_combat(request: StartCombatRequest):
-    """Start a new combat encounter."""
-    global _combat_counter
-    _combat_counter += 1
-    combat_id = f"combat_{_combat_counter}"
+# ── Endpoints ─────────────────────────────────────────────────────────────
 
-    # Initialize combat state
-    initiative_mgr = InitiativeManager()
-    surprise = initiative_mgr.resolve_surprise()
+@router.post("/start")
+def start_combat(request: StartCombatRequest) -> Dict:
+    """Start a new combat encounter with the given party and monsters.
 
-    combatants = {}
-    for p in request.party:
-        combatants[p["name"]] = {
-            **p,
-            "side": "party",
-            "is_alive": True,
-            "conditions": [],
-        }
-    for m in request.monsters:
-        name = m["name"]
-        if name in combatants:
-            count = sum(1 for k in combatants if k.startswith(m["name"]))
-            name = f"{m['name']} #{count + 1}"
-        combatants[name] = {
-            **m,
-            "name": name,
-            "side": "monsters",
-            "is_alive": True,
-            "conditions": [],
-        }
-
-    combat_state = {
-        "id": combat_id,
-        "round": 0,
-        "is_active": True,
-        "combatants": combatants,
-        "log": [f"Combat begins! {surprise}"],
-        "surprise": surprise,
-        "initiative_method": request.initiative_method,
-    }
-
-    _active_combats[combat_id] = combat_state
-    return combat_state
-
-
-@router.post("/combat/initiative")
-async def roll_initiative(combat_id: str):
-    """Roll initiative for the current round."""
-    combat = _active_combats.get(combat_id)
-    if not combat:
-        raise HTTPException(status_code=404, detail="Combat not found")
-
-    mgr = InitiativeManager()
-    if combat["initiative_method"] == "individual":
-        combatants_list = [
-            {"name": name, "dex_modifier": c.get("dex_modifier", 0), "weapon_speed": c.get("weapon_speed", 5)}
-            for name, c in combat["combatants"].items()
-            if c["is_alive"]
-        ]
-        result = mgr.roll_individual_initiative(combatants_list)
-        return {"method": "individual", "order": result}
-    else:
-        result = mgr.roll_side_initiative()
-        return {"method": "side", **result}
-
-
-@router.post("/combat/resolve-round")
-async def resolve_round(request: ResolveRoundRequest):
-    """Resolve a full combat round."""
-    combat = _active_combats.get(request.combat_id)
-    if not combat:
-        raise HTTPException(status_code=404, detail="Combat not found")
-    if not combat["is_active"]:
-        raise HTTPException(status_code=400, detail="Combat is already over")
-
-    combat["round"] += 1
-    round_log = [f"--- Round {combat['round']} ---"]
-
-    # Roll initiative
-    mgr = InitiativeManager()
-    initiative = mgr.roll_side_initiative()
-    round_log.append(f"Initiative: Party {initiative['party']}, Monsters {initiative['monsters']}")
-
-    resolver = AttackResolver()
-
-    # Process party actions
-    import random
-    for action in request.actions:
-        combatant = combat["combatants"].get(action.combatant_name)
-        if not combatant or not combatant["is_alive"]:
-            continue
-
-        if action.action_type == "attack" and action.target:
-            target = combat["combatants"].get(action.target)
-            if target and target["is_alive"]:
-                result = resolver.resolve_attack(
-                    attacker_class=combatant.get("class_name", "fighter"),
-                    attacker_level=combatant.get("level", 1),
-                    target_ac=target.get("ac", 10),
-                )
-                if result["hit"]:
-                    damage = resolver.resolve_damage(
-                        combatant.get("damage", "1d8")
-                    )
-                    target["hp"] = target.get("hp", 10) - damage["total"]
-                    round_log.append(
-                        f"{action.combatant_name} hits {action.target} for {damage['total']} damage! "
-                        f"(roll: {result['natural_roll']}, need: {result['needed']})"
-                    )
-                    if target["hp"] <= 0:
-                        target["is_alive"] = False
-                        round_log.append(f"{action.target} is slain!")
-                else:
-                    round_log.append(
-                        f"{action.combatant_name} misses {action.target} "
-                        f"(roll: {result['natural_roll']}, need: {result['needed']})"
-                    )
-            elif action.action_type == "cast":
-                round_log.append(f"{action.combatant_name} casts {action.spell_name}!")
-
-    # Monster actions (basic AI)
-    party_alive = [
-        name for name, c in combat["combatants"].items()
-        if c["side"] == "party" and c["is_alive"]
-    ]
-    for name, monster in combat["combatants"].items():
-        if monster["side"] != "monsters" or not monster["is_alive"]:
-            continue
-        if not party_alive:
-            break
-
-        target_name = random.choice(party_alive)
-        target = combat["combatants"][target_name]
-        result = resolver.resolve_attack(
-            attacker_class="monster",
-            attacker_level=monster.get("hd", 1),
-            target_ac=target.get("ac", 10),
-        )
-        if result["hit"]:
-            damage = resolver.resolve_damage(monster.get("damage", "1d6"))
-            target["hp"] = target.get("hp", 10) - damage["total"]
-            round_log.append(
-                f"{name} hits {target_name} for {damage['total']} damage!"
-            )
-            if target["hp"] <= 0:
-                target["is_alive"] = False
-                round_log.append(f"{target_name} falls!")
-                party_alive.remove(target_name)
-        else:
-            round_log.append(f"{name} misses {target_name}")
-
-    # Check combat end
-    party_alive_check = any(
-        c["is_alive"] for c in combat["combatants"].values() if c["side"] == "party"
-    )
-    monsters_alive = any(
-        c["is_alive"] for c in combat["combatants"].values() if c["side"] == "monsters"
+    Returns the combat ID and initial state.
+    """
+    manager = CombatManager(
+        initiative_method=request.initiative_method,
+        seed=request.seed,
     )
 
-    if not party_alive_check:
-        round_log.append("The party has been defeated!")
-        combat["is_active"] = False
-    elif not monsters_alive:
-        total_xp = sum(
-            c.get("xp_value", 0) for c in combat["combatants"].values()
-            if c["side"] == "monsters"
-        )
-        round_log.append(f"Victory! Total XP: {total_xp}")
-        combat["is_active"] = False
+    for member in request.party:
+        manager.add_combatant(Combatant(
+            id=member.id,
+            name=member.name,
+            side="party",
+            hp=member.hp,
+            max_hp=member.max_hp,
+            ac=member.ac,
+            class_name=member.class_name,
+            level=member.level,
+            str_score=member.str_score,
+            dex_score=member.dex_score,
+            is_monster=False,
+            damage_dice_num=member.damage_dice_num,
+            damage_dice_sides=member.damage_dice_sides,
+            magic_weapon_bonus=member.magic_weapon_bonus,
+            morale=12,
+        ))
 
-    combat["log"].extend(round_log)
+    for monster in request.monsters:
+        manager.add_combatant(Combatant(
+            id=monster.id,
+            name=monster.name,
+            side="monsters",
+            hp=monster.hp,
+            max_hp=monster.max_hp,
+            ac=monster.ac,
+            class_name=monster.class_name,
+            level=monster.level,
+            str_score=monster.str_score,
+            dex_score=monster.dex_score,
+            is_monster=True,
+            monster_hd=monster.monster_hd,
+            damage_dice_num=monster.damage_dice_num,
+            damage_dice_sides=monster.damage_dice_sides,
+            magic_weapon_bonus=monster.magic_weapon_bonus,
+            morale=monster.morale,
+        ))
+
+    _active_combats[manager.id] = manager
 
     return {
-        "round": combat["round"],
-        "initiative": initiative,
-        "log": round_log,
-        "combatants": combat["combatants"],
-        "is_active": combat["is_active"],
+        "combat_id": manager.id,
+        "state": manager.get_state(),
     }
 
 
-@router.get("/combat/{combat_id}/state")
-async def get_combat_state(combat_id: str):
-    """Get the current combat state."""
-    combat = _active_combats.get(combat_id)
-    if not combat:
-        raise HTTPException(status_code=404, detail="Combat not found")
-    return combat
+@router.post("/initiative")
+def roll_initiative(request: InitiativeRequest) -> Dict:
+    """Roll initiative for the current round.
+
+    Returns the initiative order with individual roll breakdowns.
+    """
+    manager = _active_combats.get(request.combat_id)
+    if manager is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Combat '{request.combat_id}' not found",
+        )
+
+    result = manager._roll_initiative()
+    return result.as_dict()
+
+
+@router.post("/action")
+def declare_action(request: ActionRequest) -> Dict:
+    """Declare a combat action for a combatant.
+
+    Actions are queued and resolved when the round is resolved.
+    """
+    manager = _active_combats.get(request.combat_id)
+    if manager is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Combat '{request.combat_id}' not found",
+        )
+
+    if request.combatant_id not in manager.combatants:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Combatant '{request.combatant_id}' not in combat",
+        )
+
+    try:
+        action_type = ActionType(request.action_type)
+    except ValueError:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Invalid action type '{request.action_type}'. "
+            f"Valid: {[a.value for a in ActionType]}",
+        )
+
+    action = DeclaredAction(
+        combatant_id=request.combatant_id,
+        action_type=action_type,
+        target_id=request.target_id,
+        details=request.details,
+    )
+    manager.declare_action(action)
+
+    return {
+        "message": f"Action '{action_type.value}' declared for {request.combatant_id}",
+        "declared_actions": len(manager.declared_actions),
+    }
+
+
+@router.post("/resolve-round")
+def resolve_round(request: ResolveRoundRequest) -> Dict:
+    """Resolve the current combat round.
+
+    Processes all declared actions in AD&D segment order (movement,
+    missiles, melee, spells, other), performs morale checks, and returns
+    a detailed round log.
+    """
+    manager = _active_combats.get(request.combat_id)
+    if manager is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Combat '{request.combat_id}' not found",
+        )
+
+    if not manager.is_active:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Combat has already ended",
+        )
+
+    log = manager.resolve_round()
+
+    # Clean up finished combats
+    if not manager.is_active:
+        # Keep for retrieval but mark as done
+        pass
+
+    return {
+        "round_log": log.as_dict(),
+        "combat_active": manager.is_active,
+        "state": manager.get_state(),
+    }
+
+
+@router.get("/{combat_id}/state")
+def get_combat_state(combat_id: str) -> Dict:
+    """Retrieve the current state of a combat encounter."""
+    manager = _active_combats.get(combat_id)
+    if manager is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Combat '{combat_id}' not found",
+        )
+    return manager.get_state()
