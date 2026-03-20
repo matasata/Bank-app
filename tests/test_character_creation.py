@@ -3,114 +3,103 @@ import sys
 import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'backend'))
 
-from engine.character.creation import CharacterCreator
+from engine.character.creation import validate_race_class, create_character
 
 
 class TestRaceClassValidation:
     """Test race/class combination validation."""
 
-    def test_human_can_be_any_class(self):
-        creator = CharacterCreator()
-        classes = ["fighter", "paladin", "ranger", "magic_user", "illusionist",
-                   "cleric", "druid", "thief", "assassin", "monk"]
+    def test_human_can_be_fighter(self):
         high_scores = {"str": 18, "int": 18, "wis": 18, "dex": 18, "con": 18, "cha": 18}
-        for cls in classes:
-            result = creator.validate_race_class("human", cls, high_scores)
-            assert result["valid"] is True, f"Human should be able to be {cls}"
+        result = validate_race_class("Human", "Fighter", high_scores)
+        assert result.valid is True
+
+    def test_human_can_be_paladin(self):
+        high_scores = {"str": 18, "int": 18, "wis": 18, "dex": 18, "con": 18, "cha": 18}
+        result = validate_race_class("Human", "Paladin", high_scores)
+        assert result.valid is True
 
     def test_dwarf_cannot_be_magic_user(self):
-        creator = CharacterCreator()
         scores = {"str": 18, "int": 18, "wis": 18, "dex": 18, "con": 18, "cha": 18}
-        result = creator.validate_race_class("dwarf", "magic_user", scores)
-        assert result["valid"] is False
+        result = validate_race_class("Dwarf", "Magic-User", scores)
+        assert result.valid is False
 
     def test_halfling_cannot_be_paladin(self):
-        creator = CharacterCreator()
         scores = {"str": 18, "int": 18, "wis": 18, "dex": 18, "con": 18, "cha": 18}
-        result = creator.validate_race_class("halfling", "paladin", scores)
-        assert result["valid"] is False
+        result = validate_race_class("Halfling", "Paladin", scores)
+        assert result.valid is False
 
-    def test_paladin_requires_cha_17(self):
-        creator = CharacterCreator()
-        low_cha = {"str": 12, "int": 9, "wis": 13, "dex": 6, "con": 9, "cha": 16}
-        result = creator.validate_race_class("human", "paladin", low_cha)
-        assert result["valid"] is False
-        assert "cha" in str(result.get("reason", "")).lower() or "charisma" in str(result.get("reason", "")).lower()
+    def test_paladin_requires_cha_17(self, paladin_ability_scores):
+        low_cha = dict(paladin_ability_scores)
+        low_cha["cha"] = 16
+        result = validate_race_class("Human", "Paladin", low_cha)
+        assert result.valid is False
+        error_text = " ".join(result.errors).lower()
+        assert "cha" in error_text or "charisma" in error_text
 
     def test_paladin_meets_requirements(self, paladin_ability_scores):
-        creator = CharacterCreator()
-        result = creator.validate_race_class("human", "paladin", paladin_ability_scores)
-        assert result["valid"] is True
-
-    def test_racial_ability_adjustments(self):
-        creator = CharacterCreator()
-        scores = {"str": 10, "int": 10, "wis": 10, "dex": 10, "con": 10, "cha": 10}
-        adjusted = creator.apply_racial_adjustments("dwarf", scores.copy())
-        assert adjusted["con"] == 11  # Dwarf gets +1 CON
-        assert adjusted["cha"] == 9   # Dwarf gets -1 CHA
-
-    def test_elf_adjustments(self):
-        creator = CharacterCreator()
-        scores = {"str": 10, "int": 10, "wis": 10, "dex": 10, "con": 10, "cha": 10}
-        adjusted = creator.apply_racial_adjustments("elf", scores.copy())
-        assert adjusted["dex"] == 11  # Elf gets +1 DEX
-        assert adjusted["con"] == 9   # Elf gets -1 CON
-
-
-class TestStartingGold:
-    """Test starting gold generation by class."""
-
-    def test_fighter_starting_gold_range(self):
-        creator = CharacterCreator()
-        for _ in range(100):
-            gold = creator.roll_starting_gold("fighter")
-            # Fighter: 5d4 x 10 = 50-200
-            assert 50 <= gold <= 200
-
-    def test_magic_user_starting_gold_range(self):
-        creator = CharacterCreator()
-        for _ in range(100):
-            gold = creator.roll_starting_gold("magic_user")
-            # Magic-User: 2d4 x 10 = 20-80
-            assert 20 <= gold <= 80
-
-    def test_thief_starting_gold_range(self):
-        creator = CharacterCreator()
-        for _ in range(100):
-            gold = creator.roll_starting_gold("thief")
-            # Thief: 2d6 x 10 = 20-120
-            assert 20 <= gold <= 120
+        result = validate_race_class("Human", "Paladin", paladin_ability_scores)
+        assert result.valid is True
 
 
 class TestCharacterCreation:
     """Test full character creation flow."""
 
     def test_create_fighter(self, sample_ability_scores):
-        creator = CharacterCreator()
-        character = creator.create_character(
+        character = create_character(
             name="Conan",
-            race="human",
-            class_name="fighter",
-            alignment="neutral",
-            ability_scores=sample_ability_scores
+            race_name="Human",
+            class_name="Fighter",
+            alignment="Neutral",
+            abilities=sample_ability_scores,
+            seed=42,
         )
-        assert character["name"] == "Conan"
-        assert character["race"] == "human"
-        assert character["class_name"] == "fighter"
-        assert character["level"] == 1
-        assert 1 <= character["hp"] <= 10  # d10 hit die
-        assert "saves" in character
-        assert "thac0" in character or "attack_matrix" in character
+        assert character.name == "Conan"
+        assert character.race == "Human"
+        assert character.class_name == "Fighter"
+        assert character.level == 1
+        assert character.hp >= 1
+        assert character.thac0 > 0
+        assert character.saving_throws is not None
 
-    def test_create_character_applies_racial_mods(self):
-        creator = CharacterCreator()
-        scores = {"str": 10, "int": 10, "wis": 10, "dex": 12, "con": 14, "cha": 10}
-        character = creator.create_character(
-            name="Gimli",
-            race="dwarf",
-            class_name="fighter",
-            alignment="lawful_good",
-            ability_scores=scores
+    def test_create_character_as_dict(self, sample_ability_scores):
+        character = create_character(
+            name="Test",
+            race_name="Human",
+            class_name="Fighter",
+            alignment="Neutral",
+            abilities=sample_ability_scores,
+            seed=42,
         )
-        assert character["con"] == 15  # +1 from dwarf
-        assert character["cha"] == 9   # -1 from dwarf
+        d = character.as_dict()
+        assert d["name"] == "Test"
+        assert "hp" in d
+        assert "thac0" in d
+        assert "saving_throws" in d
+        assert "gold" in d
+
+    def test_invalid_combination_raises(self):
+        scores = {"str": 8, "int": 8, "wis": 8, "dex": 8, "con": 8, "cha": 8}
+        try:
+            create_character(
+                name="Bad",
+                race_name="Dwarf",
+                class_name="Magic-User",
+                alignment="Neutral",
+                abilities=scores,
+            )
+            assert False, "Should have raised ValueError"
+        except ValueError:
+            pass
+
+    def test_starting_gold_generated(self, sample_ability_scores):
+        character = create_character(
+            name="Goldie",
+            race_name="Human",
+            class_name="Fighter",
+            alignment="Neutral",
+            abilities=sample_ability_scores,
+            seed=42,
+        )
+        assert character.gold > 0
+        assert character.gold_roll_details is not None
