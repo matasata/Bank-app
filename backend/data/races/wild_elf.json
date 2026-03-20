@@ -1,0 +1,74 @@
+{
+  "race": "Wild Elf",
+  "source": "Unearthed Arcana",
+  "other_names": ["Grugach"],
+  "subrace_of": "Elf",
+  "description": "Wild elves (Grugach) are the most reclusive and xenophobic of all elves. They shun contact with other races and even other elven subraces. They are more primitive and warlike than other elves.",
+  "ability_adjustments": {
+    "DEX": 1,
+    "CON": -1
+  },
+  "ability_score_ranges": {
+    "STR": { "min": 3, "max": 18 },
+    "INT": { "min": 3, "max": 18 },
+    "WIS": { "min": 3, "max": 18 },
+    "DEX": { "min": 7, "max": 19 },
+    "CON": { "min": 6, "max": 17 },
+    "CHA": { "min": 3, "max": 18 }
+  },
+  "size": "M",
+  "base_height": {
+    "male": { "base": 53, "modifier": "1d10", "unit": "inches" },
+    "female": { "base": 49, "modifier": "1d10", "unit": "inches" }
+  },
+  "base_weight": {
+    "male": { "base": 85, "modifier": "3d10", "unit": "lbs" },
+    "female": { "base": 70, "modifier": "3d10", "unit": "lbs" }
+  },
+  "movement_rate": 12,
+  "infravision": {
+    "range": 60,
+    "unit": "feet"
+  },
+  "languages": {
+    "automatic": ["Wild Elf dialect (Elvish)", "Alignment language"],
+    "note": "Wild elves rarely learn Common. They may learn Treant, Centaur, Faun, or similar woodland languages."
+  },
+  "class_options": {
+    "single_class": ["Fighter"],
+    "multi_class": ["Fighter/Magic-User"],
+    "dual_class": false,
+    "note": "Wild elves are very limited in class options. They have no thief tradition and rarely practice magic."
+  },
+  "level_limits": {
+    "fighter": 7,
+    "magic_user": 5,
+    "note": "Wild elves have lower magic-user limits due to their more primitive culture."
+  },
+  "special_abilities": {
+    "sleep_charm_resistance": {
+      "description": "90% resistant to sleep and charm spells.",
+      "resistance": 90
+    },
+    "secret_door_detection": {
+      "description": "As high elves.",
+      "searching_secret": "2 in 6"
+    },
+    "bow_sword_bonus": {
+      "description": "+1 to hit with bows and short/long swords.",
+      "bonus": 1
+    },
+    "surprise_bonus": {
+      "description": "Wild elves are especially skilled at ambush. They surprise opponents on 5 in 6 in their home forest territory.",
+      "surprise_chance_home_terrain": "5 in 6",
+      "surprise_chance_other": "4 in 6"
+    },
+    "woodland_stealth": {
+      "description": "Wild elves can hide in natural terrain with near-perfect ability. They are considered to be under the effect of a pass without trace spell in their home forests.",
+      "hiding_in_forest": "95%"
+    },
+    "xenophobia": {
+      "description": "Wild elves are extremely distrustful of outsiders. They attack trespassers in their territory without warning."
+    }
+  }
+}

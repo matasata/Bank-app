@@ -1,0 +1,86 @@
+{
+  "class": "Thief-Acrobat",
+  "source": "Unearthed Arcana",
+  "base_class": "Thief",
+  "description": "The Thief-Acrobat is a thief who transitions to acrobatic abilities starting at a certain level. The character begins as a thief and gains acrobatic abilities in addition to (or replacing) some thief abilities.",
+  "hit_die": "d6",
+  "prime_requisite": ["DEX"],
+  "minimum_ability_scores": {
+    "STR": 15,
+    "DEX": 16
+  },
+  "alignment_restrictions": "Any non-lawful",
+  "armor_permitted": ["Leather armor", "Padded armor"],
+  "shields_permitted": "None",
+  "weapons_permitted": ["Club", "Dagger", "Dart", "Hand crossbow", "Knife", "Lasso", "Short sword", "Sling", "Broad sword", "Long sword", "Scimitar", "Pole arm (for vaulting)", "Staff"],
+  "transition_level": 6,
+  "transition_note": "A thief who meets the STR and DEX requirements may elect to become a thief-acrobat at 6th level. The character retains thief abilities at their 5th level values (or lower) and begins gaining acrobatic abilities.",
+  "experience_table": [
+    { "level": 6, "xp_required": 20000, "title": "Acrobat", "hit_dice": "6d6", "note": "Transition from Thief at 6th level" },
+    { "level": 7, "xp_required": 42500, "title": "Acrobat", "hit_dice": "7d6" },
+    { "level": 8, "xp_required": 70000, "title": "Acrobat", "hit_dice": "8d6" },
+    { "level": 9, "xp_required": 110000, "title": "Acrobat", "hit_dice": "9d6" },
+    { "level": 10, "xp_required": 160000, "title": "Master Acrobat", "hit_dice": "10d6" },
+    { "level": 11, "xp_required": 220000, "title": "Master Acrobat", "hit_dice": "10d6+2" },
+    { "level": 12, "xp_required": 440000, "title": "Master Acrobat", "hit_dice": "10d6+4" }
+  ],
+  "xp_per_additional_level": 220000,
+  "hp_after_name_level": 2,
+  "saving_throws": "As Thief",
+  "attack_matrix": "As Thief",
+  "weapon_proficiencies": {
+    "initial": "As Thief",
+    "gained_per_levels": 4,
+    "non_proficiency_penalty": -3
+  },
+  "thief_abilities_frozen": {
+    "description": "Thief abilities are frozen at the values attained at 5th level thief when the transition occurs.",
+    "pick_pockets": 50,
+    "open_locks": 42,
+    "find_remove_traps": 40,
+    "move_silently": 40,
+    "hide_in_shadows": 31,
+    "hear_noise": 20,
+    "climb_walls": "replaced by acrobatic climbing",
+    "read_languages": 25,
+    "backstab_multiplier": 3
+  },
+  "acrobatic_abilities": {
+    "description": "Acrobatic abilities gained after the transition. Values are percentages.",
+    "table": {
+      "level_6":  { "tightrope_walking": 65, "pole_vaulting": "9ft + 1ft/level", "high_jumping": "4ft + 1/2ft per level", "standing_broad_jump": "5ft", "running_broad_jump": "9ft + 1ft/level", "tumbling_attack": 20, "tumbling_evasion": 25, "tumbling_falling": 30, "acrobatic_climbing": 95 },
+      "level_7":  { "tightrope_walking": 70, "pole_vaulting": "10ft", "high_jumping": "4.5ft", "standing_broad_jump": "5.5ft", "running_broad_jump": "10ft", "tumbling_attack": 25, "tumbling_evasion": 30, "tumbling_falling": 35, "acrobatic_climbing": 96 },
+      "level_8":  { "tightrope_walking": 75, "pole_vaulting": "11ft", "high_jumping": "5ft", "standing_broad_jump": "6ft", "running_broad_jump": "11ft", "tumbling_attack": 30, "tumbling_evasion": 35, "tumbling_falling": 40, "acrobatic_climbing": 97 },
+      "level_9":  { "tightrope_walking": 80, "pole_vaulting": "12ft", "high_jumping": "5.5ft", "standing_broad_jump": "6.5ft", "running_broad_jump": "12ft", "tumbling_attack": 35, "tumbling_evasion": 40, "tumbling_falling": 45, "acrobatic_climbing": 98 },
+      "level_10": { "tightrope_walking": 85, "pole_vaulting": "13ft", "high_jumping": "6ft", "standing_broad_jump": "7ft", "running_broad_jump": "13ft", "tumbling_attack": 40, "tumbling_evasion": 45, "tumbling_falling": 50, "acrobatic_climbing": 99 },
+      "level_11": { "tightrope_walking": 90, "pole_vaulting": "14ft", "high_jumping": "6.5ft", "standing_broad_jump": "7.5ft", "running_broad_jump": "14ft", "tumbling_attack": 45, "tumbling_evasion": 50, "tumbling_falling": 55, "acrobatic_climbing": 99.1 },
+      "level_12": { "tightrope_walking": 95, "pole_vaulting": "15ft", "high_jumping": "7ft", "standing_broad_jump": "8ft", "running_broad_jump": "15ft", "tumbling_attack": 50, "tumbling_evasion": 55, "tumbling_falling": 60, "acrobatic_climbing": 99.2 }
+    },
+    "ability_descriptions": {
+      "tightrope_walking": "Can walk along narrow surfaces (ropes, ledges) without falling.",
+      "pole_vaulting": "Distance that can be vaulted using a pole (horizontal or vertical).",
+      "high_jumping": "Maximum height that can be reached with a standing jump.",
+      "standing_broad_jump": "Distance jumped from standing position.",
+      "running_broad_jump": "Distance jumped from a running start.",
+      "tumbling_attack": "Chance of gaining +2 to hit and +1 damage by tumbling into an attack.",
+      "tumbling_evasion": "Chance of avoiding all damage from an area effect attack (breath weapon, fireball, etc.).",
+      "tumbling_falling": "Percentage of falling damage negated through acrobatic landing.",
+      "acrobatic_climbing": "Replaces the thief climb walls ability with an improved version."
+    }
+  },
+  "class_abilities": {
+    "improved_ac": {
+      "description": "Thief-Acrobats gain an AC bonus when unencumbered and wearing light armor: -2 AC bonus at 6th level, improving by -1 per 3 levels.",
+      "bonus_at_6": -2,
+      "bonus_at_9": -3,
+      "bonus_at_12": -4
+    },
+    "evasion": {
+      "description": "By tumbling, the thief-acrobat can attempt to completely avoid damage from area effects.",
+      "available_at_level": 6
+    }
+  },
+  "prime_requisite_xp_bonus": {
+    "16+": "10% bonus to earned XP"
+  }
+}

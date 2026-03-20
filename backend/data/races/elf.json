@@ -1,0 +1,79 @@
+{
+  "race": "Elf",
+  "source": "PHB",
+  "subrace": "High Elf",
+  "ability_adjustments": {
+    "DEX": 1,
+    "CON": -1
+  },
+  "ability_score_ranges": {
+    "STR": { "min": 3, "max": 18 },
+    "INT": { "min": 8, "max": 18 },
+    "WIS": { "min": 3, "max": 18 },
+    "DEX": { "min": 7, "max": 19 },
+    "CON": { "min": 6, "max": 17 },
+    "CHA": { "min": 8, "max": 18 }
+  },
+  "size": "M",
+  "base_height": {
+    "male": { "base": 55, "modifier": "1d10", "unit": "inches" },
+    "female": { "base": 50, "modifier": "1d10", "unit": "inches" }
+  },
+  "base_weight": {
+    "male": { "base": 90, "modifier": "3d10", "unit": "lbs" },
+    "female": { "base": 70, "modifier": "3d10", "unit": "lbs" }
+  },
+  "age_ranges": {
+    "starting_age": { "cleric": "500+10d10", "fighter": "130+5d6", "magic_user": "150+5d6", "thief": "100+5d6" },
+    "middle_age": 500,
+    "old": 750,
+    "venerable": 1000,
+    "max_age": "1000+2d100"
+  },
+  "movement_rate": 12,
+  "infravision": {
+    "range": 60,
+    "unit": "feet"
+  },
+  "languages": {
+    "automatic": ["Common", "Elvish", "Gnomish", "Halfling", "Goblin", "Hobgoblin", "Orcish", "Gnoll", "Alignment language"]
+  },
+  "class_options": {
+    "single_class": ["Fighter", "Magic-User", "Thief", "Assassin", "Cleric"],
+    "multi_class": ["Fighter/Magic-User", "Fighter/Thief", "Magic-User/Thief", "Fighter/Magic-User/Thief"],
+    "dual_class": false
+  },
+  "level_limits": {
+    "fighter": 7,
+    "magic_user": 11,
+    "thief": "U",
+    "assassin": 10,
+    "cleric": 7,
+    "note": "Fighter limit can be extended based on STR: 17=8th, 18=9th, 18/50+=10th. MU limit based on INT: 18=12th, 19+=unlimited."
+  },
+  "special_abilities": {
+    "sleep_charm_resistance": {
+      "description": "90% resistant to sleep and charm spells.",
+      "resistance": 90
+    },
+    "secret_door_detection": {
+      "description": "When passing within 10' of a concealed door, the elf has a 1 in 6 chance of noticing it. If actively searching: 1 in 6 for concealed doors, 2 in 6 for secret doors.",
+      "passing": "1 in 6 (concealed)",
+      "searching_concealed": "2 in 6",
+      "searching_secret": "2 in 6"
+    },
+    "bow_bonus": {
+      "description": "+1 to hit with bows (not crossbows) and short/long swords.",
+      "bonus": 1,
+      "weapons": ["short bow", "long bow", "composite bow", "short sword", "long sword"]
+    },
+    "surprise_bonus": {
+      "description": "If the elf is alone, not in metal armor, and 90+ feet from the party, or with a party of elves/halflings, they move silently and surprise on 4 in 6.",
+      "surprise_chance": "4 in 6",
+      "conditions": "alone or with elves/halflings, not in metal armor"
+    },
+    "multi_class": {
+      "description": "Elves may combine classes. Experience is divided evenly between classes. Hit points are averaged."
+    }
+  }
+}

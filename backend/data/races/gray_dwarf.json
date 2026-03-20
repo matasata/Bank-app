@@ -1,0 +1,87 @@
+{
+  "race": "Duergar",
+  "source": "Unearthed Arcana",
+  "other_names": ["Gray Dwarf"],
+  "subrace_of": "Dwarf",
+  "ability_adjustments": {
+    "CON": 1,
+    "CHA": -2
+  },
+  "ability_score_ranges": {
+    "STR": { "min": 8, "max": 18 },
+    "INT": { "min": 3, "max": 18 },
+    "WIS": { "min": 3, "max": 18 },
+    "DEX": { "min": 3, "max": 17 },
+    "CON": { "min": 12, "max": 19 },
+    "CHA": { "min": 3, "max": 14 }
+  },
+  "size": "S",
+  "base_height": {
+    "male": { "base": 43, "modifier": "1d10", "unit": "inches" },
+    "female": { "base": 41, "modifier": "1d10", "unit": "inches" }
+  },
+  "base_weight": {
+    "male": { "base": 130, "modifier": "4d10", "unit": "lbs" },
+    "female": { "base": 105, "modifier": "4d10", "unit": "lbs" }
+  },
+  "movement_rate": 6,
+  "infravision": {
+    "range": 120,
+    "unit": "feet"
+  },
+  "languages": {
+    "automatic": ["Duergar Dwarvish", "Undercommon", "Common", "Dwarvish", "Alignment language"]
+  },
+  "class_options": {
+    "single_class": ["Fighter", "Thief"],
+    "multi_class": ["Fighter/Thief"],
+    "dual_class": false
+  },
+  "level_limits": {
+    "fighter": 9,
+    "thief": "U"
+  },
+  "special_abilities": {
+    "save_bonus_vs_magic": {
+      "description": "Same as standard dwarves, plus immune to paralysis, illusions/phantasms, and magical/alchemical poisons.",
+      "immune_to": ["paralysis", "illusion spells", "phantasm spells", "magical poison", "alchemical poison"]
+    },
+    "innate_spell_abilities": {
+      "description": "Duergar have innate abilities usable once per day.",
+      "abilities": [
+        { "name": "Enlarge self", "frequency": "once per day" },
+        { "name": "Invisibility", "frequency": "once per day" }
+      ]
+    },
+    "stealth": {
+      "description": "Duergar are very stealthy. They surprise opponents on 1-4 on d6 underground.",
+      "surprise_others": "1-4 on d6 (underground)"
+    },
+    "detect_grades_slopes": {
+      "description": "As standard dwarves: detect grade or slope 1-5 on d6.",
+      "chance": "1-5 on d6"
+    },
+    "detect_new_construction": {
+      "description": "As standard dwarves: 1-5 on d6.",
+      "chance": "1-5 on d6"
+    },
+    "detect_sliding_shifting": {
+      "description": "As standard dwarves: 1-4 on d6.",
+      "chance": "1-4 on d6"
+    },
+    "detect_traps": {
+      "description": "As standard dwarves: 1-3 on d6.",
+      "chance": "1-3 on d6"
+    },
+    "determine_depth_underground": {
+      "description": "As standard dwarves: 1-3 on d6.",
+      "chance": "1-3 on d6"
+    },
+    "light_sensitivity": {
+      "description": "Duergar are penalized in bright light. -2 to attack rolls in bright light (sunlight or equivalent).",
+      "attack_penalty": -2,
+      "in_bright_light": true
+    }
+  },
+  "society_notes": "Duergar live deep underground in the Underdark. They are dour, distrustful, and often enslave other races."
+}

@@ -1,0 +1,69 @@
+{
+  "race": "Half-Elf",
+  "source": "PHB",
+  "ability_adjustments": {},
+  "ability_score_ranges": {
+    "STR": { "min": 3, "max": 18 },
+    "INT": { "min": 4, "max": 18 },
+    "WIS": { "min": 3, "max": 18 },
+    "DEX": { "min": 6, "max": 18 },
+    "CON": { "min": 6, "max": 18 },
+    "CHA": { "min": 3, "max": 18 }
+  },
+  "size": "M",
+  "base_height": {
+    "male": { "base": 60, "modifier": "2d6", "unit": "inches" },
+    "female": { "base": 58, "modifier": "2d6", "unit": "inches" }
+  },
+  "base_weight": {
+    "male": { "base": 110, "modifier": "3d12", "unit": "lbs" },
+    "female": { "base": 85, "modifier": "3d12", "unit": "lbs" }
+  },
+  "age_ranges": {
+    "starting_age": { "cleric": "40+2d4", "fighter": "22+3d4", "magic_user": "30+2d8", "thief": "22+3d8", "ranger": "22+3d4", "druid": "40+2d4" },
+    "middle_age": 100,
+    "old": 150,
+    "venerable": 200,
+    "max_age": "200+3d20"
+  },
+  "movement_rate": 12,
+  "infravision": {
+    "range": 30,
+    "unit": "feet"
+  },
+  "languages": {
+    "automatic": ["Common", "Elvish", "Gnomish", "Halfling", "Goblin", "Hobgoblin", "Orcish", "Gnoll", "Alignment language"]
+  },
+  "class_options": {
+    "single_class": ["Cleric", "Druid", "Fighter", "Ranger", "Magic-User", "Thief", "Assassin"],
+    "multi_class": ["Cleric/Fighter", "Cleric/Ranger", "Cleric/Magic-User", "Fighter/Magic-User", "Fighter/Thief", "Magic-User/Thief", "Cleric/Fighter/Magic-User", "Fighter/Magic-User/Thief"],
+    "dual_class": false
+  },
+  "level_limits": {
+    "cleric": 5,
+    "druid": "U",
+    "fighter": 8,
+    "ranger": 8,
+    "magic_user": 8,
+    "thief": "U",
+    "assassin": 11,
+    "note": "Fighter limit extended by STR: 17=9th, 18=10th, 18/50+=11th"
+  },
+  "special_abilities": {
+    "sleep_charm_resistance": {
+      "description": "30% resistant to sleep and charm spells.",
+      "resistance": 30
+    },
+    "secret_door_detection": {
+      "description": "If actively searching, detect secret doors on 1-2 on d6. Concealed doors detected on 1-3 on d6 when searching.",
+      "searching_secret": "1-2 on d6",
+      "searching_concealed": "1-3 on d6"
+    },
+    "infravision_note": {
+      "description": "Half-elves have infravision to 30 feet."
+    },
+    "multi_class": {
+      "description": "Half-elves have the broadest multi-class options of any demi-human race."
+    }
+  }
+}

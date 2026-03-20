@@ -1,0 +1,95 @@
+{
+  "race": "Svirfneblin",
+  "source": "Unearthed Arcana",
+  "other_names": ["Deep Gnome"],
+  "subrace_of": "Gnome",
+  "ability_adjustments": {
+    "DEX": 1,
+    "WIS": 1,
+    "STR": -1,
+    "CHA": -2,
+    "note": "Svirfneblin are quick and wise but physically smaller and dour in personality."
+  },
+  "ability_score_ranges": {
+    "STR": { "min": 3, "max": 17 },
+    "INT": { "min": 3, "max": 18 },
+    "WIS": { "min": 3, "max": 18 },
+    "DEX": { "min": 3, "max": 19 },
+    "CON": { "min": 8, "max": 18 },
+    "CHA": { "min": 3, "max": 14 }
+  },
+  "size": "S",
+  "base_height": {
+    "male": { "base": 36, "modifier": "1d6", "unit": "inches" },
+    "female": { "base": 34, "modifier": "1d6", "unit": "inches" }
+  },
+  "base_weight": {
+    "male": { "base": 68, "modifier": "3d4", "unit": "lbs" },
+    "female": { "base": 62, "modifier": "3d4", "unit": "lbs" }
+  },
+  "movement_rate": 9,
+  "infravision": {
+    "range": 120,
+    "unit": "feet"
+  },
+  "languages": {
+    "automatic": ["Svirfneblin Gnomish", "Undercommon", "Common", "Gnomish", "Alignment language"],
+    "bonus": ["Drow Elvish", "Duergar Dwarvish", "Kobold"]
+  },
+  "class_options": {
+    "single_class": ["Fighter", "Illusionist", "Thief"],
+    "multi_class": ["Fighter/Illusionist", "Fighter/Thief", "Illusionist/Thief"],
+    "dual_class": false
+  },
+  "level_limits": {
+    "fighter": 6,
+    "illusionist": 7,
+    "thief": "U"
+  },
+  "special_abilities": {
+    "magic_resistance": {
+      "description": "Svirfneblin have 20% base magic resistance plus 5% per level.",
+      "base": 20,
+      "per_level": 5
+    },
+    "save_bonus_vs_magic": {
+      "description": "+3 bonus to all saving throws vs. magic.",
+      "bonus": 3
+    },
+    "innate_spell_abilities": {
+      "description": "All svirfneblin can use the following abilities.",
+      "abilities": [
+        { "name": "Blindness", "frequency": "once per day" },
+        { "name": "Blur", "frequency": "once per day" },
+        { "name": "Change self", "frequency": "once per day" }
+      ]
+    },
+    "non_detection": {
+      "description": "Svirfneblin are permanently under the effect of a non-detection spell, making them very difficult to locate with divination magic."
+    },
+    "stealth": {
+      "description": "Svirfneblin can freeze in place and become nearly invisible in rocky terrain. Chance of detection is only 10%.",
+      "detection_chance": 10,
+      "condition": "rocky or underground terrain, remaining motionless"
+    },
+    "surprise": {
+      "description": "Surprised only on a 1 on d10. Surprise others on 1-6 on d10 underground.",
+      "surprised_by_others": "1 on d10",
+      "surprise_others": "1-6 on d10 (underground)"
+    },
+    "detect_grades_slopes": {
+      "description": "As gnomes, plus superior underground detection abilities.",
+      "chance": "1-5 on d6"
+    },
+    "light_sensitivity": {
+      "description": "Svirfneblin are adversely affected by bright light, though less so than drow.",
+      "attack_penalty": -1,
+      "in_bright_light": true
+    },
+    "summon_earth_elemental": {
+      "description": "Once per day, a group of svirfneblin (3 or more) can attempt to summon a small earth elemental.",
+      "frequency": "once per day",
+      "requires_group": 3
+    }
+  }
+}

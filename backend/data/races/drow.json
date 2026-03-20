@@ -1,0 +1,96 @@
+{
+  "race": "Drow",
+  "source": "Unearthed Arcana",
+  "subrace_of": "Elf",
+  "other_names": ["Dark Elf"],
+  "ability_adjustments": {
+    "DEX": 1,
+    "CON": -1,
+    "CHA": 2,
+    "note": "Drow have +2 CHA (in addition to standard elf adjustments)"
+  },
+  "ability_score_ranges": {
+    "STR": { "min": 3, "max": 18 },
+    "INT": { "min": 8, "max": 18 },
+    "WIS": { "min": 3, "max": 18 },
+    "DEX": { "min": 7, "max": 19 },
+    "CON": { "min": 6, "max": 17 },
+    "CHA": { "min": 8, "max": 18 }
+  },
+  "size": "M",
+  "base_height": {
+    "male": { "base": 50, "modifier": "1d10", "unit": "inches" },
+    "female": { "base": 50, "modifier": "1d10", "unit": "inches" }
+  },
+  "base_weight": {
+    "male": { "base": 80, "modifier": "3d10", "unit": "lbs" },
+    "female": { "base": 80, "modifier": "3d10", "unit": "lbs" }
+  },
+  "movement_rate": 12,
+  "infravision": {
+    "range": 120,
+    "unit": "feet"
+  },
+  "languages": {
+    "automatic": ["Drow Elvish", "Undercommon", "Drow Sign Language", "Common", "Alignment language"]
+  },
+  "class_options": {
+    "single_class": ["Fighter", "Magic-User", "Thief", "Assassin", "Cleric"],
+    "multi_class": ["Fighter/Magic-User", "Fighter/Thief", "Magic-User/Thief", "Fighter/Magic-User/Thief", "Cleric/Fighter"],
+    "dual_class": false,
+    "note": "Drow females can also be Cleric/Fighters with higher level limits."
+  },
+  "level_limits": {
+    "fighter": 10,
+    "magic_user": 12,
+    "thief": "U",
+    "assassin": 10,
+    "cleric": { "male": 4, "female": "U" },
+    "note": "Drow females have higher cleric level limits than males."
+  },
+  "special_abilities": {
+    "magic_resistance": {
+      "description": "Drow have a base 50% magic resistance, plus 2% per level.",
+      "base": 50,
+      "per_level": 2
+    },
+    "innate_spell_abilities": {
+      "description": "All drow can use the following abilities once per day at 1st level.",
+      "at_will": ["Dancing lights", "Faerie fire", "Darkness 5' radius"],
+      "by_level": {
+        "level_4": ["Levitate", "Know alignment", "Detect magic"],
+        "level_4_female": ["Clairvoyance", "Detect lie", "Suggestion", "Dispel magic"]
+      },
+      "note": "Drow noble houses may have additional abilities."
+    },
+    "sleep_charm_resistance": {
+      "description": "90% resistant to sleep and charm spells (as standard elves).",
+      "resistance": 90
+    },
+    "secret_door_detection": {
+      "description": "Same as surface elves.",
+      "searching_secret": "2 in 6",
+      "searching_concealed": "2 in 6"
+    },
+    "light_sensitivity": {
+      "description": "Drow are adversely affected by bright light. They suffer -2 to attack rolls and opponents gain +2 to saves vs. drow spells when in bright light (sunlight or continual light). Drow must adjust for 2-5 rounds when entering bright light.",
+      "attack_penalty": -2,
+      "opponent_save_bonus": 2,
+      "adjustment_time": "2d4 rounds"
+    },
+    "surprise_bonus": {
+      "description": "If the drow is alone, not in metal armor, and moving quietly, surprise on 4 in 6.",
+      "surprise_chance": "4 in 6"
+    },
+    "stealth_cloak": {
+      "description": "Drow wear special cloaks that grant 75% undetectability in shadowy conditions. These cloaks lose their power when exposed to sunlight for extended periods.",
+      "stealth_chance": 75,
+      "degrades_in_sunlight": true
+    }
+  },
+  "equipment_notes": {
+    "drow_equipment": "Drow equipment (armor, weapons, cloaks) is created using special radiation in the Underdark. It degrades and becomes non-functional after 1d20+30 days of exposure to sunlight.",
+    "adamantite": "Drow chain mail is made of adamantite and is equivalent to elven chain mail."
+  },
+  "society_notes": "Drow are matriarchal, worshipping Lolth (the Spider Queen). They dwell in the Underdark in vast underground cities."
+}

@@ -1,0 +1,109 @@
+{
+  "race": "Dwarf",
+  "source": "PHB",
+  "subrace": "Hill Dwarf",
+  "ability_adjustments": {
+    "CON": 1,
+    "CHA": -1
+  },
+  "ability_score_ranges": {
+    "STR": { "min": 8, "max": 18 },
+    "INT": { "min": 3, "max": 18 },
+    "WIS": { "min": 3, "max": 18 },
+    "DEX": { "min": 3, "max": 17 },
+    "CON": { "min": 12, "max": 19 },
+    "CHA": { "min": 3, "max": 16 }
+  },
+  "size": "S",
+  "base_height": {
+    "male": { "base": 43, "modifier": "1d10", "unit": "inches" },
+    "female": { "base": 41, "modifier": "1d10", "unit": "inches" }
+  },
+  "base_weight": {
+    "male": { "base": 130, "modifier": "4d10", "unit": "lbs" },
+    "female": { "base": 105, "modifier": "4d10", "unit": "lbs" }
+  },
+  "age_ranges": {
+    "starting_age": { "cleric": "250+2d20", "fighter": "40+5d4", "thief": "75+3d6" },
+    "middle_age": 150,
+    "old": 200,
+    "venerable": 250,
+    "max_age": "250+2d100"
+  },
+  "movement_rate": 6,
+  "infravision": {
+    "range": 60,
+    "unit": "feet"
+  },
+  "languages": {
+    "automatic": ["Common", "Dwarvish", "Gnomish", "Goblin", "Kobold", "Orcish", "Alignment language"],
+    "bonus": []
+  },
+  "class_options": {
+    "single_class": ["Fighter", "Thief", "Assassin", "Cleric"],
+    "multi_class": ["Fighter/Thief"],
+    "dual_class": false
+  },
+  "level_limits": {
+    "fighter": 9,
+    "thief": "U",
+    "assassin": 9,
+    "cleric": 8,
+    "note": "Fighter limit can be extended based on STR: 17=10th, 18=11th, 18/50+=12th"
+  },
+  "special_abilities": {
+    "save_bonus_vs_magic": {
+      "description": "Dwarves gain a bonus to saving throws vs. magic (rod, staff, wand, spell) based on CON.",
+      "bonus_per_3_5_con": 1,
+      "table": {
+        "CON_3_4": 1,
+        "CON_5_6_7": 2,
+        "CON_8_9_10": 3,
+        "CON_11_12_13": 3,
+        "CON_14_15_16": 4,
+        "CON_17": 4,
+        "CON_18": 5,
+        "CON_19": 5
+      }
+    },
+    "save_bonus_vs_poison": {
+      "description": "Same bonus as vs. magic applies to poison saves.",
+      "same_as": "save_bonus_vs_magic"
+    },
+    "detect_grades_slopes": {
+      "description": "Can detect grade or slope in a passage, 1-5 on d6.",
+      "chance": "1-5 on d6"
+    },
+    "detect_new_construction": {
+      "description": "Can detect new tunnel or passage construction, 1-5 on d6.",
+      "chance": "1-5 on d6"
+    },
+    "detect_sliding_shifting_walls": {
+      "description": "Can detect sliding or shifting walls or rooms, 1-4 on d6.",
+      "chance": "1-4 on d6"
+    },
+    "detect_traps": {
+      "description": "Can detect stonework traps (pits, deadfalls, etc.), 1-3 on d6.",
+      "chance": "1-3 on d6"
+    },
+    "determine_depth_underground": {
+      "description": "Can determine approximate depth underground, 1-3 on d6.",
+      "chance": "1-3 on d6"
+    },
+    "combat_bonuses": {
+      "vs_giant_class": {
+        "description": "When fighting giant-class creatures (ogres, trolls, ogre magi, giants, titans), those creatures attack at -4 to hit.",
+        "creatures": ["ogre", "troll", "ogre_mage", "giant", "titan"],
+        "penalty_to_attacker": -4
+      },
+      "vs_orcs_goblins": {
+        "description": "+1 to hit orcs, half-orcs, goblins, and hobgoblins.",
+        "creatures": ["orc", "half_orc", "goblin", "hobgoblin"],
+        "bonus": 1
+      }
+    }
+  },
+  "restrictions": {
+    "note": "Dwarves may not be magic-users, illusionists, druids, monks, paladins, or rangers."
+  }
+}

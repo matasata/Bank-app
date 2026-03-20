@@ -1,0 +1,73 @@
+{
+  "race": "Wood Elf",
+  "source": "Unearthed Arcana",
+  "other_names": ["Sylvan Elf"],
+  "subrace_of": "Elf",
+  "description": "Wood elves are more reclusive than high elves but less so than wild elves. They dwell in deep forests and are excellent woodsmen. They have a stronger connection to nature than their high elf kin.",
+  "ability_adjustments": {
+    "DEX": 1,
+    "CON": -1
+  },
+  "ability_score_ranges": {
+    "STR": { "min": 3, "max": 18 },
+    "INT": { "min": 3, "max": 18 },
+    "WIS": { "min": 3, "max": 18 },
+    "DEX": { "min": 7, "max": 19 },
+    "CON": { "min": 6, "max": 17 },
+    "CHA": { "min": 3, "max": 18 }
+  },
+  "size": "M",
+  "base_height": {
+    "male": { "base": 54, "modifier": "1d10", "unit": "inches" },
+    "female": { "base": 49, "modifier": "1d10", "unit": "inches" }
+  },
+  "base_weight": {
+    "male": { "base": 90, "modifier": "3d10", "unit": "lbs" },
+    "female": { "base": 70, "modifier": "3d10", "unit": "lbs" }
+  },
+  "movement_rate": 12,
+  "infravision": {
+    "range": 60,
+    "unit": "feet"
+  },
+  "languages": {
+    "automatic": ["Common", "Elvish", "Gnomish", "Halfling", "Goblin", "Hobgoblin", "Orcish", "Gnoll", "Alignment language"],
+    "bonus": ["Treant", "Centaur", "Faun", "Dryad"]
+  },
+  "class_options": {
+    "single_class": ["Fighter", "Magic-User", "Thief", "Ranger"],
+    "multi_class": ["Fighter/Magic-User", "Fighter/Thief", "Magic-User/Thief", "Fighter/Magic-User/Thief"],
+    "dual_class": false,
+    "note": "Wood elves may be Rangers (unlike high elves)."
+  },
+  "level_limits": {
+    "fighter": 7,
+    "ranger": 7,
+    "magic_user": 9,
+    "thief": "U",
+    "note": "Wood elves have slightly lower magic-user limits than high elves but can be rangers."
+  },
+  "special_abilities": {
+    "sleep_charm_resistance": {
+      "description": "90% resistant to sleep and charm spells.",
+      "resistance": 90
+    },
+    "secret_door_detection": {
+      "description": "As high elves.",
+      "searching_secret": "2 in 6"
+    },
+    "bow_sword_bonus": {
+      "description": "+1 to hit with bows and short/long swords.",
+      "bonus": 1
+    },
+    "surprise_bonus": {
+      "description": "Surprise opponents on 4 in 6 when alone or with other elves/halflings, not in metal armor.",
+      "surprise_chance": "4 in 6"
+    },
+    "woodland_abilities": {
+      "description": "Wood elves have enhanced abilities in forested areas. They can pass through overgrown areas without trace and have a natural affinity for woodland creatures.",
+      "pass_without_trace_in_forest": true,
+      "animal_empathy": "Wood elves can calm and befriend woodland animals."
+    }
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "race": "Halfling",
+  "source": "PHB",
+  "ability_adjustments": {
+    "STR": -1,
+    "DEX": 1
+  },
+  "ability_score_ranges": {
+    "STR": { "min": 6, "max": 17 },
+    "INT": { "min": 6, "max": 18 },
+    "WIS": { "min": 3, "max": 17 },
+    "DEX": { "min": 8, "max": 18 },
+    "CON": { "min": 10, "max": 19 },
+    "CHA": { "min": 3, "max": 18 }
+  },
+  "size": "S",
+  "base_height": {
+    "male": { "base": 32, "modifier": "2d8", "unit": "inches" },
+    "female": { "base": 30, "modifier": "2d8", "unit": "inches" }
+  },
+  "base_weight": {
+    "male": { "base": 52, "modifier": "5d4", "unit": "lbs" },
+    "female": { "base": 48, "modifier": "5d4", "unit": "lbs" }
+  },
+  "age_ranges": {
+    "starting_age": { "fighter": "20+3d4", "thief": "40+2d4", "druid": "40+2d4" },
+    "middle_age": 50,
+    "old": 75,
+    "venerable": 100,
+    "max_age": "100+5d20"
+  },
+  "movement_rate": 6,
+  "infravision": {
+    "range": 30,
+    "unit": "feet",
+    "note": "Some halflings (Stout) have 60' infravision. Tallfellow halflings have no infravision."
+  },
+  "languages": {
+    "automatic": ["Common", "Halfling", "Dwarvish", "Elvish", "Gnomish", "Goblin", "Orcish", "Alignment language"]
+  },
+  "class_options": {
+    "single_class": ["Fighter", "Thief", "Druid"],
+    "multi_class": ["Fighter/Thief"],
+    "dual_class": false
+  },
+  "level_limits": {
+    "fighter": 4,
+    "thief": "U",
+    "druid": 6,
+    "note": "Fighter limit extended by STR: 17=5th, 18=6th, 18/50+=7th"
+  },
+  "special_abilities": {
+    "save_bonus_vs_magic": {
+      "description": "Halflings gain a bonus to saving throws vs. magic (rod, staff, wand, spell) and poison based on CON, same as dwarves.",
+      "table": {
+        "CON_3_4": 1,
+        "CON_5_6_7": 2,
+        "CON_8_9_10": 3,
+        "CON_11_12_13": 3,
+        "CON_14_15_16": 4,
+        "CON_17": 4,
+        "CON_18": 5,
+        "CON_19": 5
+      }
+    },
+    "hiding_ability": {
+      "description": "When in natural terrain (woods, bushes, tall grass), halflings can hide with a 90% success rate. Indoors, they can hide in shadows or behind cover with a 2 in 6 chance of success.",
+      "outdoor_chance": 90,
+      "indoor_chance": "2 in 6"
+    },
+    "surprise_bonus": {
+      "description": "When alone or with halflings/elves, and not in metal armor, halflings surprise opponents on 4 in 6.",
+      "surprise_chance": "4 in 6",
+      "conditions": "alone or with halflings/elves, not in metal armor"
+    },
+    "missile_attack_bonus": {
+      "description": "+1 to attack rolls with slings and thrown weapons.",
+      "bonus": 1,
+      "weapons": ["sling", "thrown weapons"]
+    },
+    "detect_grades_slopes": {
+      "description": "Can detect grade or slope in a passage, 1-3 on d6 (Stout halflings only).",
+      "chance": "1-3 on d6",
+      "subrace": "Stout"
+    },
+    "determine_direction_underground": {
+      "description": "Can determine approximate direction underground, 1-2 on d6 (Stout halflings only).",
+      "chance": "1-2 on d6",
+      "subrace": "Stout"
+    }
+  },
+  "subraces": {
+    "hairfoot": {
+      "description": "Most common type. Standard abilities.",
+      "infravision": 30
+    },
+    "tallfellow": {
+      "description": "Slightly taller, more slender. Better with bows.",
+      "infravision": 0,
+      "secret_door_detection": "1 in 6 when passing, 2 in 6 when searching"
+    },
+    "stout": {
+      "description": "Stockier build, some dwarven blood.",
+      "infravision": 60,
+      "detect_grades": true,
+      "determine_direction": true
+    }
+  }
+}

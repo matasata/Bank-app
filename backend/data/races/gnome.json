@@ -1,0 +1,96 @@
+{
+  "race": "Gnome",
+  "source": "PHB",
+  "ability_adjustments": {},
+  "ability_score_ranges": {
+    "STR": { "min": 6, "max": 18 },
+    "INT": { "min": 7, "max": 18 },
+    "WIS": { "min": 3, "max": 18 },
+    "DEX": { "min": 3, "max": 18 },
+    "CON": { "min": 8, "max": 18 },
+    "CHA": { "min": 3, "max": 18 }
+  },
+  "size": "S",
+  "base_height": {
+    "male": { "base": 38, "modifier": "1d6", "unit": "inches" },
+    "female": { "base": 36, "modifier": "1d6", "unit": "inches" }
+  },
+  "base_weight": {
+    "male": { "base": 72, "modifier": "5d4", "unit": "lbs" },
+    "female": { "base": 68, "modifier": "5d4", "unit": "lbs" }
+  },
+  "age_ranges": {
+    "starting_age": { "cleric": "300+3d12", "fighter": "60+5d4", "illusionist": "100+2d12", "thief": "80+5d4" },
+    "middle_age": 200,
+    "old": 300,
+    "venerable": 500,
+    "max_age": "500+3d100"
+  },
+  "movement_rate": 6,
+  "infravision": {
+    "range": 60,
+    "unit": "feet"
+  },
+  "languages": {
+    "automatic": ["Common", "Dwarvish", "Gnomish", "Halfling", "Goblin", "Kobold", "Alignment language"],
+    "bonus": "Gnomes can learn to speak with burrowing mammals"
+  },
+  "class_options": {
+    "single_class": ["Fighter", "Illusionist", "Thief", "Assassin", "Cleric"],
+    "multi_class": ["Fighter/Illusionist", "Fighter/Thief", "Illusionist/Thief"],
+    "dual_class": false
+  },
+  "level_limits": {
+    "fighter": 6,
+    "illusionist": 7,
+    "thief": "U",
+    "assassin": 8,
+    "cleric": 7,
+    "note": "Fighter limit extended by STR: 17=7th, 18=8th"
+  },
+  "special_abilities": {
+    "save_bonus_vs_magic": {
+      "description": "Gnomes gain a bonus to saving throws vs. magic based on CON, same as dwarves.",
+      "table": {
+        "CON_3_4": 1,
+        "CON_5_6_7": 2,
+        "CON_8_9_10": 3,
+        "CON_11_12_13": 3,
+        "CON_14_15_16": 4,
+        "CON_17": 4,
+        "CON_18": 5
+      }
+    },
+    "combat_bonuses": {
+      "vs_giant_class": {
+        "description": "Gnolls, bugbears, ogres, trolls, ogre magi, giants, and titans attack gnomes at -4 to hit.",
+        "creatures": ["gnoll", "bugbear", "ogre", "troll", "ogre_mage", "giant", "titan"],
+        "penalty_to_attacker": -4
+      },
+      "vs_kobolds_goblins": {
+        "description": "+1 to hit kobolds and goblins.",
+        "creatures": ["kobold", "goblin"],
+        "bonus": 1
+      }
+    },
+    "detect_grades_slopes": {
+      "description": "Can detect grade or slope in a passage, 1-5 on d6.",
+      "chance": "1-5 on d6"
+    },
+    "detect_unsafe_walls": {
+      "description": "Can detect unsafe walls, ceiling, and floors, 1-7 on d10.",
+      "chance": "1-7 on d10"
+    },
+    "determine_depth_underground": {
+      "description": "Can determine approximate depth underground, 1-4 on d6.",
+      "chance": "1-4 on d6"
+    },
+    "determine_direction_underground": {
+      "description": "Can determine approximate direction underground, 1-3 on d6.",
+      "chance": "1-3 on d6"
+    },
+    "speak_with_burrowing_mammals": {
+      "description": "Gnomes can communicate with moles, badgers, and similar burrowing mammals."
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "race": "Human",
+  "source": "PHB",
+  "ability_adjustments": {},
+  "ability_score_ranges": {
+    "STR": { "min": 3, "max": 18 },
+    "INT": { "min": 3, "max": 18 },
+    "WIS": { "min": 3, "max": 18 },
+    "DEX": { "min": 3, "max": 18 },
+    "CON": { "min": 3, "max": 18 },
+    "CHA": { "min": 3, "max": 18 }
+  },
+  "size": "M",
+  "base_height": {
+    "male": { "base": 60, "modifier": "1d10", "unit": "inches" },
+    "female": { "base": 59, "modifier": "1d10", "unit": "inches" }
+  },
+  "base_weight": {
+    "male": { "base": 140, "modifier": "6d10", "unit": "lbs" },
+    "female": { "base": 100, "modifier": "6d10", "unit": "lbs" }
+  },
+  "age_ranges": {
+    "starting_age": { "cleric": "18+1d4", "fighter": "15+1d4", "magic_user": "24+2d8", "thief": "18+1d4" },
+    "middle_age": 45,
+    "old": 60,
+    "venerable": 90,
+    "max_age": "90+2d20"
+  },
+  "movement_rate": 12,
+  "infravision": false,
+  "languages": {
+    "automatic": ["Common", "Alignment language"],
+    "bonus_per_int": "1 additional language per INT point above 12"
+  },
+  "class_options": {
+    "single_class": ["Fighter", "Paladin", "Ranger", "Cleric", "Druid", "Magic-User", "Illusionist", "Thief", "Assassin", "Monk", "Cavalier", "Barbarian"],
+    "multi_class": [],
+    "dual_class": true,
+    "dual_class_note": "Humans are the only race that can dual-class. Must have 15+ in prime requisite of original class and 17+ in prime requisite of new class."
+  },
+  "level_limits": {
+    "note": "Humans have no level limits in any class.",
+    "fighter": "U",
+    "paladin": "U",
+    "ranger": "U",
+    "cleric": "U",
+    "druid": "U",
+    "magic_user": "U",
+    "illusionist": "U",
+    "thief": "U",
+    "assassin": "U",
+    "monk": "U",
+    "cavalier": "U",
+    "barbarian": "U"
+  },
+  "special_abilities": {
+    "dual_class": {
+      "description": "Humans may change from one class to another. They must have 15+ in the prime requisite of the original class and 17+ in the prime requisite of the new class. They cannot use abilities of the old class until the new class exceeds the former class's level."
+    }
+  },
+  "racial_notes": "Humans are the most common race and the standard by which others are measured. They have no special abilities but also no restrictions."
+}

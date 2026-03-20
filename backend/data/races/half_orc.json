@@ -1,0 +1,64 @@
+{
+  "race": "Half-Orc",
+  "source": "PHB",
+  "ability_adjustments": {
+    "STR": 1,
+    "CON": 1,
+    "CHA": -2
+  },
+  "ability_score_ranges": {
+    "STR": { "min": 6, "max": 18 },
+    "INT": { "min": 3, "max": 17 },
+    "WIS": { "min": 3, "max": 14 },
+    "DEX": { "min": 3, "max": 17 },
+    "CON": { "min": 13, "max": 19 },
+    "CHA": { "min": 3, "max": 12 }
+  },
+  "size": "M",
+  "base_height": {
+    "male": { "base": 60, "modifier": "2d4", "unit": "inches" },
+    "female": { "base": 58, "modifier": "2d4", "unit": "inches" }
+  },
+  "base_weight": {
+    "male": { "base": 150, "modifier": "5d4", "unit": "lbs" },
+    "female": { "base": 120, "modifier": "5d4", "unit": "lbs" }
+  },
+  "age_ranges": {
+    "starting_age": { "cleric": "20+1d4", "fighter": "13+1d4", "thief": "20+2d4", "assassin": "20+2d4" },
+    "middle_age": 30,
+    "old": 40,
+    "venerable": 60,
+    "max_age": "60+1d12"
+  },
+  "movement_rate": 12,
+  "infravision": {
+    "range": 60,
+    "unit": "feet"
+  },
+  "languages": {
+    "automatic": ["Common", "Orcish", "Alignment language"]
+  },
+  "class_options": {
+    "single_class": ["Cleric", "Fighter", "Thief", "Assassin"],
+    "multi_class": ["Cleric/Fighter", "Cleric/Thief", "Cleric/Assassin", "Fighter/Thief", "Fighter/Assassin"],
+    "dual_class": false
+  },
+  "level_limits": {
+    "cleric": 4,
+    "fighter": 10,
+    "thief": 8,
+    "assassin": "U",
+    "note": "Fighter limit extended by STR: 18/01+=unlimited for assassin class."
+  },
+  "special_abilities": {
+    "infravision_note": {
+      "description": "Half-orcs have infravision to 60 feet."
+    },
+    "languages_note": {
+      "description": "Half-orcs can learn additional languages but are limited to those of creatures they associate with."
+    }
+  },
+  "restrictions": {
+    "note": "Half-orcs may not be paladins, rangers, druids, magic-users, illusionists, or monks. They suffer social stigma in many campaign settings."
+  }
+}

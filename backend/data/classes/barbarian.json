@@ -1,0 +1,114 @@
+{
+  "class": "Barbarian",
+  "source": "Unearthed Arcana",
+  "hit_die": "d12",
+  "prime_requisite": ["STR", "CON"],
+  "minimum_ability_scores": {
+    "STR": 15,
+    "CON": 15,
+    "DEX": 14,
+    "WIS": { "max": 16, "note": "Wisdom cannot exceed 16" }
+  },
+  "alignment_restrictions": "Any non-lawful (NG, NE, N, CG, CE, CN)",
+  "armor_permitted": ["Leather armor", "Studded leather", "Padded armor", "Ring mail", "Scale mail", "Chain mail", "Shield"],
+  "shields_permitted": "Any",
+  "weapons_permitted": "Any non-magical at start",
+  "starting_gold": "5d4x10",
+  "experience_table": [
+    { "level": 1, "xp_required": 0, "title": "Barbarian", "hit_dice": "1d12" },
+    { "level": 2, "xp_required": 6000, "title": "Barbarian", "hit_dice": "2d12" },
+    { "level": 3, "xp_required": 12000, "title": "Barbarian", "hit_dice": "3d12" },
+    { "level": 4, "xp_required": 24000, "title": "Barbarian", "hit_dice": "4d12" },
+    { "level": 5, "xp_required": 48000, "title": "Barbarian", "hit_dice": "5d12" },
+    { "level": 6, "xp_required": 80000, "title": "Barbarian", "hit_dice": "6d12" },
+    { "level": 7, "xp_required": 150000, "title": "Barbarian", "hit_dice": "7d12" },
+    { "level": 8, "xp_required": 275000, "title": "Barbarian", "hit_dice": "8d12" },
+    { "level": 9, "xp_required": 500000, "title": "Barbarian", "hit_dice": "9d12" },
+    { "level": 10, "xp_required": 750000, "title": "Barbarian", "hit_dice": "9d12+4" },
+    { "level": 11, "xp_required": 1000000, "title": "Barbarian", "hit_dice": "9d12+8" },
+    { "level": 12, "xp_required": 1250000, "title": "Barbarian", "hit_dice": "9d12+12" }
+  ],
+  "xp_per_additional_level": 250000,
+  "hp_after_name_level": 4,
+  "saving_throws": "As Fighter",
+  "attack_matrix": "As Fighter",
+  "weapon_proficiencies": {
+    "initial": 6,
+    "gained_per_levels": 2,
+    "non_proficiency_penalty": -1
+  },
+  "class_abilities": {
+    "back_protection": {
+      "description": "Barbarians are difficult to surprise from behind, gaining a 5% per level bonus to detect rear attacks.",
+      "available_at_level": 1,
+      "detection_per_level": 5
+    },
+    "climb_cliffs_trees": {
+      "description": "Barbarians can climb natural surfaces.",
+      "base_chance": 75,
+      "bonus_per_level": 1
+    },
+    "detect_magic": {
+      "description": "Barbarians can sense the presence of magic within 10 feet.",
+      "available_at_level": 1,
+      "base_chance": 25,
+      "bonus_per_level": 5,
+      "range": 10
+    },
+    "hide_in_natural_terrain": {
+      "description": "Barbarians can hide in natural outdoor surroundings.",
+      "base_chance": 25,
+      "bonus_per_level": 3
+    },
+    "leaping_springing": {
+      "description": "Barbarians can leap and spring with exceptional ability.",
+      "running_leap_distance": "10ft + 1ft per level",
+      "standing_leap_distance": "3ft + 1/3ft per level",
+      "vertical_leap": "3ft + 1/3ft per level"
+    },
+    "outdoor_tracking": {
+      "description": "Barbarians can track outdoors as a ranger of equivalent level.",
+      "available_at_level": 1
+    },
+    "first_aid": {
+      "description": "Barbarians can bind wounds to restore 1hp if applied within 1 round of taking damage.",
+      "available_at_level": 1
+    },
+    "surprise": {
+      "description": "Barbarians surprise opponents on 1-3 on d6 in outdoor settings.",
+      "surprise_others": "1-3 on d6 (outdoor only)",
+      "surprised_by_others": "1 on d6 (always)"
+    },
+    "magic_item_distrust": {
+      "description": "Barbarians initially distrust and refuse to use most magic items. They gain tolerance over time.",
+      "progression": {
+        "levels_1_2": "Will use potions only (with reluctance, must be convinced)",
+        "level_3": "Will use potions",
+        "level_4": "Will use potions and weapons with temporary enchantments",
+        "level_5": "Will use permanent magic weapons",
+        "level_6": "Will use magic armor, weapons, and protective devices",
+        "level_7": "Will use most non-written magic items",
+        "level_8_plus": "Will use any non-written magic items"
+      },
+      "note": "Barbarians will never read scrolls or use magic-user items like wands, rods, etc."
+    },
+    "damage_resistance": {
+      "description": "Constitution-based damage resistance. The barbarian gains damage reduction.",
+      "damage_absorbed_per_level": 1,
+      "max_damage_absorbed": "half of total damage per attack"
+    },
+    "save_bonus_vs_magic": {
+      "description": "+2 to all saving throws vs. spells and spell-like effects.",
+      "bonus": 2,
+      "note": "This increases by +1 every 4 levels"
+    }
+  },
+  "multiple_attacks": {
+    "levels_1_6": "1/1",
+    "levels_7_12": "3/2",
+    "levels_13_plus": "2/1"
+  },
+  "prime_requisite_xp_bonus": {
+    "16+_STR_and_16+_CON": "10% bonus to earned XP"
+  }
+}

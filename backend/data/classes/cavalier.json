@@ -1,0 +1,92 @@
+{
+  "class": "Cavalier",
+  "source": "Unearthed Arcana",
+  "hit_die": "d10",
+  "prime_requisite": ["STR", "DEX", "CON"],
+  "minimum_ability_scores": {
+    "STR": 15,
+    "DEX": 15,
+    "CON": 15,
+    "INT": 10,
+    "WIS": 10
+  },
+  "alignment_restrictions": "Any non-evil (LG, NG, CG, LN, N, CN)",
+  "armor_permitted": "Any",
+  "shields_permitted": "Any",
+  "weapons_permitted": "Any (with weapon expertise system)",
+  "starting_gold": "5d4x10",
+  "experience_table": [
+    { "level": 1, "xp_required": 0, "title": "Horseman", "hit_dice": "1d10" },
+    { "level": 2, "xp_required": 2500, "title": "Lancer", "hit_dice": "2d10" },
+    { "level": 3, "xp_required": 5000, "title": "Esquire", "hit_dice": "3d10" },
+    { "level": 4, "xp_required": 10000, "title": "Knight Errant", "hit_dice": "4d10" },
+    { "level": 5, "xp_required": 18500, "title": "Knight", "hit_dice": "5d10" },
+    { "level": 6, "xp_required": 37000, "title": "Knight Bachelor", "hit_dice": "6d10" },
+    { "level": 7, "xp_required": 85000, "title": "Baron", "hit_dice": "7d10" },
+    { "level": 8, "xp_required": 140000, "title": "Viscount", "hit_dice": "8d10" },
+    { "level": 9, "xp_required": 220000, "title": "Earl/Count", "hit_dice": "9d10" },
+    { "level": 10, "xp_required": 300000, "title": "Marquis", "hit_dice": "9d10+3" },
+    { "level": 11, "xp_required": 600000, "title": "Duke", "hit_dice": "9d10+6" },
+    { "level": 12, "xp_required": 900000, "title": "Knight of the Crown", "hit_dice": "9d10+9" }
+  ],
+  "xp_per_additional_level": 300000,
+  "hp_after_name_level": 3,
+  "saving_throws": "As Fighter with additional immunities",
+  "attack_matrix": "As Fighter",
+  "weapon_proficiencies": {
+    "initial": 5,
+    "gained_per_levels": 2,
+    "non_proficiency_penalty": -2,
+    "weapon_expertise": {
+      "description": "Cavaliers gain weapon of choice specialization and expertise.",
+      "levels_of_expertise": [
+        { "level": "proficient", "to_hit_bonus": 0, "damage_bonus": 0 },
+        { "level": "specialized", "to_hit_bonus": 1, "damage_bonus": 2 },
+        { "level": "double_specialized", "to_hit_bonus": 3, "damage_bonus": 3 }
+      ]
+    }
+  },
+  "class_abilities": {
+    "mounted_combat": {
+      "description": "Cavaliers are expert mounted combatants.",
+      "lance_damage_bonus": "double damage on charge with lance while mounted",
+      "mounted_to_hit_bonus": 1,
+      "mounted_ac_bonus": 1,
+      "horsemanship": {
+        "description": "Cavaliers gain bonuses to riding: can leap into saddle, fight from mount, calm horse in battle.",
+        "chance_of_being_unhorsed": "Level 1: 25% per hit, reducing by 5% per level"
+      }
+    },
+    "fear_immunity": {
+      "description": "Cavaliers are immune to fear effects. At 1st level, allies within 10' gain +2 to saves vs fear. This bonus increases by +1 per 3 levels.",
+      "available_at_level": 1,
+      "ally_radius": 10,
+      "ally_bonus_progression": {
+        "level_1": 2,
+        "level_3": 3,
+        "level_6": 4,
+        "level_9": 5,
+        "level_12": 6
+      }
+    },
+    "parry": {
+      "description": "Cavaliers can parry attacks, subtracting their to-hit bonus from the opponent's attack roll.",
+      "available_at_level": 1
+    },
+    "charge_attack": {
+      "description": "On a charge, the cavalier does double damage with a lance (triple damage if mounted and using a heavy lance).",
+      "available_at_level": 1
+    },
+    "code_of_chivalry": {
+      "description": "Cavaliers must follow a code of chivalry: protect the weak, show mercy to defeated foes, be honorable in combat."
+    }
+  },
+  "multiple_attacks": {
+    "levels_1_6": "1/1",
+    "levels_7_12": "3/2",
+    "levels_13_plus": "2/1"
+  },
+  "prime_requisite_xp_bonus": {
+    "16+_STR_DEX_CON": "10% bonus to earned XP"
+  }
+}
