@@ -21,6 +21,7 @@ from api.characters import router as characters_router
 from api.dungeon import router as dungeon_router
 from api.combat import router as combat_router
 from api.game import router as game_router
+from api.modules import router as modules_router
 
 # Import models so SQLAlchemy registers them, then create tables eagerly.
 # This ensures the DB schema exists both when running via uvicorn (lifespan)
@@ -70,6 +71,7 @@ app.include_router(characters_router)
 app.include_router(dungeon_router)
 app.include_router(combat_router)
 app.include_router(game_router)
+app.include_router(modules_router)
 
 
 # ── Health check ─────────────────────────────────────────────────────────

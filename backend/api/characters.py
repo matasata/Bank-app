@@ -18,6 +18,7 @@ from engine.character.ability_scores import generate_ability_scores, ABILITY_NAM
 from engine.character.races import list_races, get_race
 from engine.character.classes import list_classes, get_class
 from engine.character.creation import validate_race_class, create_character
+from engine.character.progression import check_level_up, level_up, xp_for_next_level, award_xp
 
 router = APIRouter(prefix="/api/characters", tags=["characters"])
 
@@ -249,3 +250,80 @@ def get_party_characters(party_id: int, db: Session = Depends(get_db)) -> Dict:
             for c in characters
         ],
     }
+
+
+# ── XP and Leveling endpoints ─────────────────────────────────────────────
+
+class AwardXPRequest(BaseModel):
+    """Request to award XP to a character."""
+
+    xp_gained: int = Field(..., ge=0)
+    prime_req_bonus: float = Field(0.0, ge=0.0, le=0.1)
+
+
+@router.post("/{character_id}/award-xp")
+def award_character_xp(
+    character_id: int,
+    request: AwardXPRequest,
+    db: Session = Depends(get_db),
+) -> Dict:
+    """Award XP to a character and check for level advancement."""
+    char = db.query(CharacterModel).filter(CharacterModel.id == character_id).first()
+    if char is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Character with id {character_id} not found",
+        )
+
+    new_xp, effective_gained = award_xp(
+        char.xp, request.xp_gained, request.prime_req_bonus
+    )
+    char.xp = new_xp
+
+    can_level = check_level_up(char.class_name, char.level, new_xp)
+    xp_needed = xp_for_next_level(char.class_name, char.level)
+
+    db.commit()
+
+    return {
+        "character_id": char.id,
+        "xp_gained": effective_gained,
+        "total_xp": new_xp,
+        "xp_for_next_level": xp_needed,
+        "can_level_up": can_level,
+    }
+
+
+@router.post("/{character_id}/level-up")
+def level_up_character(
+    character_id: int,
+    db: Session = Depends(get_db),
+) -> Dict:
+    """Level up a character if they have enough XP."""
+    char = db.query(CharacterModel).filter(CharacterModel.id == character_id).first()
+    if char is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Character with id {character_id} not found",
+        )
+
+    if not check_level_up(char.class_name, char.level, char.xp):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Not enough XP to level up",
+        )
+
+    result = level_up(
+        class_name=char.class_name,
+        current_level=char.level,
+        current_hp=char.max_hp,
+        con=char.con,
+    )
+
+    # Update database
+    char.level = result.new_level
+    char.hp = result.new_total_hp
+    char.max_hp = result.new_total_hp
+    db.commit()
+
+    return result.as_dict()
