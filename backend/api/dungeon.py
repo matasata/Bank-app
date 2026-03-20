@@ -1,164 +1,368 @@
-"""API routes for dungeon generation and exploration."""
-from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
-from typing import Optional
+"""FastAPI router for dungeon generation and exploration endpoints."""
 
-from engine.dungeon.generator import DungeonGenerator, generate_dungeon
-from engine.encounter.tables import generate_encounter, check_wandering_monster
+from __future__ import annotations
 
-router = APIRouter(tags=["dungeon"])
+from typing import Dict, Optional
 
-# In-memory dungeon state (would be in DB in production)
-_active_dungeons: dict[str, dict] = {}
-_dungeon_counter = 0
+from fastapi import APIRouter, HTTPException, status
+from pydantic import BaseModel, Field
 
+from engine.dungeon.generator import generate_dungeon, DungeonGenerator
+
+router = APIRouter(prefix="/api/dungeon", tags=["dungeon"])
+
+# ── In-memory dungeon store (production would use DB) ────────────────────
+_active_dungeons: Dict[str, Dict] = {}
+_dungeon_counter: int = 0
+
+
+def _next_dungeon_id() -> str:
+    """Generate a sequential dungeon ID."""
+    global _dungeon_counter
+    _dungeon_counter += 1
+    return str(_dungeon_counter)
+
+
+# ── Request / Response schemas ────────────────────────────────────────────
 
 class GenerateDungeonRequest(BaseModel):
-    level: int = 1
-    num_rooms: int = 10
-    width: int = 200
-    height: int = 200
-    theme: str = "standard"
-    seed: Optional[int] = None
+    """Request to generate a new dungeon level."""
+
+    dungeon_level: int = Field(1, ge=1, le=20, description="Difficulty level")
+    num_rooms: int = Field(10, ge=1, le=100, description="Number of rooms")
+    map_width: int = Field(200, ge=100, le=1000, description="Map width in feet")
+    map_height: int = Field(200, ge=100, le=1000, description="Map height in feet")
+    theme: str = Field("standard", description="Theme: standard, crypt, cavern, temple, sewers")
+    seed: Optional[int] = Field(None, description="RNG seed for reproducibility")
 
 
 class MoveRequest(BaseModel):
-    direction: str  # "north", "south", "east", "west"
-    room_id: Optional[str] = None
+    """Request to move the party within a dungeon."""
+
+    direction: str = Field(..., description="Direction: north, south, east, west")
+    room_id: Optional[str] = Field(None, description="Specific room to enter")
 
 
 class InteractRequest(BaseModel):
-    target_type: str  # "door", "room", "chest", "trap"
-    target_id: str
-    action: str  # "open", "listen", "search", "detect_traps"
+    """Request to interact with a dungeon feature."""
+
+    action: str = Field(..., description="Action: search, open_door, disarm_trap, listen, rest")
+    target_id: Optional[str] = Field(None, description="ID of the target object")
+    details: Dict = Field(default_factory=dict, description="Additional action parameters")
 
 
-@router.post("/dungeon/generate")
-async def generate_dungeon_endpoint(request: GenerateDungeonRequest):
-    """Generate a new random dungeon."""
-    global _dungeon_counter
-    _dungeon_counter += 1
-    dungeon_id = f"dungeon_{_dungeon_counter}"
+# ── Endpoints ─────────────────────────────────────────────────────────────
 
-    dungeon = generate_dungeon(
-        dungeon_level=request.level,
+@router.post("/generate")
+def generate(request: GenerateDungeonRequest) -> Dict:
+    """Generate a new random dungeon level.
+
+    Returns the complete dungeon data including rooms, passages, doors,
+    traps, and special features.
+    """
+    dungeon_data = generate_dungeon(
+        dungeon_level=request.dungeon_level,
         num_rooms=request.num_rooms,
-        map_width=request.width,
-        map_height=request.height,
+        map_width=request.map_width,
+        map_height=request.map_height,
         theme=request.theme,
         seed=request.seed,
     )
-    dungeon["id"] = dungeon_id
-    dungeon["party_position"] = {"room_index": 0}
-    dungeon["explored_rooms"] = [0]
-    dungeon["turn_count"] = 0
 
-    _active_dungeons[dungeon_id] = dungeon
-    return dungeon
-
-
-@router.get("/dungeon/{dungeon_id}")
-async def get_dungeon(dungeon_id: str):
-    """Get the current state of a dungeon."""
-    dungeon = _active_dungeons.get(dungeon_id)
-    if dungeon is None:
-        raise HTTPException(status_code=404, detail="Dungeon not found")
-    return dungeon
-
-
-@router.post("/dungeon/{dungeon_id}/move")
-async def move_in_dungeon(dungeon_id: str, request: MoveRequest):
-    """Move the party within the dungeon."""
-    dungeon = _active_dungeons.get(dungeon_id)
-    if dungeon is None:
-        raise HTTPException(status_code=404, detail="Dungeon not found")
-
-    dungeon["turn_count"] = dungeon.get("turn_count", 0) + 1
-    current_room_idx = dungeon["party_position"]["room_index"]
-    rooms = dungeon.get("rooms", [])
-
-    # Find target room based on direction or room_id
-    if request.room_id:
-        target_idx = next(
-            (i for i, r in enumerate(rooms) if r.get("id") == request.room_id),
-            None
-        )
-    else:
-        # Simple: move to next/previous room
-        if request.direction in ("north", "east"):
-            target_idx = min(current_room_idx + 1, len(rooms) - 1)
-        else:
-            target_idx = max(current_room_idx - 1, 0)
-
-    if target_idx is None:
-        raise HTTPException(status_code=400, detail="Invalid destination")
-
-    dungeon["party_position"]["room_index"] = target_idx
-    if target_idx not in dungeon["explored_rooms"]:
-        dungeon["explored_rooms"].append(target_idx)
-
-    result = {
-        "moved_to": rooms[target_idx] if target_idx < len(rooms) else None,
-        "turn_count": dungeon["turn_count"],
+    dungeon_id = _next_dungeon_id()
+    state = {
+        "id": dungeon_id,
+        "dungeon": dungeon_data,
+        "party_position": {
+            "room_index": 0,
+            "x": dungeon_data["rooms"][0]["x"] if dungeon_data["rooms"] else 0,
+            "y": dungeon_data["rooms"][0]["y"] if dungeon_data["rooms"] else 0,
+        },
+        "explored_rooms": [0] if dungeon_data["rooms"] else [],
+        "events": [],
     }
 
-    # Wandering monster check every 3 turns
-    if dungeon["turn_count"] % 3 == 0 and check_wandering_monster():
-        result["wandering_monster"] = generate_encounter(dungeon.get("level", 1))
+    # Mark first room as explored
+    if dungeon_data["rooms"]:
+        dungeon_data["rooms"][0]["explored"] = True
 
-    return result
+    _active_dungeons[dungeon_id] = state
+
+    return state
 
 
-@router.post("/dungeon/{dungeon_id}/interact")
-async def interact_in_dungeon(dungeon_id: str, request: InteractRequest):
-    """Interact with something in the dungeon."""
-    dungeon = _active_dungeons.get(dungeon_id)
-    if dungeon is None:
-        raise HTTPException(status_code=404, detail="Dungeon not found")
+@router.get("/{dungeon_id}")
+def get_dungeon(dungeon_id: str) -> Dict:
+    """Retrieve the current state of a dungeon."""
+    state = _active_dungeons.get(dungeon_id)
+    if state is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Dungeon with id '{dungeon_id}' not found",
+        )
+    return state
 
-    import random
-    result: dict = {"target_type": request.target_type, "action": request.action}
 
-    if request.action == "listen":
-        # Listen at door - 15% chance to hear something
-        heard = random.random() < 0.15
-        result["heard_something"] = heard
-        if heard:
-            result["description"] = random.choice([
-                "You hear shuffling footsteps beyond.",
-                "Faint growling echoes from the other side.",
-                "You hear nothing but dripping water.",
-                "Muffled voices can be heard.",
-                "A scraping sound comes from beyond.",
-            ])
+@router.post("/{dungeon_id}/move")
+def move_in_dungeon(dungeon_id: str, request: MoveRequest) -> Dict:
+    """Move the party within the dungeon.
+
+    Handles door checking, trap triggering, and room discovery.
+    """
+    state = _active_dungeons.get(dungeon_id)
+    if state is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Dungeon with id '{dungeon_id}' not found",
+        )
+
+    dungeon = state["dungeon"]
+    rooms = dungeon["rooms"]
+    current_room_idx = state["party_position"]["room_index"]
+
+    if current_room_idx >= len(rooms):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid current position",
+        )
+
+    current_room = rooms[current_room_idx]
+
+    # Find an exit in the requested direction
+    matching_exit = None
+    for door in current_room.get("exits", []):
+        if door["direction"] == request.direction:
+            matching_exit = door
+            break
+
+    events: list = []
+
+    if matching_exit is None:
+        events.append({
+            "type": "blocked",
+            "message": f"There is no exit to the {request.direction}.",
+        })
+        return {"success": False, "events": events, "state": state}
+
+    # Check for locked door
+    if matching_exit.get("locked"):
+        events.append({
+            "type": "locked_door",
+            "message": f"The {matching_exit['door_type']} door to the {request.direction} is locked!",
+            "door_id": matching_exit["id"],
+        })
+        return {"success": False, "events": events, "state": state}
+
+    # Check for trapped door
+    if matching_exit.get("trapped"):
+        events.append({
+            "type": "trap_triggered",
+            "message": f"A trap activates as you open the door! ({matching_exit.get('trap_type', 'unknown')})",
+            "trap_type": matching_exit.get("trap_type"),
+            "door_id": matching_exit["id"],
+        })
+        # Mark trap as sprung
+        matching_exit["trapped"] = False
+
+    # Move to next room
+    next_room_idx = min(current_room_idx + 1, len(rooms) - 1)
+    if request.room_id:
+        for idx, room in enumerate(rooms):
+            if room["id"] == request.room_id:
+                next_room_idx = idx
+                break
+
+    state["party_position"] = {
+        "room_index": next_room_idx,
+        "x": rooms[next_room_idx]["x"],
+        "y": rooms[next_room_idx]["y"],
+    }
+
+    # Mark room as explored
+    if next_room_idx not in state["explored_rooms"]:
+        state["explored_rooms"].append(next_room_idx)
+        rooms[next_room_idx]["explored"] = True
+        events.append({
+            "type": "new_room",
+            "message": rooms[next_room_idx].get("description", "You enter a new area."),
+            "room": rooms[next_room_idx],
+        })
+
+        # Check room contents
+        contents = rooms[next_room_idx].get("contents", "empty")
+        if contents == "monster" or contents == "monster_with_treasure":
+            events.append({
+                "type": "encounter",
+                "message": "Monsters are here!",
+                "contents": contents,
+            })
+        elif contents == "treasure":
+            events.append({
+                "type": "treasure",
+                "message": "You spot treasure!",
+            })
+        elif contents == "trick_trap":
+            events.append({
+                "type": "room_trap",
+                "message": "You sense danger...",
+                "trap_type": rooms[next_room_idx].get("trap"),
+            })
+        elif contents == "special":
+            events.append({
+                "type": "special",
+                "message": rooms[next_room_idx].get("special", "Something unusual here."),
+            })
+
+    state["events"].extend(events)
+    return {"success": True, "events": events, "state": state}
+
+
+@router.post("/{dungeon_id}/interact")
+def interact_in_dungeon(dungeon_id: str, request: InteractRequest) -> Dict:
+    """Interact with a feature in the current room.
+
+    Supports actions like searching, opening doors, disarming traps,
+    listening, and resting.
+    """
+    state = _active_dungeons.get(dungeon_id)
+    if state is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Dungeon with id '{dungeon_id}' not found",
+        )
+
+    dungeon = state["dungeon"]
+    rooms = dungeon["rooms"]
+    current_room_idx = state["party_position"]["room_index"]
+    current_room = rooms[current_room_idx]
+    events: list = []
+
+    if request.action == "search":
+        # Check for secret doors
+        secret_exits = [
+            d for d in current_room.get("exits", []) if d.get("secret")
+        ]
+        if secret_exits:
+            # 1-2 on d6 for elves, 1 on d6 for others
+            import random
+            roll = random.randint(1, 6)
+            if roll <= 2:
+                for door in secret_exits:
+                    door["secret"] = False
+                events.append({
+                    "type": "secret_found",
+                    "message": "You discovered a secret door!",
+                    "roll": roll,
+                })
+            else:
+                events.append({
+                    "type": "search_result",
+                    "message": "Your search reveals nothing unusual.",
+                    "roll": roll,
+                })
         else:
-            result["description"] = "You hear nothing."
+            events.append({
+                "type": "search_result",
+                "message": "You find nothing of note.",
+            })
 
-    elif request.action == "open":
-        # Try to open a door
+    elif request.action == "open_door":
+        target_door = None
+        for door in current_room.get("exits", []):
+            if door["id"] == request.target_id:
+                target_door = door
+                break
+
+        if target_door is None:
+            events.append({
+                "type": "error",
+                "message": "No such door found.",
+            })
+        elif target_door.get("locked"):
+            # Attempt to force open (Str check or thief skill)
+            import random
+            roll = random.randint(1, 6)
+            if roll <= 2:
+                target_door["locked"] = False
+                events.append({
+                    "type": "door_opened",
+                    "message": "You force the door open!",
+                    "roll": roll,
+                })
+            else:
+                events.append({
+                    "type": "door_stuck",
+                    "message": "The door resists your efforts.",
+                    "roll": roll,
+                })
+        else:
+            events.append({
+                "type": "door_opened",
+                "message": "The door opens easily.",
+            })
+
+    elif request.action == "disarm_trap":
+        if current_room.get("trap"):
+            import random
+            roll = random.randint(1, 100)
+            # Base 25% chance, modified by thief level
+            if roll <= 25:
+                current_room["trap"] = None
+                events.append({
+                    "type": "trap_disarmed",
+                    "message": "The trap has been successfully disarmed!",
+                    "roll": roll,
+                })
+            else:
+                events.append({
+                    "type": "disarm_failed",
+                    "message": "You fail to disarm the trap!",
+                    "roll": roll,
+                })
+        else:
+            events.append({
+                "type": "no_trap",
+                "message": "There is no trap here to disarm.",
+            })
+
+    elif request.action == "listen":
+        import random
         roll = random.randint(1, 6)
-        opened = roll <= 2  # Open on 1-2 on d6
-        result["opened"] = opened
-        result["roll"] = roll
-        if opened:
-            result["description"] = "The door opens!"
+        if roll == 1:
+            events.append({
+                "type": "listen_success",
+                "message": "You hear sounds beyond the door...",
+                "roll": roll,
+            })
         else:
-            result["description"] = "The door won't budge."
+            events.append({
+                "type": "listen_fail",
+                "message": "You hear nothing.",
+                "roll": roll,
+            })
 
-    elif request.action == "search":
-        # Search for traps/secret doors
-        roll = random.randint(1, 6)
-        found = roll == 1  # Find on 1 on d6 (elves get 1-2)
-        result["found_something"] = found
-        result["roll"] = roll
-        if found:
-            result["description"] = "You discover a hidden mechanism!"
+    elif request.action == "rest":
+        # Resting triggers a wandering monster check
+        from engine.encounter.tables import check_wandering_monster
+        encounter = check_wandering_monster(
+            dungeon_level=dungeon["level"],
+        )
+        if encounter.encounter_occurred:
+            events.append({
+                "type": "wandering_monster",
+                "message": "Your rest is interrupted by wandering monsters!",
+                "encounter": encounter.as_dict(),
+            })
         else:
-            result["description"] = "You find nothing unusual."
+            events.append({
+                "type": "rest_success",
+                "message": "You rest without incident.",
+            })
+    else:
+        events.append({
+            "type": "unknown_action",
+            "message": f"Unknown action: {request.action}",
+        })
 
-    elif request.action == "detect_traps":
-        roll = random.randint(1, 100)
-        result["roll"] = roll
-        result["description"] = "You check for traps."
-
-    return result
+    state["events"].extend(events)
+    return {"events": events, "state": state}

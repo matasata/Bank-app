@@ -1,152 +1,200 @@
-"""API routes for character creation and management."""
-from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel
-from typing import Optional
+"""FastAPI router for character-related endpoints.
+
+Provides ability score rolling, race/class lookup, validation, character
+creation, and character retrieval.
+"""
+
+from __future__ import annotations
+
+from typing import Dict, List, Optional
+
+from fastapi import APIRouter, Depends, HTTPException, status
+from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
-from models.database import SessionLocal
-from engine.character.ability_scores import AbilityScoreGenerator
-from engine.character.races import RACES, get_race
-from engine.character.classes import CLASSES, get_class, get_available_classes
-from engine.character.creation import CharacterCreator
-from models.character import Character as CharacterModel, Party as PartyModel
+from models.database import get_db
+from models.character import Character as CharacterModel, Party
+from engine.character.ability_scores import generate_ability_scores, ABILITY_NAMES
+from engine.character.races import list_races, get_race
+from engine.character.classes import list_classes, get_class
+from engine.character.creation import validate_race_class, create_character
 
-router = APIRouter(tags=["characters"])
+router = APIRouter(prefix="/api/characters", tags=["characters"])
 
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
+# ── Request / Response schemas ────────────────────────────────────────────
 
 class RollAbilitiesRequest(BaseModel):
-    method: int = 1  # 1-6
+    """Request to roll ability scores."""
+
+    method: str = Field("I", description="Generation method: I-VI")
+    seed: Optional[int] = Field(None, description="Optional RNG seed")
+    allocation: Optional[Dict[str, int]] = Field(
+        None, description="Point allocation for Method V"
+    )
 
 
 class ValidateRequest(BaseModel):
+    """Request to validate a race/class/ability combination."""
+
     race: str
     class_name: str
-    ability_scores: dict[str, int]
+    abilities: Dict[str, int]
+    alignment: Optional[str] = None
 
 
 class CreateCharacterRequest(BaseModel):
+    """Request to create a new character."""
+
+    name: str = Field(..., min_length=1, max_length=128)
+    race: str
+    class_name: str
+    abilities: Dict[str, int]
+    alignment: str
+    level: int = Field(1, ge=1, le=20)
+    party_id: Optional[int] = None
+    seed: Optional[int] = None
+
+
+class CharacterResponse(BaseModel):
+    """Character data returned to the client."""
+
+    id: int
     name: str
     race: str
     class_name: str
+    level: int
     alignment: str
-    ability_scores: dict[str, int]
+    abilities: Dict[str, int]
+    hp: int
+    max_hp: int
+    ac: int
+    xp: int
+    gold: float
     party_id: Optional[int] = None
 
-
-class AllocateScoresRequest(BaseModel):
-    scores: dict[str, int]
-
-
-@router.post("/characters/roll-abilities")
-async def roll_abilities(request: RollAbilitiesRequest):
-    """Roll ability scores using the specified method (1-6)."""
-    gen = AbilityScoreGenerator()
-    methods = {
-        1: gen.method_i,
-        2: gen.method_ii,
-        3: gen.method_iii,
-        4: gen.method_iv,
-        5: gen.method_v,
-        6: gen.method_vi,
-    }
-    method_func = methods.get(request.method)
-    if method_func is None:
-        raise HTTPException(status_code=400, detail=f"Invalid method: {request.method}. Must be 1-6.")
-    return method_func()
+    class Config:
+        from_attributes = True
 
 
-@router.post("/characters/validate-allocation")
-async def validate_allocation(request: AllocateScoresRequest):
-    """Validate a Method V point allocation."""
-    gen = AbilityScoreGenerator()
-    return gen.validate_method_v_allocation(request.scores)
+# ── Endpoints ─────────────────────────────────────────────────────────────
 
+@router.post("/roll-abilities")
+def roll_abilities(request: RollAbilitiesRequest) -> Dict:
+    """Roll ability scores using one of the six DMG methods.
 
-@router.get("/characters/races")
-async def get_races():
-    """Get all available races with their details."""
-    return {name: data for name, data in RACES.items()}
-
-
-@router.get("/characters/classes")
-async def get_classes():
-    """Get all available character classes."""
-    return {name: {k: v for k, v in data.items() if k != "thief_skills"} for name, data in CLASSES.items()}
-
-
-@router.get("/characters/classes/{race}")
-async def get_classes_for_race(race: str, str: int = 10, int_score: int = 10,
-                                wis: int = 10, dex: int = 10, con: int = 10, cha: int = 10):
-    """Get available classes for a given race and ability scores."""
-    scores = {"str": str, "int": int_score, "wis": wis, "dex": dex, "con": con, "cha": cha}
-    available = get_available_classes(race, scores)
-    return {"race": race, "available_classes": available}
-
-
-@router.post("/characters/validate")
-async def validate_character(request: ValidateRequest):
-    """Validate a race/class/ability score combination."""
-    creator = CharacterCreator()
-    return creator.validate_race_class(request.race, request.class_name, request.ability_scores)
-
-
-@router.post("/characters/create")
-async def create_character(request: CreateCharacterRequest, db: Session = Depends(get_db)):
-    """Create a new character."""
-    creator = CharacterCreator()
+    Returns the full roll details so the UI can animate / display what was
+    rolled and what was kept.
+    """
     try:
-        character = creator.create_character(
-            name=request.name,
-            race=request.race,
-            class_name=request.class_name,
-            alignment=request.alignment,
-            ability_scores=request.ability_scores,
+        result = generate_ability_scores(
+            method=request.method,
+            seed=request.seed,
+            allocation=request.allocation,
         )
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        return result.as_dict()
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(exc),
+        )
 
-    # Save to database
+
+@router.get("/races")
+def get_races() -> List[Dict]:
+    """Return all available player races with their attributes."""
+    return list_races()
+
+
+@router.get("/classes")
+def get_classes() -> List[Dict]:
+    """Return all available character classes with their attributes."""
+    return list_classes()
+
+
+@router.post("/validate")
+def validate_character(request: ValidateRequest) -> Dict:
+    """Check whether a race/class/ability combination is valid.
+
+    Returns ``{"valid": true/false, "errors": [...], "warnings": [...]}``.
+    """
+    result = validate_race_class(
+        race_name=request.race,
+        class_name=request.class_name,
+        abilities=request.abilities,
+        alignment=request.alignment,
+    )
+    return {
+        "valid": result.valid,
+        "errors": result.errors,
+        "warnings": result.warnings,
+    }
+
+
+@router.post("/create")
+def create_new_character(
+    request: CreateCharacterRequest,
+    db: Session = Depends(get_db),
+) -> Dict:
+    """Create a new character, persist it, and return the full sheet.
+
+    The character creation engine validates the combination, applies racial
+    modifiers, rolls HP and gold, and computes all derived statistics.
+    """
+    try:
+        created = create_character(
+            name=request.name,
+            race_name=request.race,
+            class_name=request.class_name,
+            abilities=request.abilities,
+            alignment=request.alignment,
+            level=request.level,
+            seed=request.seed,
+        )
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(exc),
+        )
+
+    # Persist to database
     db_char = CharacterModel(
-        name=character["name"],
-        race=character["race"],
-        class_name=character["class_name"],
-        level=character["level"],
-        alignment=character["alignment"],
-        str_score=character["str"],
-        int_score=character["int"],
-        wis_score=character["wis"],
-        dex_score=character["dex"],
-        con_score=character["con"],
-        cha_score=character["cha"],
-        hp=character["hp"],
-        max_hp=character["max_hp"],
-        ac=character["ac"],
-        xp=0,
-        gold=character["gold"],
+        name=created.name,
+        race=created.race,
+        class_name=created.class_name,
+        level=created.level,
+        alignment=created.alignment,
+        str=created.abilities.get("str", 10),
+        int=created.abilities.get("int", 10),
+        wis=created.abilities.get("wis", 10),
+        dex=created.abilities.get("dex", 10),
+        con=created.abilities.get("con", 10),
+        cha=created.abilities.get("cha", 10),
+        hp=created.hp,
+        max_hp=created.max_hp,
+        ac=created.ac,
+        xp=created.xp,
+        gold=created.gold,
         party_id=request.party_id,
     )
     db.add(db_char)
     db.commit()
     db.refresh(db_char)
 
-    character["id"] = db_char.id
-    return character
+    response = created.as_dict()
+    response["id"] = db_char.id
+    return response
 
 
-@router.get("/characters/{character_id}")
-async def get_character(character_id: int, db: Session = Depends(get_db)):
-    """Get a character by ID."""
+@router.get("/{character_id}")
+def get_character(character_id: int, db: Session = Depends(get_db)) -> Dict:
+    """Retrieve a character by ID."""
     char = db.query(CharacterModel).filter(CharacterModel.id == character_id).first()
     if char is None:
-        raise HTTPException(status_code=404, detail="Character not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Character with id {character_id} not found",
+        )
     return {
         "id": char.id,
         "name": char.name,
@@ -154,39 +202,50 @@ async def get_character(character_id: int, db: Session = Depends(get_db)):
         "class_name": char.class_name,
         "level": char.level,
         "alignment": char.alignment,
-        "str": char.str_score,
-        "int": char.int_score,
-        "wis": char.wis_score,
-        "dex": char.dex_score,
-        "con": char.con_score,
-        "cha": char.cha_score,
+        "abilities": {
+            "str": char.str,
+            "int": char.int,
+            "wis": char.wis,
+            "dex": char.dex,
+            "con": char.con,
+            "cha": char.cha,
+        },
         "hp": char.hp,
         "max_hp": char.max_hp,
         "ac": char.ac,
         "xp": char.xp,
         "gold": char.gold,
+        "party_id": char.party_id,
     }
 
 
-@router.get("/characters/party/{party_id}")
-async def get_party_characters(party_id: int, db: Session = Depends(get_db)):
-    """Get all characters in a party."""
-    chars = db.query(CharacterModel).filter(CharacterModel.party_id == party_id).all()
-    return [
-        {
-            "id": c.id, "name": c.name, "race": c.race,
-            "class_name": c.class_name, "level": c.level,
-            "hp": c.hp, "max_hp": c.max_hp, "ac": c.ac,
-        }
-        for c in chars
-    ]
+@router.get("/party/{party_id}")
+def get_party_characters(party_id: int, db: Session = Depends(get_db)) -> Dict:
+    """Retrieve all characters belonging to a party."""
+    party = db.query(Party).filter(Party.id == party_id).first()
+    if party is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Party with id {party_id} not found",
+        )
 
-
-@router.post("/party/create")
-async def create_party(name: str = "Adventurers", db: Session = Depends(get_db)):
-    """Create a new party."""
-    party = PartyModel(name=name)
-    db.add(party)
-    db.commit()
-    db.refresh(party)
-    return {"id": party.id, "name": party.name}
+    characters = (
+        db.query(CharacterModel)
+        .filter(CharacterModel.party_id == party_id)
+        .all()
+    )
+    return {
+        "party": {"id": party.id, "name": party.name},
+        "characters": [
+            {
+                "id": c.id,
+                "name": c.name,
+                "race": c.race,
+                "class_name": c.class_name,
+                "level": c.level,
+                "hp": c.hp,
+                "max_hp": c.max_hp,
+            }
+            for c in characters
+        ],
+    }
