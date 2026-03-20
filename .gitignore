@@ -1,5 +1,50 @@
-.DS_Store
-Thumbs.db
+# Dependencies
+node_modules/
+frontend/node_modules/
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+
+# Build outputs
+dist/
+frontend/dist/
+*.dmg
+*.exe
+*.AppImage
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# IDE
+.vscode/
+.idea/
 *.swp
 *.swo
 *~
+
+# Environment
+.env
+.env.local
+.env.production
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Test
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Electron
+electron/main.js
+electron/preload.js
