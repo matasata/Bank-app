@@ -1,43 +1,79 @@
-"""FastAPI entry point for the AD&D 1st Edition Game System."""
+"""AD&D 1st Edition Game System -- FastAPI application entry point.
+
+Configures CORS middleware, initialises the database on startup, includes
+all API routers, and provides a health-check endpoint.
+
+Run with::
+
+    uvicorn main:app --reload --host 0.0.0.0 --port 8000
+"""
+
+from __future__ import annotations
+
+from contextlib import asynccontextmanager
+from typing import AsyncGenerator, Dict
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from contextlib import asynccontextmanager
 
-from models.database import engine, Base
+from models.database import Base, engine
 from api.characters import router as characters_router
 from api.dungeon import router as dungeon_router
 from api.combat import router as combat_router
 from api.game import router as game_router
 
 
+# ── Lifespan (startup / shutdown) ────────────────────────────────────────
+
 @asynccontextmanager
-async def lifespan(app: FastAPI):
-    """Create database tables on startup."""
+async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
+    """Application lifespan handler.
+
+    Creates all database tables on startup.
+    """
+    # Import models so that SQLAlchemy knows about them before create_all
+    import models.character  # noqa: F401
+
     Base.metadata.create_all(bind=engine)
     yield
 
 
+# ── Application setup ────────────────────────────────────────────────────
+
 app = FastAPI(
     title="AD&D 1st Edition Game System",
-    description="Complete AD&D 1st Edition game engine with character creation, dungeon generation, and combat",
-    version="0.1.0",
+    description=(
+        "A complete backend for an Advanced Dungeons & Dragons 1st Edition "
+        "game system, including character creation, combat resolution, "
+        "dungeon generation, treasure, and encounter management."
+    ),
+    version="1.0.0",
     lifespan=lifespan,
 )
 
+# CORS -- allow all origins during development
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:3000"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-app.include_router(characters_router, prefix="/api")
-app.include_router(dungeon_router, prefix="/api")
-app.include_router(combat_router, prefix="/api")
-app.include_router(game_router, prefix="/api")
+# ── Include routers ──────────────────────────────────────────────────────
+
+app.include_router(characters_router)
+app.include_router(dungeon_router)
+app.include_router(combat_router)
+app.include_router(game_router)
 
 
-@app.get("/api/health")
-async def health_check():
-    return {"status": "ok", "game": "AD&D 1st Edition"}
+# ── Health check ─────────────────────────────────────────────────────────
+
+@app.get("/api/health", tags=["system"])
+def health_check() -> Dict[str, str]:
+    """Simple health check endpoint.
+
+    Returns ``{"status": "ok"}`` when the service is running.
+    """
+    return {"status": "ok"}
