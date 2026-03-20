@@ -1,0 +1,83 @@
+{
+  "description": "DMG Treasure Type Tables A through Z",
+  "note": "Percentage chance, then amount range if present. Coins in pieces, gems/jewelry in count.",
+  "types": {
+    "A": {
+      "copper": {"chance": 25, "amount": "1d6x1000"},
+      "silver": {"chance": 30, "amount": "1d6x1000"},
+      "electrum": {"chance": 35, "amount": "1d6x1000"},
+      "gold": {"chance": 40, "amount": "1d10x1000"},
+      "platinum": {"chance": 25, "amount": "1d4x100"},
+      "gems": {"chance": 60, "amount": "4d10"},
+      "jewelry": {"chance": 50, "amount": "3d10"},
+      "magic": {"chance": 30, "items": 3}
+    },
+    "B": {
+      "copper": {"chance": 50, "amount": "1d8x1000"},
+      "silver": {"chance": 25, "amount": "1d6x1000"},
+      "electrum": {"chance": 25, "amount": "1d4x1000"},
+      "gold": {"chance": 25, "amount": "1d3x1000"},
+      "gems": {"chance": 25, "amount": "1d8"},
+      "jewelry": {"chance": 25, "amount": "1d4"},
+      "magic": {"chance": 10, "items": 1, "type": "weapon_armor"}
+    },
+    "C": {
+      "copper": {"chance": 20, "amount": "1d12x1000"},
+      "silver": {"chance": 30, "amount": "1d6x1000"},
+      "electrum": {"chance": 10, "amount": "1d4x1000"},
+      "gems": {"chance": 25, "amount": "1d6"},
+      "jewelry": {"chance": 20, "amount": "1d3"},
+      "magic": {"chance": 10, "items": 2}
+    },
+    "D": {
+      "copper": {"chance": 10, "amount": "1d8x1000"},
+      "silver": {"chance": 15, "amount": "1d12x1000"},
+      "electrum": {"chance": 15, "amount": "1d8x1000"},
+      "gold": {"chance": 50, "amount": "1d6x1000"},
+      "gems": {"chance": 30, "amount": "1d10"},
+      "jewelry": {"chance": 25, "amount": "1d6"},
+      "magic": {"chance": 15, "items": 2, "plus_potion": true}
+    },
+    "E": {
+      "copper": {"chance": 5, "amount": "1d10x1000"},
+      "silver": {"chance": 25, "amount": "1d12x1000"},
+      "electrum": {"chance": 25, "amount": "1d6x1000"},
+      "gold": {"chance": 25, "amount": "1d8x1000"},
+      "gems": {"chance": 15, "amount": "1d12"},
+      "jewelry": {"chance": 10, "amount": "1d8"},
+      "magic": {"chance": 25, "items": 3, "plus_scroll": true}
+    },
+    "F": {
+      "silver": {"chance": 10, "amount": "1d20x1000"},
+      "electrum": {"chance": 15, "amount": "1d12x1000"},
+      "gold": {"chance": 40, "amount": "1d10x1000"},
+      "platinum": {"chance": 35, "amount": "1d8x100"},
+      "gems": {"chance": 20, "amount": "2d12"},
+      "jewelry": {"chance": 10, "amount": "1d12"},
+      "magic": {"chance": 30, "items": 3, "no_weapons": true}
+    },
+    "G": {
+      "gold": {"chance": 50, "amount": "1d4x10000"},
+      "platinum": {"chance": 50, "amount": "1d6x1000"},
+      "gems": {"chance": 30, "amount": "3d6"},
+      "jewelry": {"chance": 25, "amount": "1d10"},
+      "magic": {"chance": 35, "items": 4}
+    },
+    "H": {
+      "copper": {"chance": 25, "amount": "5d6x1000"},
+      "silver": {"chance": 40, "amount": "1d100x1000"},
+      "electrum": {"chance": 40, "amount": "1d4x10000"},
+      "gold": {"chance": 55, "amount": "1d6x10000"},
+      "platinum": {"chance": 25, "amount": "1d8x1000"},
+      "gems": {"chance": 50, "amount": "1d100"},
+      "jewelry": {"chance": 50, "amount": "10d4"},
+      "magic": {"chance": 15, "items": 4}
+    },
+    "I": {
+      "platinum": {"chance": 30, "amount": "1d8x100"},
+      "gems": {"chance": 55, "amount": "2d10"},
+      "jewelry": {"chance": 50, "amount": "6d10"},
+      "magic": {"chance": 15, "items": 1}
+    }
+  }
+}

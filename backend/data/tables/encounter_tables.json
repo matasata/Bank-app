@@ -1,0 +1,76 @@
+{
+  "description": "Encounter tables by dungeon level (DMG)",
+  "wandering_monster_check": "1 in 6 per turn (10 minutes)",
+  "tables": {
+    "1": [
+      {"d100": [1, 10], "monster": "giant_rat", "number": "2d6", "xp": 3},
+      {"d100": [11, 20], "monster": "kobold", "number": "2d4", "xp": 7},
+      {"d100": [21, 30], "monster": "goblin", "number": "2d4", "xp": 10},
+      {"d100": [31, 40], "monster": "orc", "number": "1d6", "xp": 15},
+      {"d100": [41, 48], "monster": "skeleton", "number": "1d8", "xp": 14},
+      {"d100": [49, 55], "monster": "zombie", "number": "1d4", "xp": 20},
+      {"d100": [56, 62], "monster": "giant_centipede", "number": "1d4", "xp": 15},
+      {"d100": [63, 70], "monster": "giant_fire_beetle", "number": "1d4", "xp": 15},
+      {"d100": [71, 77], "monster": "stirge", "number": "2d8", "xp": 14},
+      {"d100": [78, 84], "monster": "piercer", "number": "1d4", "xp": 15},
+      {"d100": [85, 90], "monster": "hobgoblin", "number": "1d6", "xp": 15},
+      {"d100": [91, 95], "monster": "bandit", "number": "2d8", "xp": 10},
+      {"d100": [96, 100], "monster": "troglodyte", "number": "1d4", "xp": 40}
+    ],
+    "2": [
+      {"d100": [1, 10], "monster": "orc", "number": "2d6", "xp": 15},
+      {"d100": [11, 20], "monster": "hobgoblin", "number": "2d4", "xp": 15},
+      {"d100": [21, 28], "monster": "gnoll", "number": "1d6", "xp": 28},
+      {"d100": [29, 35], "monster": "zombie", "number": "2d4", "xp": 20},
+      {"d100": [36, 42], "monster": "ghoul", "number": "1d6", "xp": 65},
+      {"d100": [43, 50], "monster": "troglodyte", "number": "1d6", "xp": 40},
+      {"d100": [51, 57], "monster": "lizardman", "number": "1d6", "xp": 28},
+      {"d100": [58, 65], "monster": "giant_spider", "number": "1d4", "xp": 65},
+      {"d100": [66, 72], "monster": "bugbear", "number": "1d4", "xp": 60},
+      {"d100": [73, 78], "monster": "harpy", "number": "1d4", "xp": 120},
+      {"d100": [79, 85], "monster": "carrion_crawler", "number": "1d2", "xp": 420},
+      {"d100": [86, 92], "monster": "gelatinous_cube", "number": "1", "xp": 175},
+      {"d100": [93, 100], "monster": "ogre", "number": "1d4", "xp": 125}
+    ],
+    "3": [
+      {"d100": [1, 12], "monster": "gnoll", "number": "2d6", "xp": 28},
+      {"d100": [13, 22], "monster": "bugbear", "number": "2d4", "xp": 60},
+      {"d100": [23, 32], "monster": "ogre", "number": "1d6", "xp": 125},
+      {"d100": [33, 40], "monster": "wight", "number": "1d4", "xp": 275},
+      {"d100": [41, 47], "monster": "werewolf", "number": "1d4", "xp": 150},
+      {"d100": [48, 54], "monster": "gargoyle", "number": "1d4", "xp": 175},
+      {"d100": [55, 61], "monster": "owlbear", "number": "1d2", "xp": 225},
+      {"d100": [62, 68], "monster": "rust_monster", "number": "1d2", "xp": 250},
+      {"d100": [69, 75], "monster": "wraith", "number": "1d4", "xp": 460},
+      {"d100": [76, 82], "monster": "troll", "number": "1d4", "xp": 525},
+      {"d100": [83, 90], "monster": "hill_giant", "number": "1d2", "xp": 1350},
+      {"d100": [91, 100], "monster": "basilisk", "number": "1d2", "xp": 750}
+    ],
+    "4": [
+      {"d100": [1, 12], "monster": "ogre", "number": "2d4", "xp": 125},
+      {"d100": [13, 22], "monster": "troll", "number": "1d6", "xp": 525},
+      {"d100": [23, 32], "monster": "wraith", "number": "1d6", "xp": 460},
+      {"d100": [33, 40], "monster": "wyvern", "number": "1d2", "xp": 700},
+      {"d100": [41, 48], "monster": "manticore", "number": "1d2", "xp": 525},
+      {"d100": [49, 55], "monster": "displacer_beast", "number": "1d4", "xp": 475},
+      {"d100": [56, 62], "monster": "minotaur", "number": "1d4", "xp": 350},
+      {"d100": [63, 70], "monster": "spectre", "number": "1d4", "xp": 1100},
+      {"d100": [71, 78], "monster": "chimera", "number": "1d2", "xp": 1900},
+      {"d100": [79, 85], "monster": "hydra", "number": "1d2", "xp": 500},
+      {"d100": [86, 92], "monster": "stone_giant", "number": "1d2", "xp": 1900},
+      {"d100": [93, 100], "monster": "young_dragon", "number": "1", "xp": 2100}
+    ],
+    "5": [
+      {"d100": [1, 15], "monster": "troll", "number": "2d4", "xp": 525},
+      {"d100": [16, 28], "monster": "fire_giant", "number": "1d2", "xp": 3200},
+      {"d100": [29, 40], "monster": "vampire", "number": "1d2", "xp": 3100},
+      {"d100": [41, 50], "monster": "mind_flayer", "number": "1d2", "xp": 3000},
+      {"d100": [51, 60], "monster": "beholder", "number": "1", "xp": 8000},
+      {"d100": [61, 70], "monster": "frost_giant", "number": "1d2", "xp": 2600},
+      {"d100": [71, 80], "monster": "adult_dragon", "number": "1", "xp": 4000},
+      {"d100": [81, 88], "monster": "iron_golem", "number": "1", "xp": 5500},
+      {"d100": [89, 95], "monster": "lich", "number": "1", "xp": 7500},
+      {"d100": [96, 100], "monster": "ancient_dragon", "number": "1", "xp": 12000}
+    ]
+  }
+}

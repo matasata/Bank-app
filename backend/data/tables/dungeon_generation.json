@@ -1,0 +1,126 @@
+{
+  "description": "DMG Appendix A Random Dungeon Generation Tables",
+  "passage_width": [
+    {"d20": [1, 6], "width_ft": 5},
+    {"d20": [7, 12], "width_ft": 10},
+    {"d20": [13, 16], "width_ft": 20},
+    {"d20": [17, 18], "width_ft": 30},
+    {"d20": [19, 20], "special": "Roll on special passage table"}
+  ],
+  "passage_turns": [
+    {"d20": [1, 8], "result": "straight_ahead"},
+    {"d20": [9, 10], "result": "door_left"},
+    {"d20": [11, 12], "result": "door_right"},
+    {"d20": [13, 14], "result": "side_passage_left"},
+    {"d20": [15, 16], "result": "side_passage_right"},
+    {"d20": [17, 17], "result": "passage_turns_left"},
+    {"d20": [18, 18], "result": "passage_turns_right"},
+    {"d20": [19, 19], "result": "dead_end"},
+    {"d20": [20, 20], "result": "chamber"}
+  ],
+  "room_shapes": [
+    {"d100": [1, 20], "shape": "square"},
+    {"d100": [21, 50], "shape": "rectangular"},
+    {"d100": [51, 60], "shape": "circular"},
+    {"d100": [61, 70], "shape": "triangular"},
+    {"d100": [71, 80], "shape": "trapezoidal"},
+    {"d100": [81, 85], "shape": "octagonal"},
+    {"d100": [86, 90], "shape": "oval"},
+    {"d100": [91, 95], "shape": "cave"},
+    {"d100": [96, 100], "shape": "irregular"}
+  ],
+  "room_sizes": {
+    "square": [
+      {"d100": [1, 30], "size": [10, 10]},
+      {"d100": [31, 50], "size": [20, 20]},
+      {"d100": [51, 70], "size": [30, 30]},
+      {"d100": [71, 85], "size": [40, 40]},
+      {"d100": [86, 95], "size": [50, 50]},
+      {"d100": [96, 100], "size": [60, 60]}
+    ],
+    "rectangular": [
+      {"d100": [1, 20], "size": [10, 20]},
+      {"d100": [21, 35], "size": [20, 30]},
+      {"d100": [36, 50], "size": [20, 40]},
+      {"d100": [51, 65], "size": [30, 40]},
+      {"d100": [66, 80], "size": [30, 50]},
+      {"d100": [81, 90], "size": [40, 60]},
+      {"d100": [91, 100], "size": [50, 80]}
+    ]
+  },
+  "room_exits": [
+    {"d20": [1, 3], "exits": 0},
+    {"d20": [4, 7], "exits": 1},
+    {"d20": [8, 12], "exits": 2},
+    {"d20": [13, 16], "exits": 3},
+    {"d20": [17, 20], "exits": 4}
+  ],
+  "room_contents": [
+    {"d100": [1, 12], "contents": "monster"},
+    {"d100": [13, 16], "contents": "monster_with_treasure"},
+    {"d100": [17, 17], "contents": "special"},
+    {"d100": [18, 18], "contents": "trick_trap"},
+    {"d100": [19, 19], "contents": "treasure"},
+    {"d100": [20, 20], "contents": "empty"}
+  ],
+  "door_types": [
+    {"d100": [1, 30], "type": "wooden"},
+    {"d100": [31, 45], "type": "wooden_locked"},
+    {"d100": [46, 55], "type": "wooden_barred"},
+    {"d100": [56, 65], "type": "iron"},
+    {"d100": [66, 75], "type": "iron_locked"},
+    {"d100": [76, 82], "type": "stone"},
+    {"d100": [83, 90], "type": "secret"},
+    {"d100": [91, 95], "type": "concealed"},
+    {"d100": [96, 98], "type": "portcullis"},
+    {"d100": [99, 100], "type": "one_way"}
+  ],
+  "trap_types": [
+    {"d100": [1, 15], "type": "pit", "damage": "1d6", "description": "Covered pit, 10 ft deep"},
+    {"d100": [16, 25], "type": "poison_needle", "damage": "save_or_die", "description": "Needle in lock/handle"},
+    {"d100": [26, 35], "type": "gas", "damage": "1d6_per_round", "description": "Poison gas fills room"},
+    {"d100": [36, 45], "type": "falling_block", "damage": "2d6", "description": "Stone block falls from ceiling"},
+    {"d100": [46, 55], "type": "arrow", "damage": "1d6", "description": "Arrow fires from wall"},
+    {"d100": [56, 65], "type": "spear", "damage": "1d8", "description": "Spear thrusts from floor/wall"},
+    {"d100": [66, 75], "type": "scything_blade", "damage": "2d8", "description": "Blade sweeps across passage"},
+    {"d100": [76, 80], "type": "flooding", "damage": "special", "description": "Water floods the room"},
+    {"d100": [81, 85], "type": "fire", "damage": "2d6", "description": "Fire jets from walls"},
+    {"d100": [86, 95], "type": "teleport", "damage": "none", "description": "Teleports to another area"},
+    {"d100": [96, 98], "type": "alarm", "damage": "none", "description": "Alert nearby monsters"},
+    {"d100": [99, 100], "type": "magic_mouth", "damage": "none", "description": "Magic mouth delivers message"}
+  ],
+  "stair_types": [
+    {"d20": [1, 4], "type": "down_one_level"},
+    {"d20": [5, 6], "type": "down_two_levels"},
+    {"d20": [7, 7], "type": "down_three_levels"},
+    {"d20": [8, 10], "type": "up_one_level"},
+    {"d20": [11, 11], "type": "up_two_levels"},
+    {"d20": [12, 13], "type": "chimney_up"},
+    {"d20": [14, 15], "type": "chimney_down"},
+    {"d20": [16, 17], "type": "chute"},
+    {"d20": [18, 18], "type": "trap_door"},
+    {"d20": [19, 20], "type": "spiral"}
+  ],
+  "special_features": [
+    "Altar with strange carvings",
+    "Pool of unknown liquid (may be magical)",
+    "Statue with gem eyes",
+    "Magical darkness fills the area",
+    "Whispering voices echo from the walls",
+    "Pillars carved with ancient runes",
+    "Underground stream",
+    "Phosphorescent fungi",
+    "Ancient mural depicting a great battle",
+    "Iron cage hanging from ceiling",
+    "Collapsed section reveals natural cavern",
+    "Mosaic floor tiles in magical pattern",
+    "Strong wind from unknown source",
+    "Unnaturally cold temperature",
+    "Unnaturally hot temperature",
+    "Illusion of a different room",
+    "Anti-magic zone",
+    "Reversed gravity",
+    "Time passes at different rate",
+    "Mirror showing different reflections"
+  ]
+}

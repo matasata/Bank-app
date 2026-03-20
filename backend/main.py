@@ -22,6 +22,13 @@ from api.dungeon import router as dungeon_router
 from api.combat import router as combat_router
 from api.game import router as game_router
 
+# Import models so SQLAlchemy registers them, then create tables eagerly.
+# This ensures the DB schema exists both when running via uvicorn (lifespan)
+# and when the module is imported by test clients.
+import models.character  # noqa: F401
+
+Base.metadata.create_all(bind=engine)
+
 
 # ── Lifespan (startup / shutdown) ────────────────────────────────────────
 
@@ -29,12 +36,9 @@ from api.game import router as game_router
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     """Application lifespan handler.
 
-    Creates all database tables on startup.
+    Tables are already created at import time; this hook is kept for any
+    future async startup work.
     """
-    # Import models so that SQLAlchemy knows about them before create_all
-    import models.character  # noqa: F401
-
-    Base.metadata.create_all(bind=engine)
     yield
 
 
