@@ -1,0 +1,162 @@
+{
+  "name": "The Crypts of Khar-Dhuum",
+  "author": "System",
+  "description": "A small introductory dungeon for 4-6 characters of levels 1-3. An ancient dwarven crypt has been disturbed, and the dead walk again.",
+  "min_level": 1,
+  "max_level": 3,
+  "party_size": "4-6",
+  "setting": "Underground crypt beneath an abandoned dwarven mine",
+  "introduction": "The villagers of Millhaven have reported strange sounds from the old dwarven mines. Livestock has gone missing, and a shepherd swears he saw walking dead near the mine entrance at dusk. The village elder offers 500 gold pieces to any brave souls who will investigate and cleanse the threat.",
+  "wandering_monsters": {
+    "check_frequency": "1 in 6 per 3 turns",
+    "table": [
+      {"d6": [1, 2], "monster": "skeleton", "number": "1d4"},
+      {"d6": [3, 4], "monster": "giant_rat", "number": "2d4"},
+      {"d6": [5, 5], "monster": "zombie", "number": "1d2"},
+      {"d6": [6, 6], "monster": "ghoul", "number": "1"}
+    ]
+  },
+  "rooms": [
+    {
+      "id": 1,
+      "name": "Mine Entrance",
+      "description": "A crumbling stone archway leads into darkness. Dwarven runes, badly worn, are carved above the entrance. A cold draft carries the scent of dust and decay.",
+      "dimensions": {"width": 30, "length": 20},
+      "exits": [
+        {"direction": "north", "to_room": 2, "door": "open_archway"}
+      ],
+      "contents": {
+        "type": "empty",
+        "details": "Broken mining equipment lies scattered about. A successful Search check (1 in 6) reveals a rusted but usable iron spike."
+      }
+    },
+    {
+      "id": 2,
+      "name": "Guard Chamber",
+      "description": "This room once served as a guard post. Stone benches line the walls, and rusted weapon racks stand empty. The air is stale.",
+      "dimensions": {"width": 20, "length": 20},
+      "exits": [
+        {"direction": "south", "to_room": 1, "door": "open_archway"},
+        {"direction": "east", "to_room": 3, "door": "wooden"},
+        {"direction": "north", "to_room": 4, "door": "wooden_locked", "lock_dc": 15}
+      ],
+      "contents": {
+        "type": "monster",
+        "monsters": [
+          {"type": "skeleton", "count": 3, "hp": [6, 4, 5]}
+        ],
+        "treasure": {
+          "coins": {"gp": 12, "sp": 45},
+          "items": ["Rusted short sword (functional)"]
+        }
+      }
+    },
+    {
+      "id": 3,
+      "name": "Storage Room",
+      "description": "Shelves line the walls of this small chamber, most bare or holding only dust. A few sealed clay jars remain intact.",
+      "dimensions": {"width": 15, "length": 15},
+      "exits": [
+        {"direction": "west", "to_room": 2, "door": "wooden"}
+      ],
+      "contents": {
+        "type": "treasure",
+        "treasure": {
+          "coins": {"gp": 30},
+          "items": ["Potion of Healing (2d4+2)", "50 feet of hemp rope", "Lantern (full)"]
+        },
+        "trap": {
+          "type": "poison_needle",
+          "trigger": "Opening the third jar",
+          "damage": "1d4 poison damage, save vs. Poison or additional 1d6",
+          "detection": "Find Traps or careful inspection (1 in 6)"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "name": "Hall of the Dead",
+      "description": "A long corridor lined with stone alcoves, each containing a dwarven sarcophagus. Faded murals depict dwarven warriors in battle. Several sarcophagi have been broken open from the inside.",
+      "dimensions": {"width": 15, "length": 50},
+      "exits": [
+        {"direction": "south", "to_room": 2, "door": "wooden_locked"},
+        {"direction": "north", "to_room": 5, "door": "iron"},
+        {"direction": "east", "to_room": 6, "door": "secret", "search_dc": 2}
+      ],
+      "contents": {
+        "type": "monster",
+        "monsters": [
+          {"type": "zombie", "count": 4, "hp": [12, 9, 11, 8]}
+        ],
+        "special": "The zombies rise from the broken sarcophagi when the party reaches the middle of the hall. Surprise on 1-3 (d6)."
+      }
+    },
+    {
+      "id": 5,
+      "name": "The Defiled Shrine",
+      "description": "This chamber was once a dwarven shrine to Moradin. The altar has been overturned and dark runes scrawled in dried blood cover the walls. A sickly green glow emanates from a cracked crystal set into the floor.",
+      "dimensions": {"width": 30, "length": 30},
+      "exits": [
+        {"direction": "south", "to_room": 4, "door": "iron"}
+      ],
+      "contents": {
+        "type": "boss",
+        "monsters": [
+          {"type": "ghoul", "count": 2, "hp": [14, 11]},
+          {
+            "type": "custom",
+            "name": "Khar-Dhuum the Wight",
+            "hp": 22,
+            "ac": 5,
+            "attacks": ["1d4 + energy drain"],
+            "special": "Energy drain: successful hit drains 1 level. Immune to sleep, charm, hold, cold. Silver or magic weapons to hit."
+          }
+        ],
+        "treasure": {
+          "coins": {"gp": 350, "sp": 800, "ep": 200},
+          "gems": [{"type": "garnet", "value": 100}, {"type": "moonstone", "value": 50}],
+          "items": ["Sword +1", "Shield +1", "Scroll of Protection from Undead"]
+        },
+        "special": "Destroying the cracked crystal (AC 5, 10 HP) causes the remaining undead in the dungeon to collapse. The crystal radiates evil and necromantic magic."
+      }
+    },
+    {
+      "id": 6,
+      "name": "Hidden Treasury",
+      "description": "A small, dusty chamber hidden behind a secret door. Dwarven runes on the wall read 'For the faithful in times of need.' A stone chest sits in the center.",
+      "dimensions": {"width": 10, "length": 10},
+      "exits": [
+        {"direction": "west", "to_room": 4, "door": "secret"}
+      ],
+      "contents": {
+        "type": "treasure",
+        "treasure": {
+          "coins": {"gp": 200, "pp": 25},
+          "items": ["Potion of Extra Healing (3d8+3)", "Wand of Magic Detection (15 charges)", "Dwarven war hammer (masterwork, non-magical)"]
+        }
+      }
+    }
+  ],
+  "encounters": [
+    {
+      "name": "The Mine Entrance",
+      "trigger": "Entering room 1",
+      "read_aloud": "The mine entrance yawns before you like the maw of some great beast. The dwarven runes above read, in Common, 'Here rest the honored dead of Clan Stoneshield.' A cold wind moans from within."
+    },
+    {
+      "name": "Zombie Ambush",
+      "trigger": "Reaching center of room 4",
+      "read_aloud": "As you pass between the broken sarcophagi, the sound of grinding stone fills the hall. Pale, rotting hands reach from the darkness of the alcoves as the dead rise to attack!"
+    },
+    {
+      "name": "The Wight Lord",
+      "trigger": "Entering room 5",
+      "read_aloud": "The green glow from the cracked crystal illuminates a horrific scene. Two emaciated, grey-skinned creatures crouch near the desecrated altar. Behind them, seated on the overturned altar like a throne, is a figure in corroded dwarven plate armor. Its eyes burn with cold, malevolent intelligence. 'You dare disturb the rest of Khar-Dhuum?' it rasps. 'Then join my army of the dead!'"
+    }
+  ],
+  "rewards": {
+    "xp_total": "Approximately 1,200-1,500 XP per character",
+    "treasure_total": "Approximately 1,500 GP value",
+    "story_reward": "The village of Millhaven is grateful. Characters gain free room and board at the Millhaven Inn and a 10% discount at the general store."
+  }
+}
