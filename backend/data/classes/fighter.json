@@ -1,0 +1,130 @@
+{
+  "class": "Fighter",
+  "source": "PHB",
+  "hit_die": "d10",
+  "prime_requisite": ["STR"],
+  "minimum_ability_scores": {},
+  "alignment_restrictions": "Any",
+  "armor_permitted": "Any",
+  "shields_permitted": "Any",
+  "weapons_permitted": "All",
+  "oil_permitted": true,
+  "poison_permitted": false,
+  "starting_gold": "5d4x10",
+  "experience_table": [
+    { "level": 1, "xp_required": 0, "title": "Veteran", "hit_dice": "1d10" },
+    { "level": 2, "xp_required": 2000, "title": "Warrior", "hit_dice": "2d10" },
+    { "level": 3, "xp_required": 4000, "title": "Swordsman", "hit_dice": "3d10" },
+    { "level": 4, "xp_required": 8000, "title": "Hero", "hit_dice": "4d10" },
+    { "level": 5, "xp_required": 18000, "title": "Swashbuckler", "hit_dice": "5d10" },
+    { "level": 6, "xp_required": 35000, "title": "Myrmidon", "hit_dice": "6d10" },
+    { "level": 7, "xp_required": 70000, "title": "Champion", "hit_dice": "7d10" },
+    { "level": 8, "xp_required": 125000, "title": "Superhero", "hit_dice": "8d10" },
+    { "level": 9, "xp_required": 250000, "title": "Lord", "hit_dice": "9d10" },
+    { "level": 10, "xp_required": 500000, "title": "Lord (10th)", "hit_dice": "9d10+3" },
+    { "level": 11, "xp_required": 750000, "title": "Lord (11th)", "hit_dice": "9d10+6" }
+  ],
+  "xp_per_additional_level": 250000,
+  "hp_after_name_level": 3,
+  "saving_throws": {
+    "levels_1_2": {
+      "paralyzation_poison_death_magic": 14,
+      "petrification_polymorph": 15,
+      "rod_staff_wand": 16,
+      "breath_weapon": 17,
+      "spells": 17
+    },
+    "levels_3_4": {
+      "paralyzation_poison_death_magic": 13,
+      "petrification_polymorph": 14,
+      "rod_staff_wand": 15,
+      "breath_weapon": 16,
+      "spells": 16
+    },
+    "levels_5_6": {
+      "paralyzation_poison_death_magic": 11,
+      "petrification_polymorph": 12,
+      "rod_staff_wand": 13,
+      "breath_weapon": 13,
+      "spells": 14
+    },
+    "levels_7_8": {
+      "paralyzation_poison_death_magic": 10,
+      "petrification_polymorph": 11,
+      "rod_staff_wand": 12,
+      "breath_weapon": 12,
+      "spells": 13
+    },
+    "levels_9_10": {
+      "paralyzation_poison_death_magic": 8,
+      "petrification_polymorph": 9,
+      "rod_staff_wand": 10,
+      "breath_weapon": 9,
+      "spells": 11
+    },
+    "levels_11_12": {
+      "paralyzation_poison_death_magic": 7,
+      "petrification_polymorph": 8,
+      "rod_staff_wand": 9,
+      "breath_weapon": 8,
+      "spells": 10
+    },
+    "levels_13_14": {
+      "paralyzation_poison_death_magic": 5,
+      "petrification_polymorph": 6,
+      "rod_staff_wand": 7,
+      "breath_weapon": 5,
+      "spells": 8
+    },
+    "levels_15_16": {
+      "paralyzation_poison_death_magic": 4,
+      "petrification_polymorph": 5,
+      "rod_staff_wand": 6,
+      "breath_weapon": 4,
+      "spells": 7
+    },
+    "levels_17_plus": {
+      "paralyzation_poison_death_magic": 3,
+      "petrification_polymorph": 4,
+      "rod_staff_wand": 5,
+      "breath_weapon": 4,
+      "spells": 6
+    }
+  },
+  "attack_matrix": {
+    "description": "To-hit numbers needed on d20 vs armor class",
+    "levels_1": { "-10": 26, "-9": 25, "-8": 24, "-7": 23, "-6": 22, "-5": 21, "-4": 20, "-3": 20, "-2": 20, "-1": 20, "0": 20, "1": 19, "2": 18, "3": 17, "4": 16, "5": 15, "6": 14, "7": 13, "8": 12, "9": 11, "10": 10 },
+    "levels_2": { "-10": 25, "-9": 24, "-8": 23, "-7": 22, "-6": 21, "-5": 20, "-4": 20, "-3": 20, "-2": 20, "-1": 19, "0": 19, "1": 18, "2": 17, "3": 16, "4": 15, "5": 14, "6": 13, "7": 12, "8": 11, "9": 10, "10": 9 },
+    "levels_3_4": { "-10": 24, "-9": 23, "-8": 22, "-7": 21, "-6": 20, "-5": 20, "-4": 20, "-3": 20, "-2": 19, "-1": 18, "0": 18, "1": 17, "2": 16, "3": 15, "4": 14, "5": 13, "6": 12, "7": 11, "8": 10, "9": 9, "10": 8 },
+    "levels_5_6": { "-10": 23, "-9": 22, "-8": 21, "-7": 20, "-6": 20, "-5": 20, "-4": 19, "-3": 18, "-2": 17, "-1": 16, "0": 16, "1": 15, "2": 14, "3": 13, "4": 12, "5": 11, "6": 10, "7": 9, "8": 8, "9": 7, "10": 6 },
+    "levels_7_8": { "-10": 21, "-9": 20, "-8": 20, "-7": 20, "-6": 19, "-5": 18, "-4": 17, "-3": 16, "-2": 15, "-1": 14, "0": 14, "1": 13, "2": 12, "3": 11, "4": 10, "5": 9, "6": 8, "7": 7, "8": 6, "9": 5, "10": 4 },
+    "levels_9_10": { "-10": 20, "-9": 20, "-8": 19, "-7": 18, "-6": 17, "-5": 16, "-4": 15, "-3": 14, "-2": 13, "-1": 12, "0": 12, "1": 11, "2": 10, "3": 9, "4": 8, "5": 7, "6": 6, "7": 5, "8": 4, "9": 3, "10": 2 },
+    "levels_11_12": { "-10": 18, "-9": 17, "-8": 16, "-7": 15, "-6": 14, "-5": 13, "-4": 12, "-3": 11, "-2": 10, "-1": 9, "0": 9, "1": 8, "2": 7, "3": 6, "4": 5, "5": 4, "6": 3, "7": 2, "8": 1, "9": 1, "10": 1 },
+    "levels_13_14": { "-10": 16, "-9": 15, "-8": 14, "-7": 13, "-6": 12, "-5": 11, "-4": 10, "-3": 9, "-2": 8, "-1": 7, "0": 7, "1": 6, "2": 5, "3": 4, "4": 3, "5": 2, "6": 1, "7": 1, "8": 1, "9": 1, "10": 1 },
+    "levels_15_plus": { "-10": 14, "-9": 13, "-8": 12, "-7": 11, "-6": 10, "-5": 9, "-4": 8, "-3": 7, "-2": 6, "-1": 5, "0": 5, "1": 4, "2": 3, "3": 2, "4": 1, "5": 1, "6": 1, "7": 1, "8": 1, "9": 1, "10": 1 }
+  },
+  "weapon_proficiencies": {
+    "initial": 4,
+    "gained_per_levels": 3,
+    "non_proficiency_penalty": -2
+  },
+  "class_abilities": {
+    "multiple_attacks": {
+      "description": "Fighters gain multiple attacks per round at higher levels",
+      "levels_1_6": "1/1",
+      "levels_7_12": "3/2",
+      "levels_13_plus": "2/1"
+    },
+    "attract_followers": {
+      "level": 9,
+      "description": "At 9th level (Lord), the fighter may build a castle and attract followers. The fighter attracts a body of men-at-arms."
+    },
+    "strength_bonuses": {
+      "description": "Fighters are the only class eligible for exceptional strength (18/01 through 18/00) if STR is 18."
+    }
+  },
+  "prime_requisite_xp_bonus": {
+    "16+": "10% bonus to earned XP",
+    "description": "Fighters with 16+ STR gain a 10% bonus to earned experience points."
+  }
+}

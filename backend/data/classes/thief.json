@@ -1,0 +1,151 @@
+{
+  "class": "Thief",
+  "source": "PHB",
+  "hit_die": "d6",
+  "prime_requisite": ["DEX"],
+  "minimum_ability_scores": {
+    "DEX": 9
+  },
+  "alignment_restrictions": "Any non-lawful (NG, NE, N, CG, CE, CN)",
+  "armor_permitted": ["Leather armor", "Studded leather", "Padded armor", "Elven chain (if available)"],
+  "shields_permitted": "None",
+  "weapons_permitted": ["Club", "Dagger", "Dart", "Hand crossbow", "Knife", "Lasso", "Short sword", "Sling", "Broad sword", "Long sword", "Scimitar"],
+  "starting_gold": "2d6x10",
+  "experience_table": [
+    { "level": 1, "xp_required": 0, "title": "Rogue (Apprentice)", "hit_dice": "1d6" },
+    { "level": 2, "xp_required": 1250, "title": "Footpad", "hit_dice": "2d6" },
+    { "level": 3, "xp_required": 2500, "title": "Cutpurse", "hit_dice": "3d6" },
+    { "level": 4, "xp_required": 5000, "title": "Robber", "hit_dice": "4d6" },
+    { "level": 5, "xp_required": 10000, "title": "Burglar", "hit_dice": "5d6" },
+    { "level": 6, "xp_required": 20000, "title": "Filcher", "hit_dice": "6d6" },
+    { "level": 7, "xp_required": 42500, "title": "Sharper", "hit_dice": "7d6" },
+    { "level": 8, "xp_required": 70000, "title": "Magsman", "hit_dice": "8d6" },
+    { "level": 9, "xp_required": 110000, "title": "Thief", "hit_dice": "9d6" },
+    { "level": 10, "xp_required": 160000, "title": "Master Thief", "hit_dice": "10d6" },
+    { "level": 11, "xp_required": 220000, "title": "Master Thief (11th)", "hit_dice": "10d6+2" },
+    { "level": 12, "xp_required": 440000, "title": "Master Thief (12th)", "hit_dice": "10d6+4" }
+  ],
+  "xp_per_additional_level": 220000,
+  "hp_after_name_level": 2,
+  "saving_throws": {
+    "levels_1_4": {
+      "paralyzation_poison_death_magic": 13,
+      "petrification_polymorph": 12,
+      "rod_staff_wand": 14,
+      "breath_weapon": 16,
+      "spells": 15
+    },
+    "levels_5_8": {
+      "paralyzation_poison_death_magic": 12,
+      "petrification_polymorph": 11,
+      "rod_staff_wand": 12,
+      "breath_weapon": 15,
+      "spells": 13
+    },
+    "levels_9_12": {
+      "paralyzation_poison_death_magic": 11,
+      "petrification_polymorph": 10,
+      "rod_staff_wand": 10,
+      "breath_weapon": 14,
+      "spells": 11
+    },
+    "levels_13_16": {
+      "paralyzation_poison_death_magic": 10,
+      "petrification_polymorph": 9,
+      "rod_staff_wand": 8,
+      "breath_weapon": 13,
+      "spells": 9
+    },
+    "levels_17_20": {
+      "paralyzation_poison_death_magic": 9,
+      "petrification_polymorph": 8,
+      "rod_staff_wand": 6,
+      "breath_weapon": 12,
+      "spells": 7
+    },
+    "levels_21_plus": {
+      "paralyzation_poison_death_magic": 8,
+      "petrification_polymorph": 7,
+      "rod_staff_wand": 4,
+      "breath_weapon": 11,
+      "spells": 5
+    }
+  },
+  "attack_matrix": "As Cleric",
+  "weapon_proficiencies": {
+    "initial": 2,
+    "gained_per_levels": 4,
+    "non_proficiency_penalty": -3
+  },
+  "thief_skills": {
+    "description": "Base chances for thief abilities. Modified by race, DEX, and armor worn.",
+    "table": {
+      "level_1":  { "pick_pockets": 30, "open_locks": 25, "find_remove_traps": 20, "move_silently": 15, "hide_in_shadows": 10, "hear_noise": 10, "climb_walls": 85, "read_languages": 0 },
+      "level_2":  { "pick_pockets": 35, "open_locks": 29, "find_remove_traps": 25, "move_silently": 21, "hide_in_shadows": 15, "hear_noise": 10, "climb_walls": 86, "read_languages": 0 },
+      "level_3":  { "pick_pockets": 40, "open_locks": 33, "find_remove_traps": 30, "move_silently": 27, "hide_in_shadows": 20, "hear_noise": 15, "climb_walls": 87, "read_languages": 0 },
+      "level_4":  { "pick_pockets": 45, "open_locks": 37, "find_remove_traps": 35, "move_silently": 33, "hide_in_shadows": 25, "hear_noise": 15, "climb_walls": 88, "read_languages": 20 },
+      "level_5":  { "pick_pockets": 50, "open_locks": 42, "find_remove_traps": 40, "move_silently": 40, "hide_in_shadows": 31, "hear_noise": 20, "climb_walls": 90, "read_languages": 25 },
+      "level_6":  { "pick_pockets": 55, "open_locks": 47, "find_remove_traps": 45, "move_silently": 47, "hide_in_shadows": 37, "hear_noise": 20, "climb_walls": 92, "read_languages": 30 },
+      "level_7":  { "pick_pockets": 60, "open_locks": 52, "find_remove_traps": 50, "move_silently": 55, "hide_in_shadows": 43, "hear_noise": 25, "climb_walls": 94, "read_languages": 35 },
+      "level_8":  { "pick_pockets": 65, "open_locks": 57, "find_remove_traps": 55, "move_silently": 62, "hide_in_shadows": 49, "hear_noise": 25, "climb_walls": 96, "read_languages": 40 },
+      "level_9":  { "pick_pockets": 70, "open_locks": 62, "find_remove_traps": 60, "move_silently": 70, "hide_in_shadows": 56, "hear_noise": 30, "climb_walls": 98, "read_languages": 45 },
+      "level_10": { "pick_pockets": 80, "open_locks": 67, "find_remove_traps": 65, "move_silently": 78, "hide_in_shadows": 63, "hear_noise": 30, "climb_walls": 99, "read_languages": 50 },
+      "level_11": { "pick_pockets": 90, "open_locks": 72, "find_remove_traps": 70, "move_silently": 86, "hide_in_shadows": 70, "hear_noise": 35, "climb_walls": 99.1, "read_languages": 55 },
+      "level_12": { "pick_pockets": 95, "open_locks": 77, "find_remove_traps": 75, "move_silently": 94, "hide_in_shadows": 77, "hear_noise": 35, "climb_walls": 99.2, "read_languages": 60 },
+      "level_13": { "pick_pockets": 99, "open_locks": 82, "find_remove_traps": 80, "move_silently": 99, "hide_in_shadows": 85, "hear_noise": 40, "climb_walls": 99.3, "read_languages": 65 },
+      "level_14": { "pick_pockets": 99, "open_locks": 87, "find_remove_traps": 85, "move_silently": 99, "hide_in_shadows": 93, "hear_noise": 40, "climb_walls": 99.4, "read_languages": 70 },
+      "level_15": { "pick_pockets": 99, "open_locks": 92, "find_remove_traps": 90, "move_silently": 99, "hide_in_shadows": 99, "hear_noise": 45, "climb_walls": 99.5, "read_languages": 75 },
+      "level_16": { "pick_pockets": 99, "open_locks": 97, "find_remove_traps": 95, "move_silently": 99, "hide_in_shadows": 99, "hear_noise": 50, "climb_walls": 99.6, "read_languages": 80 },
+      "level_17": { "pick_pockets": 99, "open_locks": 99, "find_remove_traps": 99, "move_silently": 99, "hide_in_shadows": 99, "hear_noise": 55, "climb_walls": 99.7, "read_languages": 80 }
+    },
+    "racial_adjustments": {
+      "dwarf":    { "pick_pockets": -5, "open_locks": 10, "find_remove_traps": 15, "move_silently": 0, "hide_in_shadows": 0, "hear_noise": 0, "climb_walls": -10, "read_languages": -5 },
+      "elf":      { "pick_pockets": 5, "open_locks": -5, "find_remove_traps": 0, "move_silently": 5, "hide_in_shadows": 10, "hear_noise": 5, "climb_walls": 0, "read_languages": 0 },
+      "gnome":    { "pick_pockets": 0, "open_locks": 5, "find_remove_traps": 10, "move_silently": 5, "hide_in_shadows": 5, "hear_noise": 10, "climb_walls": -15, "read_languages": 0 },
+      "half_elf": { "pick_pockets": 10, "open_locks": 0, "find_remove_traps": 0, "move_silently": 0, "hide_in_shadows": 5, "hear_noise": 0, "climb_walls": 0, "read_languages": 0 },
+      "halfling": { "pick_pockets": 5, "open_locks": 5, "find_remove_traps": 5, "move_silently": 10, "hide_in_shadows": 15, "hear_noise": 5, "climb_walls": -15, "read_languages": -5 },
+      "half_orc": { "pick_pockets": -5, "open_locks": 5, "find_remove_traps": 5, "move_silently": 0, "hide_in_shadows": 0, "hear_noise": 5, "climb_walls": 5, "read_languages": -10 }
+    },
+    "dex_adjustments": {
+      "9":  { "pick_pockets": -15, "open_locks": -10, "find_remove_traps": -10, "move_silently": -20, "hide_in_shadows": -10 },
+      "10": { "pick_pockets": -10, "open_locks": -5, "find_remove_traps": -10, "move_silently": -15, "hide_in_shadows": -5 },
+      "11": { "pick_pockets": -5, "open_locks": 0, "find_remove_traps": -5, "move_silently": -10, "hide_in_shadows": 0 },
+      "12": { "pick_pockets": 0, "open_locks": 0, "find_remove_traps": 0, "move_silently": -5, "hide_in_shadows": 0 },
+      "13": { "pick_pockets": 0, "open_locks": 0, "find_remove_traps": 0, "move_silently": 0, "hide_in_shadows": 0 },
+      "14": { "pick_pockets": 0, "open_locks": 0, "find_remove_traps": 0, "move_silently": 0, "hide_in_shadows": 0 },
+      "15": { "pick_pockets": 0, "open_locks": 0, "find_remove_traps": 0, "move_silently": 0, "hide_in_shadows": 0 },
+      "16": { "pick_pockets": 0, "open_locks": 5, "find_remove_traps": 0, "move_silently": 0, "hide_in_shadows": 0 },
+      "17": { "pick_pockets": 5, "open_locks": 10, "find_remove_traps": 0, "move_silently": 5, "hide_in_shadows": 5 },
+      "18": { "pick_pockets": 10, "open_locks": 15, "find_remove_traps": 5, "move_silently": 10, "hide_in_shadows": 10 },
+      "19": { "pick_pockets": 15, "open_locks": 20, "find_remove_traps": 10, "move_silently": 15, "hide_in_shadows": 15 }
+    },
+    "hear_noise_note": "Hear noise is rolled on d6 (not d100). The percentages listed represent the x-in-20 chance; divide by 5 to get d6 value."
+  },
+  "backstab": {
+    "description": "If a thief can attack an opponent from behind and unnoticed, the thief gains +4 to hit and deals multiplied damage.",
+    "to_hit_bonus": 4,
+    "damage_multiplier_by_level": {
+      "levels_1_4": 2,
+      "levels_5_8": 3,
+      "levels_9_12": 4,
+      "levels_13_plus": 5
+    }
+  },
+  "class_abilities": {
+    "thieves_cant": {
+      "description": "All thieves speak Thieves' Cant, a secret language of signs, signals, and code words."
+    },
+    "read_scrolls": {
+      "description": "At 10th level, a thief can attempt to read and use magic-user and cleric scrolls. There is a 25% chance of misreading the spell, which has potentially dangerous effects.",
+      "available_at_level": 10,
+      "failure_chance": 25
+    },
+    "attract_followers": {
+      "level": 10,
+      "description": "At 10th level, a thief may build a stronghold (thieves' guild) and attract 4d6 thieves of various levels as followers."
+    }
+  },
+  "prime_requisite_xp_bonus": {
+    "16+": "10% bonus to earned XP"
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "class": "Ranger",
+  "source": "PHB",
+  "subclass_of": "Fighter",
+  "hit_die": "d8",
+  "special_first_level_hp": "2d8",
+  "prime_requisite": ["STR", "INT", "WIS"],
+  "minimum_ability_scores": {
+    "STR": 13,
+    "INT": 13,
+    "WIS": 14,
+    "CON": 14
+  },
+  "alignment_restrictions": "Any Good (LG, NG, CG)",
+  "armor_permitted": "Any",
+  "shields_permitted": "Any",
+  "weapons_permitted": "All",
+  "starting_gold": "5d4x10",
+  "experience_table": [
+    { "level": 1, "xp_required": 0, "title": "Runner", "hit_dice": "2d8" },
+    { "level": 2, "xp_required": 2250, "title": "Strider", "hit_dice": "3d8" },
+    { "level": 3, "xp_required": 4500, "title": "Scout", "hit_dice": "4d8" },
+    { "level": 4, "xp_required": 10000, "title": "Courser", "hit_dice": "5d8" },
+    { "level": 5, "xp_required": 20000, "title": "Tracker", "hit_dice": "6d8" },
+    { "level": 6, "xp_required": 40000, "title": "Guide", "hit_dice": "7d8" },
+    { "level": 7, "xp_required": 90000, "title": "Pathfinder", "hit_dice": "8d8" },
+    { "level": 8, "xp_required": 150000, "title": "Ranger", "hit_dice": "9d8" },
+    { "level": 9, "xp_required": 300000, "title": "Ranger Knight", "hit_dice": "10d8" },
+    { "level": 10, "xp_required": 600000, "title": "Ranger Lord", "hit_dice": "11d8" },
+    { "level": 11, "xp_required": 900000, "title": "Ranger Lord (11th)", "hit_dice": "11d8+2" }
+  ],
+  "xp_per_additional_level": 300000,
+  "hp_after_name_level": 2,
+  "saving_throws": "As Fighter",
+  "attack_matrix": "As Fighter",
+  "weapon_proficiencies": {
+    "initial": 3,
+    "gained_per_levels": 3,
+    "non_proficiency_penalty": -2
+  },
+  "class_abilities": {
+    "damage_bonus_vs_giant_class": {
+      "description": "Rangers deal bonus damage per level against 'giant class' creatures: bugbears, ettins, giants, gnolls, goblins, hobgoblins, kobolds, ogres, ogre magi, orcs, and trolls.",
+      "damage_per_level": 1,
+      "affected_creatures": ["bugbear", "ettin", "giant", "gnoll", "goblin", "hobgoblin", "kobold", "ogre", "ogre_mage", "orc", "troll"]
+    },
+    "surprise": {
+      "description": "Rangers surprise on 1-3 on d6 and are only surprised on 1 on d6.",
+      "surprise_others": "1-3 on d6",
+      "surprised_by_others": "1 on d6"
+    },
+    "tracking": {
+      "description": "Rangers can track creatures outdoors and underground.",
+      "base_chance_outdoor": "90%",
+      "base_chance_underground": "65%",
+      "modifiers": {
+        "each_creature_above_1": 2,
+        "each_hour_old": -6,
+        "each_hour_rain": -25,
+        "soft_ground": 5,
+        "firm_ground": 0,
+        "rocky_ground": -25
+      }
+    },
+    "travel_light": {
+      "description": "Rangers must travel light. Until 8th level, they may not have more than 3 henchmen and may not hire any other followers or employees. They may own only those items they can carry."
+    },
+    "druid_spells": {
+      "description": "Rangers gain druid spell ability at 8th level.",
+      "available_at_level": 8,
+      "spell_progression": {
+        "level_8":  { "1": 1 },
+        "level_9":  { "1": 1 },
+        "level_10": { "1": 2 },
+        "level_11": { "1": 2 },
+        "level_12": { "1": 2, "2": 1 },
+        "level_13": { "1": 2, "2": 1 },
+        "level_14": { "1": 2, "2": 2 },
+        "level_15": { "1": 2, "2": 2 },
+        "level_16": { "1": 2, "2": 2, "3": 1 },
+        "level_17": { "1": 2, "2": 2, "3": 2 }
+      }
+    },
+    "magic_user_spells": {
+      "description": "Rangers gain magic-user spell ability at 9th level.",
+      "available_at_level": 9,
+      "spell_progression": {
+        "level_9":  { "1": 1 },
+        "level_10": { "1": 1 },
+        "level_11": { "1": 2 },
+        "level_12": { "1": 2 },
+        "level_13": { "1": 2, "2": 1 },
+        "level_14": { "1": 2, "2": 1 },
+        "level_15": { "1": 2, "2": 2 },
+        "level_16": { "1": 2, "2": 2, "3": 1 },
+        "level_17": { "1": 2, "2": 2, "3": 2 }
+      }
+    },
+    "attract_followers": {
+      "level": 10,
+      "description": "At 10th level, the ranger attracts 2d6 special followers. Roll on the ranger followers table."
+    },
+    "empathy_with_animals": {
+      "description": "Rangers have limited empathy with wild animals and can befriend them."
+    }
+  },
+  "multiple_attacks": {
+    "levels_1_7": "1/1",
+    "levels_8_14": "3/2",
+    "levels_15_plus": "2/1"
+  },
+  "prime_requisite_xp_bonus": {
+    "16+_STR_INT_WIS": "10% bonus to earned XP"
+  }
+}

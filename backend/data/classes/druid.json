@@ -1,0 +1,101 @@
+{
+  "class": "Druid",
+  "source": "PHB",
+  "subclass_of": "Cleric",
+  "hit_die": "d8",
+  "prime_requisite": ["WIS", "CHA"],
+  "minimum_ability_scores": {
+    "WIS": 12,
+    "CHA": 15
+  },
+  "alignment_restrictions": "True Neutral only",
+  "armor_permitted": ["Leather armor", "Padded armor", "Wooden shield"],
+  "shields_permitted": "Wooden only",
+  "weapons_permitted": ["Club", "Dagger", "Dart", "Hammer", "Scimitar", "Sling", "Spear", "Staff"],
+  "starting_gold": "3d6x10",
+  "experience_table": [
+    { "level": 1, "xp_required": 0, "title": "Aspirant", "hit_dice": "1d8" },
+    { "level": 2, "xp_required": 2000, "title": "Ovate", "hit_dice": "2d8" },
+    { "level": 3, "xp_required": 4000, "title": "Initiate of the 1st Circle", "hit_dice": "3d8" },
+    { "level": 4, "xp_required": 7500, "title": "Initiate of the 2nd Circle", "hit_dice": "4d8" },
+    { "level": 5, "xp_required": 12500, "title": "Initiate of the 3rd Circle", "hit_dice": "5d8" },
+    { "level": 6, "xp_required": 20000, "title": "Initiate of the 4th Circle", "hit_dice": "6d8" },
+    { "level": 7, "xp_required": 35000, "title": "Initiate of the 5th Circle", "hit_dice": "7d8" },
+    { "level": 8, "xp_required": 60000, "title": "Initiate of the 6th Circle", "hit_dice": "8d8" },
+    { "level": 9, "xp_required": 90000, "title": "Initiate of the 7th Circle", "hit_dice": "9d8" },
+    { "level": 10, "xp_required": 125000, "title": "Initiate of the 8th Circle", "hit_dice": "10d8" },
+    { "level": 11, "xp_required": 200000, "title": "Initiate of the 9th Circle", "hit_dice": "11d8" },
+    { "level": 12, "xp_required": 300000, "title": "Druid", "hit_dice": "12d8" },
+    { "level": 13, "xp_required": 750000, "title": "Archdruid", "hit_dice": "13d8" },
+    { "level": 14, "xp_required": 1500000, "title": "The Great Druid", "hit_dice": "14d8" }
+  ],
+  "hp_after_name_level": 0,
+  "max_level": 14,
+  "level_note": "Advancement above 12th level requires defeating a current holder of the title in magical or physical combat.",
+  "saving_throws": "As Cleric",
+  "attack_matrix": "As Cleric",
+  "weapon_proficiencies": {
+    "initial": 2,
+    "gained_per_levels": 5,
+    "non_proficiency_penalty": -4
+  },
+  "spell_progression": {
+    "level_1":  { "1": 2 },
+    "level_2":  { "1": 2, "2": 1 },
+    "level_3":  { "1": 3, "2": 2, "3": 1 },
+    "level_4":  { "1": 4, "2": 2, "3": 2 },
+    "level_5":  { "1": 4, "2": 3, "3": 2 },
+    "level_6":  { "1": 4, "2": 3, "3": 2, "4": 1 },
+    "level_7":  { "1": 4, "2": 4, "3": 3, "4": 1 },
+    "level_8":  { "1": 4, "2": 4, "3": 3, "4": 2 },
+    "level_9":  { "1": 5, "2": 4, "3": 3, "4": 2, "5": 1 },
+    "level_10": { "1": 5, "2": 4, "3": 3, "4": 3, "5": 2 },
+    "level_11": { "1": 5, "2": 5, "3": 3, "4": 3, "5": 2, "6": 1 },
+    "level_12": { "1": 6, "2": 5, "3": 4, "4": 4, "5": 3, "6": 2, "7": 1 },
+    "level_13": { "1": 6, "2": 5, "3": 5, "4": 5, "5": 4, "6": 3, "7": 2 },
+    "level_14": { "1": 6, "2": 6, "3": 6, "4": 6, "5": 5, "6": 4, "7": 3 }
+  },
+  "class_abilities": {
+    "spellcasting": {
+      "description": "Druids cast druid spells through their connection to nature. They do not use spellbooks.",
+      "spell_type": "divine (nature)",
+      "max_spell_level": 7,
+      "spellbook_required": false,
+      "memorization_required": true
+    },
+    "druidic_language": {
+      "description": "All druids speak Druidic, a secret language known only to druids. This is in addition to other languages."
+    },
+    "identify_plants_animals": {
+      "description": "Can identify plant type, animal type, and pure water with perfect accuracy.",
+      "available_at_level": 1
+    },
+    "pass_through_undergrowth": {
+      "description": "Can pass through overgrown areas (thick thorn bushes, tangled vines, briar patches) at normal movement rate without leaving a trail.",
+      "available_at_level": 3
+    },
+    "woodland_languages": {
+      "description": "At 3rd level and every level thereafter, the druid learns one woodland language: centaur, dryad, elven, faun, gnome, green dragon, hill giant, lizard man, manticore, nixie, pixie, sprite, treant.",
+      "available_at_level": 3,
+      "languages_gained_per_level": 1
+    },
+    "immunity_to_charm": {
+      "description": "Immune to charm spells cast by woodland creatures (dryads, nixies, etc.).",
+      "available_at_level": 7
+    },
+    "shape_change": {
+      "description": "At 7th level, the druid can shape change into a natural animal up to 3 times per day. Each form can be used once: one reptile, one bird, one mammal. Healing of 10-60% of damage occurs with each change.",
+      "available_at_level": 7,
+      "uses_per_day": 3,
+      "forms": ["reptile", "bird", "mammal"],
+      "healing_per_change": "1d6x10 percent"
+    },
+    "fire_and_lightning_immunity": {
+      "description": "Immune to fire and lightning from natural sources. +2 to saves vs fire and lightning from magical sources.",
+      "available_at_level": 7
+    }
+  },
+  "prime_requisite_xp_bonus": {
+    "16+_WIS_and_16+_CHA": "10% bonus to earned XP"
+  }
+}

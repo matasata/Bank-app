@@ -1,0 +1,107 @@
+{
+  "class": "Assassin",
+  "source": "PHB",
+  "subclass_of": "Thief",
+  "hit_die": "d6",
+  "prime_requisite": ["STR", "INT", "DEX"],
+  "minimum_ability_scores": {
+    "STR": 12,
+    "INT": 11,
+    "DEX": 12
+  },
+  "alignment_restrictions": "Any Evil (LE, NE, CE)",
+  "armor_permitted": ["Leather armor", "Studded leather", "Padded armor", "Shield"],
+  "shields_permitted": "Any",
+  "weapons_permitted": "All",
+  "starting_gold": "2d6x10",
+  "experience_table": [
+    { "level": 1, "xp_required": 0, "title": "Bravo (Apprentice)", "hit_dice": "1d6" },
+    { "level": 2, "xp_required": 1500, "title": "Rutterkin", "hit_dice": "2d6" },
+    { "level": 3, "xp_required": 3000, "title": "Waghalter", "hit_dice": "3d6" },
+    { "level": 4, "xp_required": 6000, "title": "Murderer", "hit_dice": "4d6" },
+    { "level": 5, "xp_required": 12000, "title": "Thug", "hit_dice": "5d6" },
+    { "level": 6, "xp_required": 25000, "title": "Killer", "hit_dice": "6d6" },
+    { "level": 7, "xp_required": 50000, "title": "Cutthroat", "hit_dice": "7d6" },
+    { "level": 8, "xp_required": 100000, "title": "Executioner", "hit_dice": "8d6" },
+    { "level": 9, "xp_required": 200000, "title": "Assassin", "hit_dice": "9d6" },
+    { "level": 10, "xp_required": 300000, "title": "Expert Assassin", "hit_dice": "10d6" },
+    { "level": 11, "xp_required": 425000, "title": "Senior Assassin", "hit_dice": "11d6" },
+    { "level": 12, "xp_required": 575000, "title": "Chief Assassin", "hit_dice": "12d6" },
+    { "level": 13, "xp_required": 750000, "title": "Prime Assassin", "hit_dice": "12d6+2" },
+    { "level": 14, "xp_required": 1000000, "title": "Guildmaster Assassin", "hit_dice": "12d6+4" },
+    { "level": 15, "xp_required": 1500000, "title": "Grandfather of Assassins", "hit_dice": "12d6+6" }
+  ],
+  "max_level": 15,
+  "hp_after_name_level": 2,
+  "saving_throws": "As Thief",
+  "attack_matrix": "As Fighter",
+  "weapon_proficiencies": {
+    "initial": 3,
+    "gained_per_levels": 4,
+    "non_proficiency_penalty": -3
+  },
+  "assassination_table": {
+    "description": "When an assassin attacks by surprise with a melee weapon, there is a base chance of instant death to the victim.",
+    "base_chance_by_level": {
+      "level_1":  { "victim_level_1_to_4": 50, "victim_level_5_to_6": 45, "victim_level_7_to_8": 40, "victim_level_9_to_10": 35, "victim_level_11_to_12": 30, "victim_level_13_to_14": 25, "victim_level_15_to_16": 15, "victim_level_17_plus": 5 },
+      "level_2":  { "victim_level_1_to_4": 55, "victim_level_5_to_6": 50, "victim_level_7_to_8": 45, "victim_level_9_to_10": 40, "victim_level_11_to_12": 35, "victim_level_13_to_14": 30, "victim_level_15_to_16": 20, "victim_level_17_plus": 10 },
+      "level_3":  { "victim_level_1_to_4": 60, "victim_level_5_to_6": 55, "victim_level_7_to_8": 50, "victim_level_9_to_10": 45, "victim_level_11_to_12": 40, "victim_level_13_to_14": 35, "victim_level_15_to_16": 25, "victim_level_17_plus": 15 },
+      "level_4":  { "victim_level_1_to_4": 65, "victim_level_5_to_6": 60, "victim_level_7_to_8": 55, "victim_level_9_to_10": 50, "victim_level_11_to_12": 45, "victim_level_13_to_14": 40, "victim_level_15_to_16": 30, "victim_level_17_plus": 20 },
+      "level_5":  { "victim_level_1_to_4": 70, "victim_level_5_to_6": 65, "victim_level_7_to_8": 60, "victim_level_9_to_10": 55, "victim_level_11_to_12": 50, "victim_level_13_to_14": 45, "victim_level_15_to_16": 35, "victim_level_17_plus": 25 },
+      "level_6":  { "victim_level_1_to_4": 75, "victim_level_5_to_6": 70, "victim_level_7_to_8": 65, "victim_level_9_to_10": 60, "victim_level_11_to_12": 55, "victim_level_13_to_14": 50, "victim_level_15_to_16": 40, "victim_level_17_plus": 30 },
+      "level_7":  { "victim_level_1_to_4": 80, "victim_level_5_to_6": 75, "victim_level_7_to_8": 70, "victim_level_9_to_10": 65, "victim_level_11_to_12": 60, "victim_level_13_to_14": 55, "victim_level_15_to_16": 45, "victim_level_17_plus": 35 },
+      "level_8":  { "victim_level_1_to_4": 85, "victim_level_5_to_6": 80, "victim_level_7_to_8": 75, "victim_level_9_to_10": 70, "victim_level_11_to_12": 65, "victim_level_13_to_14": 60, "victim_level_15_to_16": 50, "victim_level_17_plus": 40 },
+      "level_9":  { "victim_level_1_to_4": 90, "victim_level_5_to_6": 85, "victim_level_7_to_8": 80, "victim_level_9_to_10": 75, "victim_level_11_to_12": 70, "victim_level_13_to_14": 65, "victim_level_15_to_16": 55, "victim_level_17_plus": 45 },
+      "level_10": { "victim_level_1_to_4": 95, "victim_level_5_to_6": 90, "victim_level_7_to_8": 85, "victim_level_9_to_10": 80, "victim_level_11_to_12": 75, "victim_level_13_to_14": 70, "victim_level_15_to_16": 60, "victim_level_17_plus": 50 },
+      "level_11": { "victim_level_1_to_4": 99, "victim_level_5_to_6": 95, "victim_level_7_to_8": 90, "victim_level_9_to_10": 85, "victim_level_11_to_12": 80, "victim_level_13_to_14": 75, "victim_level_15_to_16": 65, "victim_level_17_plus": 55 },
+      "level_12": { "victim_level_1_to_4": 99, "victim_level_5_to_6": 99, "victim_level_7_to_8": 95, "victim_level_9_to_10": 90, "victim_level_11_to_12": 85, "victim_level_13_to_14": 80, "victim_level_15_to_16": 70, "victim_level_17_plus": 60 },
+      "level_13": { "victim_level_1_to_4": 99, "victim_level_5_to_6": 99, "victim_level_7_to_8": 99, "victim_level_9_to_10": 95, "victim_level_11_to_12": 90, "victim_level_13_to_14": 85, "victim_level_15_to_16": 75, "victim_level_17_plus": 65 },
+      "level_14": { "victim_level_1_to_4": 99, "victim_level_5_to_6": 99, "victim_level_7_to_8": 99, "victim_level_9_to_10": 99, "victim_level_11_to_12": 95, "victim_level_13_to_14": 90, "victim_level_15_to_16": 80, "victim_level_17_plus": 70 },
+      "level_15": { "victim_level_1_to_4": 99, "victim_level_5_to_6": 99, "victim_level_7_to_8": 99, "victim_level_9_to_10": 99, "victim_level_11_to_12": 99, "victim_level_13_to_14": 95, "victim_level_15_to_16": 85, "victim_level_17_plus": 75 }
+    },
+    "note": "If assassination fails, normal backstab damage is dealt instead."
+  },
+  "thief_abilities": {
+    "description": "Assassins have thief abilities at a reduced rate. Use thief skill values at assassin level -2 (minimum 1st level thief).",
+    "effective_thief_level": "assassin_level - 2 (min 1)",
+    "backstab": {
+      "levels_1_4": 2,
+      "levels_5_8": 3,
+      "levels_9_12": 4,
+      "levels_13_plus": 5
+    }
+  },
+  "class_abilities": {
+    "assassination": {
+      "description": "See assassination_table. Requires surprise attack from behind with a melee weapon."
+    },
+    "disguise": {
+      "description": "Assassins can disguise themselves. Base chance of being detected is 2% per day of observation plus modifiers for race, sex, and other differences.",
+      "base_detection_per_day": 2,
+      "modifiers": {
+        "different_race": 5,
+        "different_sex": 5,
+        "different_class": 2,
+        "different_alignment": 2,
+        "height_difference_per_inch": 1,
+        "weight_difference_per_10_lbs": 1,
+        "age_difference_per_10_years": 1
+      }
+    },
+    "poison_use": {
+      "description": "Assassins may use poison (insinuative or contact). Other classes are prohibited from poison use.",
+      "available_at_level": 1,
+      "types": ["insinuative (blade venom)", "contact"]
+    },
+    "attract_followers": {
+      "level": 12,
+      "description": "At 12th level, the assassin may build a stronghold (assassins' guild) and attract followers."
+    },
+    "spy_ability": {
+      "description": "Assassins learn alignment languages as a spy skill, gaining one per level. They also can use thieves' cant."
+    }
+  },
+  "prime_requisite_xp_bonus": {
+    "16+_STR_INT_DEX": "10% bonus to earned XP"
+  }
+}
