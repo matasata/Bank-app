@@ -4,6 +4,8 @@
   "description": "AD&D 1st Edition Complete Game System",
   "main": "electron/main.js",
   "scripts": {
+    "setup": "bash setup.sh",
+    "start:game": "bash start.sh",
     "dev:frontend": "cd frontend && npm run dev",
     "dev:backend": "cd backend && uvicorn main:app --reload --port 8000",
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
