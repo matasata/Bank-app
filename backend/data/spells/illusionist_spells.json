@@ -1,0 +1,496 @@
+{
+  "class": "Illusionist",
+  "description": "PHB Illusionist Spells",
+  "spells": [
+    {
+      "name": "Audible Glamer",
+      "level": 1,
+      "school": "illusion",
+      "range": "60 yards + 10/level",
+      "duration": "3 rounds/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "1 segment",
+      "saving_throw": "special",
+      "damage": null,
+      "description": "Creates illusory sounds. Volume as 4 people per level."
+    },
+    {
+      "name": "Change Self",
+      "level": 1,
+      "school": "illusion",
+      "range": "0",
+      "duration": "2d6 rounds + 2/level",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "1 segment",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Alter appearance. Height +/- 1 foot."
+    },
+    {
+      "name": "Color Spray",
+      "level": 1,
+      "school": "alteration",
+      "range": "10 yards/level",
+      "duration": "instantaneous",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "1 segment",
+      "saving_throw": "special",
+      "damage": null,
+      "description": "Vivid colors. Up to 6 HD unconscious, 6-8 HD blinded, 8+ HD stunned."
+    },
+    {
+      "name": "Dancing Lights",
+      "level": 1,
+      "school": "alteration",
+      "range": "40 yards + 10/level",
+      "duration": "2 rounds/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "1 segment",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Creates 1-4 lights or 1 humanoid-shaped glow."
+    },
+    {
+      "name": "Detect Illusion",
+      "level": 1,
+      "school": "divination",
+      "range": "0",
+      "duration": "3 rounds + 2/level",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "1 segment",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Detect illusions in 10-foot path, 10 yards + 10/level."
+    },
+    {
+      "name": "Hypnotism",
+      "level": 1,
+      "school": "enchantment",
+      "range": "5 yards",
+      "duration": "1 round + 1/level",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "1 segment",
+      "saving_throw": "neg.",
+      "damage": null,
+      "description": "Hypnotize 1d6 creatures. Suggest simple course of action."
+    },
+    {
+      "name": "Phantasmal Force",
+      "level": 1,
+      "school": "illusion",
+      "range": "60 yards + 10/level",
+      "duration": "special",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "1 segment",
+      "saving_throw": "special",
+      "damage": null,
+      "description": "Creates visual illusion in 40-foot cube + 10 sq ft/level."
+    },
+    {
+      "name": "Wall of Fog",
+      "level": 1,
+      "school": "alteration",
+      "range": "30 yards",
+      "duration": "2d4 rounds + 1/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "1 segment",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Creates fog bank 20x20x20 feet. Obscures vision."
+    },
+    {
+      "name": "Blindness",
+      "level": 2,
+      "school": "illusion",
+      "range": "30 yards + 10/level",
+      "duration": "special",
+      "components": [
+        "V"
+      ],
+      "casting_time": "2 segments",
+      "saving_throw": "neg.",
+      "damage": null,
+      "description": "Target permanently blinded. Dispel magic or cure removes."
+    },
+    {
+      "name": "Blur",
+      "level": 2,
+      "school": "illusion",
+      "range": "0",
+      "duration": "3 rounds + 1/level",
+      "components": [
+        "V"
+      ],
+      "casting_time": "2 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Outline blurs. -4 to first attack, -2 subsequent. +1 to saves."
+    },
+    {
+      "name": "Improved Phantasmal Force",
+      "level": 2,
+      "school": "illusion",
+      "range": "60 yards + 10/level",
+      "duration": "special",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "2 segments",
+      "saving_throw": "special",
+      "damage": null,
+      "description": "As phantasmal force but includes sound. Continues without concentration."
+    },
+    {
+      "name": "Invisibility",
+      "level": 2,
+      "school": "illusion",
+      "range": "touch",
+      "duration": "special",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "2 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Subject invisible until attacking."
+    },
+    {
+      "name": "Mirror Image",
+      "level": 2,
+      "school": "illusion",
+      "range": "0",
+      "duration": "3 rounds/level",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "2 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Creates 1d4+1 illusory duplicates."
+    },
+    {
+      "name": "Spectral Force",
+      "level": 3,
+      "school": "illusion",
+      "range": "60 yards + 10/level",
+      "duration": "special",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "3 segments",
+      "saving_throw": "special",
+      "damage": null,
+      "description": "As improved phantasmal force but includes thermal/olfactory elements."
+    },
+    {
+      "name": "Fear",
+      "level": 3,
+      "school": "illusion",
+      "range": "0",
+      "duration": "special",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "3 segments",
+      "saving_throw": "neg.",
+      "damage": null,
+      "description": "60-foot cone causes fear. Duration 1 round/level."
+    },
+    {
+      "name": "Suggestion",
+      "level": 3,
+      "school": "enchantment",
+      "range": "30 yards",
+      "duration": "4 hours + 4/level",
+      "components": [
+        "V",
+        "M"
+      ],
+      "casting_time": "3 segments",
+      "saving_throw": "neg.",
+      "damage": null,
+      "description": "Suggest reasonable course of action to single target."
+    },
+    {
+      "name": "Paralyzation",
+      "level": 3,
+      "school": "illusion",
+      "range": "10 yards/level",
+      "duration": "permanent",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "3 segments",
+      "saving_throw": "neg.",
+      "damage": null,
+      "description": "Paralyzes single target via illusory attack."
+    },
+    {
+      "name": "Confusion",
+      "level": 4,
+      "school": "enchantment",
+      "range": "80 yards",
+      "duration": "1 round/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "4 segments",
+      "saving_throw": "special",
+      "damage": null,
+      "description": "2d8 creatures confused for duration."
+    },
+    {
+      "name": "Phantasmal Killer",
+      "level": 4,
+      "school": "illusion",
+      "range": "5 yards/level",
+      "duration": "1 round/level",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "4 segments",
+      "saving_throw": "special",
+      "damage": "death",
+      "description": "Creates monster from target's nightmares. INT check or die of fright."
+    },
+    {
+      "name": "Improved Invisibility",
+      "level": 4,
+      "school": "illusion",
+      "range": "touch",
+      "duration": "4 rounds + 1/level",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "4 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Invisible even when attacking. -4 to be hit."
+    },
+    {
+      "name": "Shadow Monsters",
+      "level": 4,
+      "school": "illusion",
+      "range": "30 yards",
+      "duration": "1 round/level",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "4 segments",
+      "saving_throw": "special",
+      "damage": "20% real",
+      "description": "Creates monsters from shadow. 20% real HP and damage if disbelieved."
+    },
+    {
+      "name": "Shadow Magic",
+      "level": 5,
+      "school": "illusion",
+      "range": "50 yards + 10/level",
+      "duration": "special",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "5 segments",
+      "saving_throw": "special",
+      "damage": "varies",
+      "description": "Mimic evocation spells (fireball, etc.) at 20% real if disbelieved."
+    },
+    {
+      "name": "Demi-Shadow Monsters",
+      "level": 5,
+      "school": "illusion",
+      "range": "30 yards",
+      "duration": "1 round/level",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "5 segments",
+      "saving_throw": "special",
+      "damage": "40% real",
+      "description": "As shadow monsters but 40% real."
+    },
+    {
+      "name": "Major Creation",
+      "level": 5,
+      "school": "illusion",
+      "range": "10 yards",
+      "duration": "special",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "1 turn",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Create object of mineral or vegetable matter. Duration varies by material."
+    },
+    {
+      "name": "Projected Image",
+      "level": 5,
+      "school": "illusion",
+      "range": "5 yards/level",
+      "duration": "1 round/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "5 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Illusory double can cast spells as if from its location."
+    },
+    {
+      "name": "Programmed Illusion",
+      "level": 6,
+      "school": "illusion",
+      "range": "10 yards/level",
+      "duration": "special",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "6 segments",
+      "saving_throw": "special",
+      "damage": null,
+      "description": "Illusion activates on trigger. Lasts 1 round/level when triggered."
+    },
+    {
+      "name": "Shades",
+      "level": 6,
+      "school": "illusion",
+      "range": "30 yards",
+      "duration": "1 round/level",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "6 segments",
+      "saving_throw": "special",
+      "damage": "60% real",
+      "description": "As shadow monsters but 60% real."
+    },
+    {
+      "name": "True Sight",
+      "level": 6,
+      "school": "divination",
+      "range": "touch",
+      "duration": "1 round/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "1 round",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "See all things as truly are. Penetrate all illusions."
+    },
+    {
+      "name": "Prismatic Spray",
+      "level": 7,
+      "school": "conjuration",
+      "range": "0",
+      "duration": "instantaneous",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "7 segments",
+      "saving_throw": "special",
+      "damage": "varies",
+      "description": "Seven colors with different effects. 70 feet long, 15 feet wide."
+    },
+    {
+      "name": "Prismatic Wall",
+      "level": 7,
+      "school": "conjuration",
+      "range": "10 yards",
+      "duration": "1 turn/level",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "7 segments",
+      "saving_throw": "special",
+      "damage": "varies",
+      "description": "Seven-layered wall of prismatic colors. Each layer has different effect."
+    },
+    {
+      "name": "Alter Reality",
+      "level": 7,
+      "school": "illusion",
+      "range": "unlimited",
+      "duration": "special",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "special",
+      "saving_throw": "special",
+      "damage": null,
+      "description": "Illusionist version of Limited Wish. Shaped by illusion."
+    },
+    {
+      "name": "Mass Invisibility",
+      "level": 7,
+      "school": "illusion",
+      "range": "10 yards/level",
+      "duration": "special",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "7 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Makes all creatures in 30x30 yard area invisible."
+    }
+  ]
+}

@@ -1,0 +1,639 @@
+{
+  "class": "Cleric",
+  "description": "PHB Cleric Spells",
+  "spells": [
+    {
+      "name": "Cure Light Wounds",
+      "level": 1,
+      "school": "necromancy",
+      "range": "touch",
+      "duration": "permanent",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "5 segments",
+      "saving_throw": "none",
+      "damage": "heals 1d8",
+      "description": "Heals 1d8 hit points of damage."
+    },
+    {
+      "name": "Bless",
+      "level": 1,
+      "school": "conjuration",
+      "range": "60 yards",
+      "duration": "6 rounds",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "1 round",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "+1 to hit and +1 to saves vs fear for allies in 50-foot cube."
+    },
+    {
+      "name": "Command",
+      "level": 1,
+      "school": "enchantment",
+      "range": "30 yards",
+      "duration": "1 round",
+      "components": [
+        "V"
+      ],
+      "casting_time": "1 segment",
+      "saving_throw": "special",
+      "damage": null,
+      "description": "Single-word command obeyed for 1 round."
+    },
+    {
+      "name": "Detect Evil",
+      "level": 1,
+      "school": "divination",
+      "range": "0",
+      "duration": "1 turn + 5 rounds/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "1 round",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Detect evil intent or enchantments within 120 feet."
+    },
+    {
+      "name": "Detect Magic",
+      "level": 1,
+      "school": "divination",
+      "range": "0",
+      "duration": "1 turn",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "1 round",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Detect magical radiations in 30-foot path, 60 feet long."
+    },
+    {
+      "name": "Light",
+      "level": 1,
+      "school": "alteration",
+      "range": "120 yards",
+      "duration": "6 turns + 1/level",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "4 segments",
+      "saving_throw": "special",
+      "damage": null,
+      "description": "20-foot radius globe of light. Can target creature eyes."
+    },
+    {
+      "name": "Protection from Evil",
+      "level": 1,
+      "school": "abjuration",
+      "range": "touch",
+      "duration": "3 rounds/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "4 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "+2 AC and saves vs evil, blocks mental control."
+    },
+    {
+      "name": "Remove Fear",
+      "level": 1,
+      "school": "abjuration",
+      "range": "touch",
+      "duration": "special",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "1 segment",
+      "saving_throw": "special",
+      "damage": null,
+      "description": "Removes fear or grants +1/4 levels to saves vs fear."
+    },
+    {
+      "name": "Sanctuary",
+      "level": 1,
+      "school": "abjuration",
+      "range": "touch",
+      "duration": "2 rounds + 1/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "4 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Attackers must save vs spell or attack another target."
+    },
+    {
+      "name": "Hold Person",
+      "level": 2,
+      "school": "enchantment",
+      "range": "120 yards",
+      "duration": "4 rounds + 1/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "5 segments",
+      "saving_throw": "neg.",
+      "damage": null,
+      "description": "Paralyzes 1-3 human-sized targets."
+    },
+    {
+      "name": "Silence 15' Radius",
+      "level": 2,
+      "school": "alteration",
+      "range": "120 yards",
+      "duration": "2 rounds/level",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "5 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "No sound in 15-foot radius. Prevents spellcasting."
+    },
+    {
+      "name": "Spiritual Hammer",
+      "level": 2,
+      "school": "invocation",
+      "range": "10 yards/level",
+      "duration": "3 rounds + 1/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "5 segments",
+      "saving_throw": "none",
+      "damage": "1d4+1 per 6 levels",
+      "description": "Hammer of force attacks as caster directs."
+    },
+    {
+      "name": "Find Traps",
+      "level": 2,
+      "school": "divination",
+      "range": "0",
+      "duration": "3 turns",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "5 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Detects traps in 10-foot path, 30 feet long."
+    },
+    {
+      "name": "Resist Fire",
+      "level": 2,
+      "school": "alteration",
+      "range": "touch",
+      "duration": "1 round/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "5 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Normal fires no damage, magical fire at -1/die, +3 to saves."
+    },
+    {
+      "name": "Slow Poison",
+      "level": 2,
+      "school": "necromancy",
+      "range": "touch",
+      "duration": "1 hour/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "1 segment",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Slows poison progression. Victim takes 1 HP/turn instead of dying."
+    },
+    {
+      "name": "Augury",
+      "level": 2,
+      "school": "divination",
+      "range": "0",
+      "duration": "special",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "2 rounds",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "70% + 1%/level chance of determining if action is weal or woe."
+    },
+    {
+      "name": "Cure Disease",
+      "level": 3,
+      "school": "abjuration",
+      "range": "touch",
+      "duration": "permanent",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "1 round",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Cures all diseases, including mummy rot and lycanthropy."
+    },
+    {
+      "name": "Dispel Magic",
+      "level": 3,
+      "school": "abjuration",
+      "range": "60 yards",
+      "duration": "instantaneous",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "6 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Negates magical effects. Base 50% + 5% per level difference."
+    },
+    {
+      "name": "Prayer",
+      "level": 3,
+      "school": "conjuration",
+      "range": "0",
+      "duration": "1 round/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "6 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "+1 to hit/damage/saves for allies, -1 for enemies in 60-foot radius."
+    },
+    {
+      "name": "Remove Curse",
+      "level": 3,
+      "school": "abjuration",
+      "range": "touch",
+      "duration": "permanent",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "6 segments",
+      "saving_throw": "special",
+      "damage": null,
+      "description": "Removes curse from person or object."
+    },
+    {
+      "name": "Animate Dead",
+      "level": 3,
+      "school": "necromancy",
+      "range": "10 yards",
+      "duration": "permanent",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "1 round",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Creates undead skeletons or zombies from corpses."
+    },
+    {
+      "name": "Glyph of Warding",
+      "level": 3,
+      "school": "abjuration",
+      "range": "touch",
+      "duration": "permanent until triggered",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "special",
+      "saving_throw": "special",
+      "damage": "2/level",
+      "description": "Inscribes protective glyph. Explodes when triggered."
+    },
+    {
+      "name": "Cure Serious Wounds",
+      "level": 4,
+      "school": "necromancy",
+      "range": "touch",
+      "duration": "permanent",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "7 segments",
+      "saving_throw": "none",
+      "damage": "heals 2d8+1",
+      "description": "Heals 2d8+1 hit points of damage."
+    },
+    {
+      "name": "Neutralize Poison",
+      "level": 4,
+      "school": "necromancy",
+      "range": "touch",
+      "duration": "permanent",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "7 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Detoxifies poison in creature or item. Revives recently poisoned."
+    },
+    {
+      "name": "Protection from Evil 10' Radius",
+      "level": 4,
+      "school": "abjuration",
+      "range": "touch",
+      "duration": "1 turn/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "7 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "10-foot radius protection from evil as per 1st level spell."
+    },
+    {
+      "name": "Tongues",
+      "level": 4,
+      "school": "alteration",
+      "range": "0",
+      "duration": "1 round/level",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "7 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Understand and speak any language."
+    },
+    {
+      "name": "Sticks to Snakes",
+      "level": 4,
+      "school": "alteration",
+      "range": "30 yards",
+      "duration": "2 rounds/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "7 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "1d4+level/3 sticks become snakes that attack as directed."
+    },
+    {
+      "name": "Cure Critical Wounds",
+      "level": 5,
+      "school": "necromancy",
+      "range": "touch",
+      "duration": "permanent",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "8 segments",
+      "saving_throw": "none",
+      "damage": "heals 3d8+3",
+      "description": "Heals 3d8+3 hit points of damage."
+    },
+    {
+      "name": "Raise Dead",
+      "level": 5,
+      "school": "necromancy",
+      "range": "30 yards",
+      "duration": "permanent",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "1 round",
+      "saving_throw": "special",
+      "damage": null,
+      "description": "Restores life to dead creature. Body must be present. System shock applies."
+    },
+    {
+      "name": "Flame Strike",
+      "level": 5,
+      "school": "evocation",
+      "range": "60 yards",
+      "duration": "instantaneous",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "8 segments",
+      "saving_throw": "half",
+      "damage": "6d8",
+      "description": "Column of divine fire, 10-foot diameter, 30 feet high."
+    },
+    {
+      "name": "Dispel Evil",
+      "level": 5,
+      "school": "abjuration",
+      "range": "touch",
+      "duration": "1 round/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "8 segments",
+      "saving_throw": "neg.",
+      "damage": null,
+      "description": "Banishes evil extraplanar creatures or removes evil enchantments."
+    },
+    {
+      "name": "True Seeing",
+      "level": 5,
+      "school": "divination",
+      "range": "touch",
+      "duration": "1 round/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "8 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "See all things as they truly are. Penetrates illusions, darkness, invisibility."
+    },
+    {
+      "name": "Commune",
+      "level": 5,
+      "school": "divination",
+      "range": "0",
+      "duration": "special",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "1 turn",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Ask deity 1 yes/no question per level."
+    },
+    {
+      "name": "Heal",
+      "level": 6,
+      "school": "necromancy",
+      "range": "touch",
+      "duration": "permanent",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "1 round",
+      "saving_throw": "none",
+      "damage": "heals all but 1d4",
+      "description": "Heals all damage except 1d4 HP. Cures disease and blindness."
+    },
+    {
+      "name": "Blade Barrier",
+      "level": 6,
+      "school": "evocation",
+      "range": "30 yards",
+      "duration": "3 rounds/level",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "9 segments",
+      "saving_throw": "none",
+      "damage": "8d8",
+      "description": "Wall of spinning blades. 8d8 damage to pass through."
+    },
+    {
+      "name": "Word of Recall",
+      "level": 6,
+      "school": "alteration",
+      "range": "0",
+      "duration": "instantaneous",
+      "components": [
+        "V"
+      ],
+      "casting_time": "1 segment",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Instantly teleport to designated sanctuary."
+    },
+    {
+      "name": "Find the Path",
+      "level": 6,
+      "school": "divination",
+      "range": "touch",
+      "duration": "1 turn/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "3 rounds",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Unerringly find shortest route to destination."
+    },
+    {
+      "name": "Holy Word",
+      "level": 7,
+      "school": "conjuration",
+      "range": "0",
+      "duration": "special",
+      "components": [
+        "V"
+      ],
+      "casting_time": "1 segment",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Affects evil creatures in 30-foot radius. Under 4 HD: killed. 4-7 HD: stunned. 8-11 HD: confused. 12+ HD: deafened."
+    },
+    {
+      "name": "Resurrection",
+      "level": 7,
+      "school": "necromancy",
+      "range": "touch",
+      "duration": "permanent",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "1 turn",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Restores life and full HP. Works even if body is not present."
+    },
+    {
+      "name": "Restoration",
+      "level": 7,
+      "school": "necromancy",
+      "range": "touch",
+      "duration": "permanent",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "3 rounds",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Restores levels and abilities lost to energy drain."
+    },
+    {
+      "name": "Gate",
+      "level": 7,
+      "school": "conjuration",
+      "range": "30 yards",
+      "duration": "special",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "5 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Opens portal to another plane and summons named entity."
+    }
+  ]
+}

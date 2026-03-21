@@ -1,0 +1,945 @@
+{
+  "class": "Magic-User",
+  "description": "PHB Magic-User Spells",
+  "spells": [
+    {
+      "name": "Magic Missile",
+      "level": 1,
+      "school": "evocation",
+      "range": "60 yards + 10/level",
+      "duration": "instantaneous",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "1 segment",
+      "saving_throw": "none",
+      "damage": "1d4+1 per missile",
+      "description": "Creates darts of magical force. 1 missile at 1st level, +1 per 2 levels (max 5)."
+    },
+    {
+      "name": "Sleep",
+      "level": 1,
+      "school": "enchantment",
+      "range": "30 yards",
+      "duration": "5 rounds/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "1 segment",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Puts 2d4 HD of creatures to sleep. Affects lowest HD first."
+    },
+    {
+      "name": "Charm Person",
+      "level": 1,
+      "school": "enchantment",
+      "range": "120 yards",
+      "duration": "special",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "1 segment",
+      "saving_throw": "neg.",
+      "damage": null,
+      "description": "Target humanoid regards caster as trusted friend."
+    },
+    {
+      "name": "Shield",
+      "level": 1,
+      "school": "evocation",
+      "range": "0",
+      "duration": "5 rounds/level",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "1 segment",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Creates invisible barrier. AC 2 vs missiles, AC 4 vs other attacks."
+    },
+    {
+      "name": "Detect Magic",
+      "level": 1,
+      "school": "divination",
+      "range": "0",
+      "duration": "2 rounds/level",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "1 round",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Detects magical auras within 60 feet."
+    },
+    {
+      "name": "Read Magic",
+      "level": 1,
+      "school": "divination",
+      "range": "0",
+      "duration": "2 rounds/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "1 round",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Read magical writings and scrolls."
+    },
+    {
+      "name": "Light",
+      "level": 1,
+      "school": "alteration",
+      "range": "60 yards",
+      "duration": "1 turn/level",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "1 segment",
+      "saving_throw": "special",
+      "damage": null,
+      "description": "Creates 20-foot radius globe of light."
+    },
+    {
+      "name": "Burning Hands",
+      "level": 1,
+      "school": "alteration",
+      "range": "0",
+      "duration": "instantaneous",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "1 segment",
+      "saving_throw": "none",
+      "damage": "1d3+2/level (max 1d3+20)",
+      "description": "Fan of flame from fingertips in 3-foot arc."
+    },
+    {
+      "name": "Identify",
+      "level": 1,
+      "school": "divination",
+      "range": "0",
+      "duration": "1 round/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "1 turn",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "15%+5%/level chance to determine properties of magic item."
+    },
+    {
+      "name": "Feather Fall",
+      "level": 1,
+      "school": "alteration",
+      "range": "10 yards/level",
+      "duration": "1 segment/level",
+      "components": [
+        "V"
+      ],
+      "casting_time": "special",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Slows falling to 2 feet/second. Instant casting."
+    },
+    {
+      "name": "Mirror Image",
+      "level": 2,
+      "school": "illusion",
+      "range": "0",
+      "duration": "3 rounds/level",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "2 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Creates 1d4+1 illusory duplicates. Images destroyed when hit."
+    },
+    {
+      "name": "Web",
+      "level": 2,
+      "school": "evocation",
+      "range": "5 yards/level",
+      "duration": "2 turns/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "2 segments",
+      "saving_throw": "neg. or half",
+      "damage": null,
+      "description": "Fills 80 cubic feet with sticky webs. STR check to break free."
+    },
+    {
+      "name": "Invisibility",
+      "level": 2,
+      "school": "illusion",
+      "range": "touch",
+      "duration": "special",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "2 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Subject invisible until attacking or casting."
+    },
+    {
+      "name": "Knock",
+      "level": 2,
+      "school": "alteration",
+      "range": "60 yards",
+      "duration": "special",
+      "components": [
+        "V"
+      ],
+      "casting_time": "1 segment",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Opens locked/barred/held doors, chests, shackles."
+    },
+    {
+      "name": "Levitate",
+      "level": 2,
+      "school": "alteration",
+      "range": "20 yards/level",
+      "duration": "1 turn/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "2 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Rise or lower at 20 feet/round. No horizontal movement."
+    },
+    {
+      "name": "ESP",
+      "level": 2,
+      "school": "divination",
+      "range": "0",
+      "duration": "1 round/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "2 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Detect surface thoughts within 60 feet/90 feet."
+    },
+    {
+      "name": "Stinking Cloud",
+      "level": 2,
+      "school": "evocation",
+      "range": "30 yards",
+      "duration": "1 round/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "2 segments",
+      "saving_throw": "special",
+      "damage": null,
+      "description": "20-foot cube of nauseous vapors. Failed save = helpless 1d4+1 rounds."
+    },
+    {
+      "name": "Darkness 15' Radius",
+      "level": 2,
+      "school": "alteration",
+      "range": "10 yards/level",
+      "duration": "1 turn + 1 round/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "2 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Magical darkness in 15-foot radius. Negates light sources."
+    },
+    {
+      "name": "Fireball",
+      "level": 3,
+      "school": "evocation",
+      "range": "10 yards + 10/level",
+      "duration": "instantaneous",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "3 segments",
+      "saving_throw": "half",
+      "damage": "1d6/level (max 10d6)",
+      "description": "Explosive ball of fire, 20-foot radius."
+    },
+    {
+      "name": "Lightning Bolt",
+      "level": 3,
+      "school": "evocation",
+      "range": "40 yards + 10/level",
+      "duration": "instantaneous",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "3 segments",
+      "saving_throw": "half",
+      "damage": "1d6/level (max 10d6)",
+      "description": "Bolt of lightning, 5 feet wide, up to 80 feet long."
+    },
+    {
+      "name": "Fly",
+      "level": 3,
+      "school": "alteration",
+      "range": "touch",
+      "duration": "1 turn/level + 1d6 turns",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "3 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Fly at movement rate 12 (18 in dive)."
+    },
+    {
+      "name": "Haste",
+      "level": 3,
+      "school": "alteration",
+      "range": "60 yards",
+      "duration": "3 rounds + 1/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "3 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Double movement and attacks for 1 creature/level in 40-foot cube."
+    },
+    {
+      "name": "Slow",
+      "level": 3,
+      "school": "alteration",
+      "range": "90 yards + 10/level",
+      "duration": "3 rounds + 1/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "3 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Halves movement and attacks for 1 creature/level in 40-foot cube."
+    },
+    {
+      "name": "Dispel Magic",
+      "level": 3,
+      "school": "abjuration",
+      "range": "120 yards",
+      "duration": "instantaneous",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "3 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Negates magical effects in 30-foot cube. Base 50% + 5%/level difference."
+    },
+    {
+      "name": "Hold Person",
+      "level": 3,
+      "school": "enchantment",
+      "range": "120 yards",
+      "duration": "2 rounds/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "3 segments",
+      "saving_throw": "neg.",
+      "damage": null,
+      "description": "Paralyzes 1-4 human-sized targets."
+    },
+    {
+      "name": "Protection from Normal Missiles",
+      "level": 3,
+      "school": "abjuration",
+      "range": "touch",
+      "duration": "1 turn/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "3 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Immune to non-magical missiles."
+    },
+    {
+      "name": "Dimension Door",
+      "level": 4,
+      "school": "alteration",
+      "range": "0",
+      "duration": "instantaneous",
+      "components": [
+        "V"
+      ],
+      "casting_time": "1 segment",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Teleport up to 30 yards/level. No error."
+    },
+    {
+      "name": "Polymorph Self",
+      "level": 4,
+      "school": "alteration",
+      "range": "0",
+      "duration": "2 turns/level",
+      "components": [
+        "V"
+      ],
+      "casting_time": "4 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Assume form of any creature. Gain physical abilities."
+    },
+    {
+      "name": "Polymorph Other",
+      "level": 4,
+      "school": "alteration",
+      "range": "5 yards/level",
+      "duration": "permanent",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "4 segments",
+      "saving_throw": "neg.",
+      "damage": null,
+      "description": "Transform target into another creature."
+    },
+    {
+      "name": "Ice Storm",
+      "level": 4,
+      "school": "evocation",
+      "range": "10 yards/level",
+      "duration": "instantaneous",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "4 segments",
+      "saving_throw": "none",
+      "damage": "3d10 hailstones or 1d4/level sleet",
+      "description": "Hail or sleet in 40-foot diameter or 80-foot long path."
+    },
+    {
+      "name": "Wall of Fire",
+      "level": 4,
+      "school": "evocation",
+      "range": "60 yards",
+      "duration": "special",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "4 segments",
+      "saving_throw": "none",
+      "damage": "2d6+1/level within 10 feet, 1d6 within 20 feet",
+      "description": "Immobile sheet of fire. 20 feet/level long, 20 feet high."
+    },
+    {
+      "name": "Confusion",
+      "level": 4,
+      "school": "enchantment",
+      "range": "120 yards",
+      "duration": "2 rounds + 1/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "4 segments",
+      "saving_throw": "special",
+      "damage": null,
+      "description": "2d8 creatures confused. Roll each round for behavior."
+    },
+    {
+      "name": "Fear",
+      "level": 4,
+      "school": "illusion",
+      "range": "0",
+      "duration": "1 round/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "4 segments",
+      "saving_throw": "neg.",
+      "damage": null,
+      "description": "60-foot cone causes fear. Creatures flee for duration."
+    },
+    {
+      "name": "Remove Curse",
+      "level": 4,
+      "school": "abjuration",
+      "range": "touch",
+      "duration": "permanent",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "4 segments",
+      "saving_throw": "special",
+      "damage": null,
+      "description": "Removes curse from person or item."
+    },
+    {
+      "name": "Teleport",
+      "level": 5,
+      "school": "alteration",
+      "range": "touch",
+      "duration": "instantaneous",
+      "components": [
+        "V"
+      ],
+      "casting_time": "2 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Instant transport. Familiarity determines accuracy."
+    },
+    {
+      "name": "Wall of Force",
+      "level": 5,
+      "school": "evocation",
+      "range": "30 yards",
+      "duration": "1 turn + 1 round/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "5 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Invisible wall, 20 sq ft/level. Immune to dispel magic."
+    },
+    {
+      "name": "Cloudkill",
+      "level": 5,
+      "school": "evocation",
+      "range": "10 yards",
+      "duration": "1 round/level",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "5 segments",
+      "saving_throw": "special",
+      "damage": "death or 1d10",
+      "description": "Cloud kills creatures under 4+1 HD, damages others."
+    },
+    {
+      "name": "Cone of Cold",
+      "level": 5,
+      "school": "evocation",
+      "range": "0",
+      "duration": "instantaneous",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "5 segments",
+      "saving_throw": "half",
+      "damage": "1d4+1/level",
+      "description": "Cone of cold, 5 feet/level long."
+    },
+    {
+      "name": "Hold Monster",
+      "level": 5,
+      "school": "enchantment",
+      "range": "5 yards/level",
+      "duration": "1 round/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "5 segments",
+      "saving_throw": "neg.",
+      "damage": null,
+      "description": "Paralyzes 1-4 creatures of any type."
+    },
+    {
+      "name": "Passwall",
+      "level": 5,
+      "school": "alteration",
+      "range": "30 yards",
+      "duration": "1 turn + 1 round/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "5 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Opens passage through wood, plaster, or stone. 5x8x10 feet."
+    },
+    {
+      "name": "Animate Dead",
+      "level": 5,
+      "school": "necromancy",
+      "range": "10 yards",
+      "duration": "permanent",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "5 rounds",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Creates skeletons or zombies from corpses."
+    },
+    {
+      "name": "Disintegrate",
+      "level": 6,
+      "school": "alteration",
+      "range": "5 yards/level",
+      "duration": "instantaneous",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "6 segments",
+      "saving_throw": "neg.",
+      "damage": "total destruction",
+      "description": "Target creature or object disintegrated. Save or die."
+    },
+    {
+      "name": "Globe of Invulnerability",
+      "level": 6,
+      "school": "abjuration",
+      "range": "0",
+      "duration": "1 round/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "1 round",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Immobile sphere blocks spells of 4th level or lower."
+    },
+    {
+      "name": "Chain Lightning",
+      "level": 6,
+      "school": "evocation",
+      "range": "40 yards + 5/level",
+      "duration": "instantaneous",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "6 segments",
+      "saving_throw": "half",
+      "damage": "1d6/level primary, half to secondary",
+      "description": "Lightning arcs between targets. -1d6 per subsequent target."
+    },
+    {
+      "name": "Death Spell",
+      "level": 6,
+      "school": "necromancy",
+      "range": "10 yards/level",
+      "duration": "instantaneous",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "6 segments",
+      "saving_throw": "none",
+      "damage": "death",
+      "description": "Kills creatures under 8 HD. Up to 4d20 HD of creatures affected."
+    },
+    {
+      "name": "Flesh to Stone",
+      "level": 6,
+      "school": "alteration",
+      "range": "10 yards/level",
+      "duration": "permanent",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "6 segments",
+      "saving_throw": "neg.",
+      "damage": null,
+      "description": "Turns target to stone. Reversible as Stone to Flesh."
+    },
+    {
+      "name": "Power Word Stun",
+      "level": 7,
+      "school": "conjuration",
+      "range": "5 yards/level",
+      "duration": "special",
+      "components": [
+        "V"
+      ],
+      "casting_time": "1 segment",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Stuns creature. Under 30 HP: 4d4 rounds. 31-60 HP: 2d4. 61-90 HP: 1d4."
+    },
+    {
+      "name": "Delayed Blast Fireball",
+      "level": 7,
+      "school": "evocation",
+      "range": "100 yards + 10/level",
+      "duration": "up to 5 rounds delay",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "7 segments",
+      "saving_throw": "half",
+      "damage": "1d6+1/level",
+      "description": "Fireball with delayed detonation. +1 damage per die over normal fireball."
+    },
+    {
+      "name": "Limited Wish",
+      "level": 7,
+      "school": "conjuration",
+      "range": "unlimited",
+      "duration": "special",
+      "components": [
+        "V"
+      ],
+      "casting_time": "special",
+      "saving_throw": "special",
+      "damage": null,
+      "description": "Alters reality within limits. Less powerful than Wish."
+    },
+    {
+      "name": "Prismatic Spray",
+      "level": 7,
+      "school": "conjuration",
+      "range": "0",
+      "duration": "instantaneous",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "7 segments",
+      "saving_throw": "special",
+      "damage": "varies by color",
+      "description": "7 colors, each with different effect. 70-foot long, 15-foot spread."
+    },
+    {
+      "name": "Reverse Gravity",
+      "level": 7,
+      "school": "alteration",
+      "range": "5 yards/level",
+      "duration": "1 segment/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "7 segments",
+      "saving_throw": "none",
+      "damage": "falling",
+      "description": "Reverses gravity in 30-foot cube."
+    },
+    {
+      "name": "Power Word Blind",
+      "level": 8,
+      "school": "conjuration",
+      "range": "5 yards/level",
+      "duration": "special",
+      "components": [
+        "V"
+      ],
+      "casting_time": "1 segment",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Blinds creature. Under 50 HP: 2d4+2 rounds. 51-100 HP: 1d4+1 rounds."
+    },
+    {
+      "name": "Mind Blank",
+      "level": 8,
+      "school": "abjuration",
+      "range": "30 yards",
+      "duration": "1 day",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "1 segment",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Immune to all divination, mental influence, thought detection."
+    },
+    {
+      "name": "Maze",
+      "level": 8,
+      "school": "conjuration",
+      "range": "5 yards/level",
+      "duration": "special",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "3 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Banishes target to extradimensional maze. INT determines escape time."
+    },
+    {
+      "name": "Incendiary Cloud",
+      "level": 8,
+      "school": "evocation",
+      "range": "30 yards",
+      "duration": "1d6+4 rounds",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "2 segments",
+      "saving_throw": "half",
+      "damage": "1d2/level to 1d4/level",
+      "description": "Billowing cloud of fire. Damage increases then decreases."
+    },
+    {
+      "name": "Symbol",
+      "level": 8,
+      "school": "conjuration",
+      "range": "touch",
+      "duration": "permanent until triggered",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "8 segments",
+      "saving_throw": "neg.",
+      "damage": "varies",
+      "description": "Inscribes magical glyph. Effects: death, discord, fear, insanity, pain, sleep, stunning."
+    },
+    {
+      "name": "Power Word Kill",
+      "level": 9,
+      "school": "conjuration",
+      "range": "5 yards/level",
+      "duration": "permanent",
+      "components": [
+        "V"
+      ],
+      "casting_time": "1 segment",
+      "saving_throw": "none",
+      "damage": "death",
+      "description": "Instantly kills one creature with 60 or fewer HP."
+    },
+    {
+      "name": "Wish",
+      "level": 9,
+      "school": "conjuration",
+      "range": "unlimited",
+      "duration": "special",
+      "components": [
+        "V"
+      ],
+      "casting_time": "special",
+      "saving_throw": "special",
+      "damage": null,
+      "description": "Most powerful spell. Reshapes reality. Literal interpretation may be dangerous."
+    },
+    {
+      "name": "Meteor Swarm",
+      "level": 9,
+      "school": "evocation",
+      "range": "40 yards + 10/level",
+      "duration": "instantaneous",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "9 segments",
+      "saving_throw": "none/half",
+      "damage": "40d10 total (4 meteors x 10d10 or 8 x 5d4)",
+      "description": "Blazing meteors streak from caster's hands."
+    },
+    {
+      "name": "Time Stop",
+      "level": 9,
+      "school": "alteration",
+      "range": "0",
+      "duration": "1d3 rounds",
+      "components": [
+        "V"
+      ],
+      "casting_time": "9 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Time ceases for all but caster for 1-3 rounds."
+    },
+    {
+      "name": "Gate",
+      "level": 9,
+      "school": "conjuration",
+      "range": "30 yards",
+      "duration": "special",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "9 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Opens gate to another plane. Named entity is called through."
+    }
+  ]
+}

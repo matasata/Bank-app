@@ -65,8 +65,8 @@ const CATEGORIES: EquipmentCategory[] = [
 ];
 
 export const EquipmentShop: React.FC = () => {
-  const { gold, setGold, selectedEquipment, addEquipment, removeEquipment, setStep, finalizeCharacter } = useCharacterStore();
-  const { addLogEntry, addCharacter } = useGameStore();
+  const { gold, setGold, selectedEquipment, addEquipment, removeEquipment, setStep, finalizeCharacter, addCharacter } = useCharacterStore();
+  const { addLogEntry } = useGameStore();
   const [activeCategory, setActiveCategory] = useState<EquipmentCategory>('Weapon');
   const [hasRolledGold, setHasRolledGold] = useState(false);
 

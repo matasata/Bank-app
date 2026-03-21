@@ -1,0 +1,455 @@
+{
+  "class": "Druid",
+  "description": "PHB Druid Spells",
+  "spells": [
+    {
+      "name": "Animal Friendship",
+      "level": 1,
+      "school": "enchantment",
+      "range": "10 yards",
+      "duration": "permanent",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "1 hour",
+      "saving_throw": "neg.",
+      "damage": null,
+      "description": "Befriend animal of up to 2 HD + 1 HD/level."
+    },
+    {
+      "name": "Detect Magic",
+      "level": 1,
+      "school": "divination",
+      "range": "0",
+      "duration": "12 rounds",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "4 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Detect magical radiations in 40-foot path."
+    },
+    {
+      "name": "Entangle",
+      "level": 1,
+      "school": "alteration",
+      "range": "80 yards",
+      "duration": "1 turn",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "4 segments",
+      "saving_throw": "half",
+      "damage": null,
+      "description": "Plants entangle creatures in 40-foot cube."
+    },
+    {
+      "name": "Faerie Fire",
+      "level": 1,
+      "school": "alteration",
+      "range": "80 yards",
+      "duration": "4 rounds/level",
+      "components": [
+        "V",
+        "M"
+      ],
+      "casting_time": "4 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Outlines creatures in pale glow. +2 to hit outlined targets."
+    },
+    {
+      "name": "Invisibility to Animals",
+      "level": 1,
+      "school": "alteration",
+      "range": "touch",
+      "duration": "1 turn + 1 round/level",
+      "components": [
+        "S",
+        "M"
+      ],
+      "casting_time": "5 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Animals ignore protected creature completely."
+    },
+    {
+      "name": "Pass without Trace",
+      "level": 1,
+      "school": "enchantment",
+      "range": "touch",
+      "duration": "1 turn/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "1 round",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Leave no tracks or scent. Cannot be tracked by nonmagical means."
+    },
+    {
+      "name": "Shillelagh",
+      "level": 1,
+      "school": "alteration",
+      "range": "touch",
+      "duration": "1 round/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "2 segments",
+      "saving_throw": "none",
+      "damage": "2d4",
+      "description": "Club or staff becomes +1 weapon doing 2d4 damage."
+    },
+    {
+      "name": "Barkskin",
+      "level": 2,
+      "school": "alteration",
+      "range": "touch",
+      "duration": "4 rounds + 1/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "5 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Toughens skin to AC 6 (improves 1 per 4 levels above 7th)."
+    },
+    {
+      "name": "Charm Person or Mammal",
+      "level": 2,
+      "school": "enchantment",
+      "range": "80 yards",
+      "duration": "special",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "5 segments",
+      "saving_throw": "neg.",
+      "damage": null,
+      "description": "Charm humanoid or mammal. Regards caster as friend."
+    },
+    {
+      "name": "Heat Metal",
+      "level": 2,
+      "school": "alteration",
+      "range": "40 yards",
+      "duration": "7 rounds",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "5 segments",
+      "saving_throw": "none",
+      "damage": "up to 2d4",
+      "description": "Metal becomes searing hot. Damage increases then decreases over 7 rounds."
+    },
+    {
+      "name": "Produce Flame",
+      "level": 2,
+      "school": "alteration",
+      "range": "0",
+      "duration": "2 rounds/level",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "5 segments",
+      "saving_throw": "none",
+      "damage": "1d4+1",
+      "description": "Flame in palm. Can hurl for 1d4+1 damage."
+    },
+    {
+      "name": "Warp Wood",
+      "level": 2,
+      "school": "alteration",
+      "range": "10 yards/level",
+      "duration": "permanent",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "5 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Warps wood. Affects 15-inch shaft per level."
+    },
+    {
+      "name": "Call Lightning",
+      "level": 3,
+      "school": "alteration",
+      "range": "0",
+      "duration": "1 turn/level",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "1 turn",
+      "saving_throw": "half",
+      "damage": "2d8 + 1d8/level",
+      "description": "Calls lightning bolts from storm clouds. 1 bolt/turn."
+    },
+    {
+      "name": "Cure Disease",
+      "level": 3,
+      "school": "abjuration",
+      "range": "touch",
+      "duration": "permanent",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "1 round",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Cures all diseases."
+    },
+    {
+      "name": "Hold Animal",
+      "level": 3,
+      "school": "enchantment",
+      "range": "80 yards",
+      "duration": "2 rounds/level",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "6 segments",
+      "saving_throw": "neg.",
+      "damage": null,
+      "description": "Paralyzes 1-4 animals."
+    },
+    {
+      "name": "Plant Growth",
+      "level": 3,
+      "school": "alteration",
+      "range": "160 yards",
+      "duration": "permanent",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "1 round",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Plants grow thick and entangling in area up to 1600 sq yards."
+    },
+    {
+      "name": "Protection from Fire",
+      "level": 3,
+      "school": "abjuration",
+      "range": "touch",
+      "duration": "special",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "6 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Absorbs 12 HP/level of fire damage (self) or immunity to normal fire (others)."
+    },
+    {
+      "name": "Animal Summoning I",
+      "level": 4,
+      "school": "conjuration",
+      "range": "40 yards/level",
+      "duration": "special",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "7 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Summons 8 animals of 4 HD or less."
+    },
+    {
+      "name": "Dispel Magic",
+      "level": 4,
+      "school": "abjuration",
+      "range": "80 yards",
+      "duration": "instantaneous",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "7 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "As 3rd level MU spell."
+    },
+    {
+      "name": "Hallucinatory Forest",
+      "level": 4,
+      "school": "illusion",
+      "range": "80 yards",
+      "duration": "permanent",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "7 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Creates illusory forest up to 40-foot square/level."
+    },
+    {
+      "name": "Insect Plague",
+      "level": 5,
+      "school": "conjuration",
+      "range": "320 yards",
+      "duration": "1 turn/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "1 turn",
+      "saving_throw": "none",
+      "damage": "1 HP/round",
+      "description": "Swarm of insects in 360-foot diameter. Creatures below 2 HD flee."
+    },
+    {
+      "name": "Wall of Fire",
+      "level": 5,
+      "school": "evocation",
+      "range": "80 yards",
+      "duration": "special",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "8 segments",
+      "saving_throw": "none",
+      "damage": "4d8 one side, 2d8 other",
+      "description": "Immobile curtain of fire."
+    },
+    {
+      "name": "Transmute Rock to Mud",
+      "level": 5,
+      "school": "alteration",
+      "range": "160 yards",
+      "duration": "special",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "8 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Turns 20-foot cube/level of rock into mud."
+    },
+    {
+      "name": "Conjure Fire Elemental",
+      "level": 6,
+      "school": "conjuration",
+      "range": "80 yards",
+      "duration": "1 turn/level",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "6 rounds",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Summons fire elemental of 8-16 HD."
+    },
+    {
+      "name": "Transport via Plants",
+      "level": 6,
+      "school": "alteration",
+      "range": "touch",
+      "duration": "instantaneous",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "4 segments",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Enter one plant and exit from another of same species, any distance."
+    },
+    {
+      "name": "Wall of Thorns",
+      "level": 6,
+      "school": "alteration",
+      "range": "80 yards",
+      "duration": "1 turn/level",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "9 segments",
+      "saving_throw": "none",
+      "damage": "8+AC HP",
+      "description": "Barrier of thorns. 8 + AC in HP damage to pass through."
+    },
+    {
+      "name": "Fire Storm",
+      "level": 7,
+      "school": "evocation",
+      "range": "160 yards",
+      "duration": "1 round",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "9 segments",
+      "saving_throw": "half",
+      "damage": "2d8 + 1d8/level",
+      "description": "Fire in 2 ten-foot cubes per level."
+    },
+    {
+      "name": "Creeping Doom",
+      "level": 7,
+      "school": "conjuration",
+      "range": "0",
+      "duration": "4 rounds/level",
+      "components": [
+        "V",
+        "S"
+      ],
+      "casting_time": "9 segments",
+      "saving_throw": "none",
+      "damage": "1 HP/insect",
+      "description": "Mass of 1000 insects that can be directed to attack."
+    },
+    {
+      "name": "Control Weather",
+      "level": 7,
+      "school": "alteration",
+      "range": "0",
+      "duration": "4d12 hours",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "casting_time": "1 turn",
+      "saving_throw": "none",
+      "damage": null,
+      "description": "Alter weather in 4d4 mile area."
+    }
+  ]
+}
